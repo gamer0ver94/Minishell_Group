@@ -16,22 +16,22 @@ all: $(APPNAME)
 
 $(APPNAME): $(OBJ)
 	make -C libft
+	$(CC) $(CCFLAGS) -o $@ $^ $(LDFLAGS) $(LIBFT)
 	make -C commands/echo
 	make -C commands/env
 	make -C commands/exit
 	make -C commands/pwd
-	$(CC) $(CCFLAGS) -o $@ $^ $(LDFLAGS) $(LIBFT)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%$(EXT)
 	$(CC) $(CCFLAGS) -o $@ -c $<
 
 clean:
+	$(RM) $(DELOBJ) $(DEP) $(APPNAME)
 	make fclean -C libft
 	make fclean -C commands/echo
 	make fclean -C commands/env
 	make fclean -C commands/exit
 	make fclean -C commands/pwd
-	$(RM) $(DELOBJ) $(DEP) $(APPNAME)
 
 fclean	:	clean
 
