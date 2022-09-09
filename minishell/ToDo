@@ -1,0 +1,10 @@
+create a struct with enviroment variable so i can acess them
+use that struct to replace the $sign with the correct variable.
+handle $dolar when it is between quotes and still have a space with other caracters.
+handle signals
+handle $?
+edit function cd when there is no argument than shold display the HOME variable as current pwd
+implement redirections
+inplemente pipe
+after that just need to handle the programs
+and LEAKS

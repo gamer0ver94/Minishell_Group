@@ -1,0 +1,10 @@
+{
+	"files.associations": {
+		"unistd.h": "c",
+		"readline.h": "c",
+		"stat.h": "c",
+		"minishell.h": "c",
+		"string": "c",
+		"system_error": "c"
+	}
+}

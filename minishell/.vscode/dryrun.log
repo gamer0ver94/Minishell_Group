@@ -1,0 +1,6 @@
+make --dry-run --keep-going --print-directory
+make: Entering directory `/Users/dpaulino/Desktop/Cursus42/Cursus42/MiniShell'
+gcc main.c srcs/get_prompt_name.c -lreadline
+ 
+make: Leaving directory `/Users/dpaulino/Desktop/Cursus42/Cursus42/MiniShell'
+ 
