@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 09:42:11 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/09 09:12:02 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/12 23:45:52 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,24 +47,27 @@ void struct_init(t_command **prompt, char **envp)
 {
 	int i;
 	int j;
-	int h = 0;
+	int h;
+	
+	h = 0;
 	i = 0;
 	j = 0;
 	(*prompt)->cmd = NULL;
 	(*prompt)->argc = 0;
 	(*prompt)->argv = NULL;
 	(*prompt)->next = NULL;
-	(*prompt)->envp = ft_calloc(100, sizeof(char *));
-	(*prompt)->envp_val = ft_calloc(100, sizeof(char *));
+	(*prompt)->envp = ft_calloc(60, sizeof(char *));
+	(*prompt)->envp_val = ft_calloc(1000, sizeof(char *));
 	while (envp[i])
 	{
-		(*prompt)->envp[i] = ft_calloc(100, sizeof(char));
+		(*prompt)->envp[i] = ft_calloc(1000, sizeof(char));
 		while (envp[i][j] != '=')
 		{
 			(*prompt)->envp[i][j] = envp[i][j];
 			j++;
 		}
-		(*prompt)->envp_val[i] = ft_calloc(100, sizeof(char));
+		(*prompt)->envp[i][j] = '\0';
+		(*prompt)->envp_val[i] = ft_calloc(5000, sizeof(char));
 		j++;
 		while(envp[i][j])
 		{
@@ -72,6 +75,7 @@ void struct_init(t_command **prompt, char **envp)
 			j++;
 			h++;
 		}
+		(*prompt)->envp_val[i][j] = '\0';
 		h = 0;
 		j = 0;
 		i++;
@@ -106,16 +110,16 @@ void	free_prompt(t_command **prompt)
 		}
 	}
 	free((*prompt)->envp);
-	i = 0;
-	if ((*prompt)->envp_val)
-	{
-		while ((*prompt)->envp_val[i])
-		{
-			free((*prompt)->envp_val[i]);
-			i++;
-		}
-	}
-	free((*prompt)->envp_val);
+	// i = 0;
+	// if ((*prompt)->envp_val)
+	// {
+	// 	while ((*prompt)->envp_val[i])
+	// 	{
+	// 		free((*prompt)->envp_val[i]);
+	// 		i++;
+	// 	}
+	// }
+// 	free((*prompt)->envp_val);
 }
 
 int	get_prompt(char **envp)
@@ -123,6 +127,7 @@ int	get_prompt(char **envp)
 	t_command	*prompt;
 	char		*buffer;
 	char		*ptr;
+	(void)envp;
 
 	prompt = malloc(sizeof(t_command));
 	while (1)
@@ -135,10 +140,10 @@ int	get_prompt(char **envp)
 		{
 			if (!parse_buffer(buffer, &prompt, envp))
 			{
-				print_struct(prompt);
 				exec_command(prompt, envp);
 			}
 		}
+		print_struct(prompt);
 		free(buffer);
 		free(ptr);
 		free_prompt(&prompt);

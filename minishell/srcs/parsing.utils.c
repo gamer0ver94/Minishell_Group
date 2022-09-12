@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 14:30:06 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/08 17:49:05 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/12 21:49:35 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,60 +58,61 @@ void free_args(char **args)//2
 	free(args);
 }
 
-// void	get_dolar_var(t_command **prompt, char **arg, char *tmp, char **envp)
-// {
-// 	int	i;
+char	*get_dolar_var(char *tmp2, t_command **prompt)
+{
+	int i;
 
-// 	i = 0;
-// 	while((*prompt)->envp[i])
-// 	{
-// 		printf("HHHHHH%s\n",*arg);
-// 		if (!ft_strncmp(tmp, envp[i], ft_strlen(tmp)))
-// 		{
-// 			if(!**arg)
-// 				*arg = ft_strjoin(*arg,envp[i] + ft_strlen((*prompt)->envp[i]));
-// 		}
-// 		i++;
-// 	}
-// } 
+	i = 0;
+	while ((*prompt)->envp[i])
+	{
+		if (!ft_strncmp(tmp2, (*prompt)->envp[i], ft_strlen((*prompt)->envp[i])) \
+		&& !ft_strncmp(tmp2, (*prompt)->envp[i], ft_strlen(tmp2)))
+		{
+			ft_bzero(tmp2, ft_strlen(tmp2));
+			tmp2 = ft_strdup((*prompt)->envp_val[i]);
+			return (tmp2);
+		}
+		i++;
+	}
+	ft_bzero(tmp2, ft_strlen(tmp2));
+	return (tmp2);
+} 
 
 void	get_dolar_char(t_command **prompt, char **arg, int i)
 {
-	int k = 0;
 	int		j;
 	char	*tmp;
+	char *tmp2;
 	int h = 0;
 	(void)prompt;
+	tmp = ft_calloc(100,sizeof(tmp));
+	
 	j = 0;
 
-	while (arg[i])
+	while (arg[i][j])
 	{
-		if (arg[i][k] == '$')
+		if (arg[i][j] == '$')
 		{
-			tmp = ft_calloc(100, sizeof(tmp));
-			while (arg[i][k + 1] && (arg[i][k + 0] != '$' || arg[i][k + 1] != ' '))
+			j++;
+			tmp2 = ft_calloc(100,sizeof(tmp));
+			while ((arg[i][j] && arg[i][j] != '$') && (arg[i][j] && arg[i][j] != ' '))
 			{
-				tmp[j] = arg[i][k + 1];
-				j++;
-				k++;
-			}
-			tmp[j] = '\0';
-			while ((*prompt)->envp[h])
-			{
-				if (!ft_strncmp(tmp, (*prompt)->envp[h], ft_strlen(tmp)))
-				{
-					arg[i] = ft_strdup((*prompt)->envp_val[h]);
-					h = 0;
-					break;
-				}
+				tmp2[h] = arg[i][j];
 				h++;
+				j++;
 			}
+			h = 0;
+			tmp = ft_strjoin(tmp, get_dolar_var(tmp2, prompt));
+			free(tmp2);
 		}
-		j = 0;
-		i++;
-		if (*tmp)
-			free(tmp);
+		else
+			tmp[ft_strlen(tmp)] = arg[i][j];
+		if (arg[i][j] != '$')
+			j++;
 	}
+	// free(arg[i]);
+	arg[i] = ft_strdup(tmp);
+	// free(tmp);
 }
 
 void	identify_dolar(t_command **prompt, char **args)

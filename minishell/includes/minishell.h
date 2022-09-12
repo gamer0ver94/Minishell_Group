@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 13:25:13 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/08 14:42:33 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/12 23:27:47 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void free_args(char **args);
 void init_parse_struct(t_parse *p);
 int	ft_array_size(char **array);
 void identify_dolar(t_command **prompt, char **args);
+void struct_init(t_command **prompt, char **envp);
 //
 int get_prompt(char **envp);
 int logo(char *path);
