@@ -44,7 +44,7 @@ int	find_char(char *buffer, char c);
 void free_args(char **args);
 void init_parse_struct(t_parse *p);
 int	ft_array_size(char **array);
-void replace_dolar(t_command **prompt, char **args, char **envp);
+void identify_dolar(t_command **prompt, char **args);
 //
 int get_prompt(char **envp);
 int logo(char *path);

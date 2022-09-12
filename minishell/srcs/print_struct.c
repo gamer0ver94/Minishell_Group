@@ -13,5 +13,17 @@ void    print_struct(t_command  *prompt)
         printf("argv[%d] -> %s\n",i, prompt->argv[i]);
         i++;
     }
+	i = 0;
+	while (prompt->envp[i])
+	{
+		printf("envp[%d] -> %s\n",i,prompt->envp[i]);
+		i++;
+	}
+	i = 0;
+	while (prompt->envp[i])
+	{
+		printf("envp_values[%d] -> %s\n",i,prompt->envp_val[i]);
+		i++;
+	}
      printf("____________OUTPUT___________________\n\n");
 }

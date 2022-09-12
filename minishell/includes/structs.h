@@ -15,6 +15,7 @@ typedef struct s_command
 	char	*cmd;
 	int		argc;
 	char	**argv;
+	char	**envp_val;
 	char	**envp;
 	struct t_command	*next;
 }   t_command;

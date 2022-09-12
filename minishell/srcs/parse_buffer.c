@@ -34,7 +34,7 @@ void	get_commands(char **split, t_command **prompt)
 int	split_buffer(char **args, char *buffer)
 {
 	t_parse	p;
-	int code;
+	int		code;
 
 	code = 0;
 	init_parse_struct(&p);
@@ -82,6 +82,7 @@ int	parse_buffer(char *buffer, t_command **prompt, char **envp)
 {
 	char	**args;
 	int		code;
+	(void)envp;
 	code = 0;
 	args = ft_calloc(100, sizeof(char *));
 	if (!args)
@@ -97,7 +98,7 @@ int	parse_buffer(char *buffer, t_command **prompt, char **envp)
 		if (find_char(buffer, '$'))
 		{
 			if (code > 0)
-				replace_dolar(prompt, args, envp);
+				identify_dolar(prompt, args);
 		}
 		get_commands(args, prompt);
 		free_args(args);
