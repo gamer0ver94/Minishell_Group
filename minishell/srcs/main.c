@@ -21,7 +21,7 @@ int	main(int argc, char **argv, char **envp)
 		printf("no need argv\n");
 		return (1);
 	}
-	 	
+	logo("assets/logo.txt");
 	get_prompt(envp);
 	return (0);
 }

@@ -133,7 +133,7 @@ int	get_prompt(char **envp)
 	{
 		ptr = parse_prompt();
 		struct_init(&prompt, envp);
-		buffer = readline("MiniShell: $ ");
+		buffer = readline(ptr);
 		add_history(buffer);
 		if (ft_strlen(buffer))
 		{
