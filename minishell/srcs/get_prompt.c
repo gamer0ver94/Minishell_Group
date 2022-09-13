@@ -93,13 +93,13 @@ void	free_prompt(t_command **prompt)
 		free((*prompt)->cmd);
 	if ((*prompt)->argv)
 	{
-		while ((*prompt)->argv[i])
+		while ((*prompt)->argv[i + 1])
 		{
 			free((*prompt)->argv[i]);
 			i++;
 		}
+		free((*prompt)->argv);
 	}
-	free((*prompt)->argv);
 	i = 0;
 	if ((*prompt)->envp)
 	{
@@ -108,18 +108,18 @@ void	free_prompt(t_command **prompt)
 			free((*prompt)->envp[i]);
 			i++;
 		}
+		free((*prompt)->envp);
 	}
-	free((*prompt)->envp);
-	// i = 0;
-	// if ((*prompt)->envp_val)
-	// {
-	// 	while ((*prompt)->envp_val[i])
-	// 	{
-	// 		free((*prompt)->envp_val[i]);
-	// 		i++;
-	// 	}
-	// }
-// 	free((*prompt)->envp_val);
+	i = 0;
+	if ((*prompt)->envp_val)
+	{
+		while ((*prompt)->envp_val[i])
+		{
+			free((*prompt)->envp_val[i]);
+			i++;
+		}
+	}
+	free((*prompt)->envp_val);
 }
 
 int	get_prompt(char **envp)
@@ -127,7 +127,6 @@ int	get_prompt(char **envp)
 	t_command	*prompt;
 	char		*buffer;
 	char		*ptr;
-	(void)envp;
 
 	prompt = malloc(sizeof(t_command));
 	while (1)
@@ -141,6 +140,11 @@ int	get_prompt(char **envp)
 			if (!parse_buffer(buffer, &prompt, envp))
 			{
 				exec_command(prompt, envp);
+			}
+			else
+			{
+				printf("pipe parsed\n");
+				exec_pipe_commands(&prompt, envp);
 			}
 		}
 		print_struct(prompt);

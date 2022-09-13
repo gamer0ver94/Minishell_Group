@@ -14,18 +14,20 @@
 # define MINISHELL_H
 # include <stdio.h>
 # include <unistd.h>
-#include <stdlib.h>
-#include <stddef.h>
+# include <stdlib.h>
+# include <stddef.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <fcntl.h>
+# include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
-#include "../libft/libft.h"
-#include <sys/stat.h>
-#include <fcntl.h>
-#include "get_next_line.h"
-#include "structs.h"
-#include <signal.h>
+# include "../libft/libft.h"
+# include <sys/stat.h>
+# include <fcntl.h>
+# include "get_next_line.h"
+# include "structs.h"
+# include <signal.h>
 //STRING COLORS
 #define BLACK_CLR "\e[39m"
 #define RED_CLR "\e[41m"
@@ -52,5 +54,6 @@ int logo(char *path);
 int	parse_buffer(char *buffer, t_command **prompt, char **envp);
 void    print_struct(t_command  *prompt);
 void    exec_command(t_command *prompt, char **envp);
+void exec_pipe_commands(t_command **prompt, char **envp);
 int cd_cmd(t_command *prompt, char **envp);
 #endif

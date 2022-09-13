@@ -17,18 +17,17 @@ void	get_commands(char **split, t_command **prompt, char **envp)
 	int		i;
 	int		j;
 	t_command *tmp;
-
+	(void)envp;
 	tmp = (*prompt);
 	j = 0;
 	i = 0;
-	while (tmp->argc)
-	{
+	while(tmp->next != NULL)
 		tmp = tmp->next;
-		tmp = malloc(sizeof(tmp));
-		struct_init(&tmp, envp);
+	if (tmp->argc > 0 && tmp->next == NULL)
+	{
+		tmp->next = ft_calloc(100, sizeof(t_command));
+		tmp = tmp->next;
 	}
-	
-		
 	tmp->cmd = ft_strdup(split[0]);
 	tmp->argv = ft_calloc(tmp->argc + 1, sizeof(char *));
 	while (split && split[i])
@@ -96,19 +95,22 @@ int	split_buffer(char **args, char *buffer)
 int	parse_buffer(char *buffer, t_command **prompt, char **envp)
 {
 	char	**args;
-	char 	**pipes;
+	char	**pipes;
 	int		code;
-	int i;
+	int		i;
+
 	i = 0;
-	(void)envp;
 	code = 0;
+
 	if (find_char(buffer, '|'))
 	{
+		pipes = ft_split(buffer, '|');
 		while (pipes[i])
 		{
+			if (pipes[i][0] == ' ')
+				pipes[i]++;
 			args = ft_calloc(100, sizeof(char *));
-			pipes = ft_split(buffer, '|');
-			code = split_buffer(args,pipes[i]);
+			code = split_buffer(args, pipes[i]);
 			if (find_char(pipes[i], '$'))
 			{
 				if (code > 0)
@@ -118,6 +120,7 @@ int	parse_buffer(char *buffer, t_command **prompt, char **envp)
 			free_args(args);
 			i++;
 		}
+		return (1);
 	}
 	else
 	{
