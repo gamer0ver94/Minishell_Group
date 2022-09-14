@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 13:25:13 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/12 23:27:47 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/15 00:41:15 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,19 @@
 #define BOLD "\e[1m"
 #define RESET_ATT "\e[0m"
 //utils
+void struct_init2(t_command **prompt, char **envp);
 int	find_char(char *buffer, char c);
 void free_args(char **args);
+void	free_prompt(t_command **prompt);
 void init_parse_struct(t_parse *p);
 int	ft_array_size(char **array);
 void identify_dolar(t_command **prompt, char **args);
 void struct_init(t_command **prompt, char **envp);
+char	*get_single_path(char *cmd, char *env_path);
+char	*buildin_path(char *cmd);
+t_command	*get_last(t_command *prompt);
 //
-int get_prompt(char **envp);
+int shell_prompt(char **argv, char **envp);
 int logo(char *path);
 int	parse_buffer(char *buffer, t_command **prompt, char **envp);
 void    print_struct(t_command  *prompt);

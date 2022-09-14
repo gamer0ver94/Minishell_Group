@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 13:34:36 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/12 23:45:35 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/14 15:48:11 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,29 @@ void	get_commands(char **split, t_command **prompt, char **envp)
 	int		i;
 	int		j;
 	t_command *tmp;
+	
 	(void)envp;
 	tmp = (*prompt);
 	j = 0;
 	i = 0;
+	if ((*prompt)->argc != 0)
+	{
+		struct_init2(&tmp, envp);
+	}
 	while(tmp->next != NULL)
 		tmp = tmp->next;
-	if (tmp->argc > 0 && tmp->next == NULL)
-	{
-		tmp->next = ft_calloc(100, sizeof(t_command));
-		tmp = tmp->next;
-	}
+	// if (tmp->argc > 0 && tmp->next == NULL)
+	// {
+		
+	// 	// tmp->next = malloc(sizeof(t_command));
+	// 	// tmp = tmp->next;
+	// 	// tmp->cmd = NULL;
+	// 	// tmp->argc = 0;
+	// 	// tmp->argv = NULL;
+	// 	// tmp->next = NULL;
+	// }
 	tmp->cmd = ft_strdup(split[0]);
-	tmp->argv = ft_calloc(tmp->argc + 1, sizeof(char *));
+	tmp->argv = ft_calloc(500, sizeof(char *));
 	while (split && split[i])
 	{
 		if (split[i][0])
@@ -120,6 +130,7 @@ int	parse_buffer(char *buffer, t_command **prompt, char **envp)
 			free_args(args);
 			i++;
 		}
+		free(pipes);
 		return (1);
 	}
 	else

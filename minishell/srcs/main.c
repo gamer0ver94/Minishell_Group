@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 12:07:26 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/12 17:32:00 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/15 00:41:38 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ int	main(int argc, char **argv, char **envp)
 {
 	(void)envp;
 	(void)argv;
-	if (argc != 1)
+	if (argc > 2)
 	{
 		printf("no need argv\n");
 		return (1);
 	}
 	logo("assets/logo.txt");
-	get_prompt(envp);
+	shell_prompt(argv, envp);
 	return (0);
 }

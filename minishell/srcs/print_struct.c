@@ -3,12 +3,11 @@
 void    print_struct(t_command  *prompt)
 {
     int i;
-	
 	t_command *tmp;
 
 	tmp = prompt;
     i = 0;
-    printf("_____________TEST____________________\n\n");
+    printf("_____________OUTPUTED____________________\n\n");
 	
 	// while (tmp->envp[i])
 	// {
@@ -37,6 +36,5 @@ void    print_struct(t_command  *prompt)
 		i = 0;
 		tmp = tmp->next;
 	}
-	printf("_____________DONE_____________\n");
-     printf("____________OUTPUT___________________\n\n");
+	printf("_____________TESTED_____________\n");
 }

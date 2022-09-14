@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 15:18:48 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/07 15:21:01 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/15 00:05:46 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,6 @@ void    exec_command(t_command *prompt, char **envp)
 			printf("%s: command not found\n", prompt->cmd);
 		}		
 	}
-	wait (&pid);
+	waitpid(pid,NULL,0);
 	free_args(env_path);
 }
