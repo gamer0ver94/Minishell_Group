@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 15:18:48 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/15 00:05:46 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/15 14:51:04 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,28 @@ char	*get_single_path(char *cmd, char *env_path)
 	free(str);
 	return (tmp);
 }
+// here is the exec (echo),(pwd),(env), 
+int    exec_builtin(t_command *prompt, char **envp)
+{
+	if (!ft_strncmp(prompt->cmd, "echo", 4))
+	{
+		ft_echo(prompt);
+		return (0);
+	}
+	if (!ft_strncmp(prompt->cmd, "pwd", 3))
+	{
+		ft_pwd();
+		return (0);
+	}
+	if (!ft_strncmp(prompt->cmd, "env", 3))
+	{
+		ft_env(envp);
+		return (0);
+	}
+	return (1);
+}
 
-void    exec_command(t_command *prompt, char **envp)
+void	exec_command(t_command *prompt, char **envp)
 {
 	char	*path;
 	char	**env_path;
@@ -51,14 +71,12 @@ void    exec_command(t_command *prompt, char **envp)
 		cd_cmd(prompt, envp);
 		return ;
 	}
-	if (!ft_strncmp(prompt->cmd, "exit", 4))
-		execve(path, prompt->argv, envp);
+	//here is the exec_builtin
+	if (exec_builtin(prompt, envp) == 0)
+		return;
 	pid = fork();
 	if (pid == 0)
 	{
-		if (execve(path, prompt->argv, envp) == -1)
-		{
-			free(path);
 			while (env_path[i])
 			{
 				path = get_single_path(prompt->cmd, env_path[i]);
@@ -69,7 +87,6 @@ void    exec_command(t_command *prompt, char **envp)
 				}
 			}
 			printf("%s: command not found\n", prompt->cmd);
-		}		
 	}
 	waitpid(pid,NULL,0);
 	free_args(env_path);

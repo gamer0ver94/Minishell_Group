@@ -1,35 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/26 09:15:08 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/06 15:52:55 by dpaulino         ###   ########.fr       */
+/*   Created: 2022/09/15 11:03:50 by memam             #+#    #+#             */
+/*   Updated: 2022/09/15 14:22:06 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
+#include "../includes/minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+int	ft_echo(t_command *command)
 {
-	int	i;
-	
-	(void)argc;
-	(void)argv;
-	(void)envp;
+	int		i;
+
 	i = 1;
-	if (!ft_strncmp(argv[0],"-n", 2))
+	if (ft_strncmp(command->argv[0], "-n", 2) == 0)
 	{
 		printf("\n");
 		return (0);
 	}
-	while (argv[i])
+	while (command->argv[i])
 	{
-		printf("%s ", argv[i]);
+		printf("%s ", command->argv[i]);
 		i++;
 	}
+	printf("😀");
 	printf("\n");
 	return (0);
 }

@@ -15,12 +15,10 @@ int	count_pipes(t_command **prompt)
 	return (i);
 }
 
-void exec_pipe_commands(t_command **prompt, char **envp)
+void	exec_pipe_commands(t_command **prompt, char **envp)
 {
-	int fd;
 
-	fd = open("text.txt");
-	write(fd,"fsafsafsa", 6)
-
+	(void)prompt;
+	(void)envp;
 
 }
