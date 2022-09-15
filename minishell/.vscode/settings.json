@@ -5,6 +5,11 @@
 		"stat.h": "c",
 		"minishell.h": "c",
 		"string": "c",
-		"system_error": "c"
+		"system_error": "c",
+		"structs.h": "c",
+		"types.h": "c",
+		"fcntl.h": "c",
+		"__config": "c",
+		"locale": "c"
 	}
 }

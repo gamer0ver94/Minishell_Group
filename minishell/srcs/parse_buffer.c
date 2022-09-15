@@ -6,35 +6,59 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 13:34:36 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/08 15:36:06 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/14 15:48:11 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	get_commands(char **split, t_command **prompt)
+void	get_commands(char **split, t_command **prompt, char **envp)
 {
 	int		i;
 	int		j;
-
+	t_command *tmp;
+	
+	(void)envp;
+	tmp = (*prompt);
 	j = 0;
 	i = 0;
-	(*prompt)->cmd = ft_strdup(split[0]);
-	(*prompt)->argc = ft_array_size(split);
-	(*prompt)->argv = ft_calloc((*prompt)->argc + 1, sizeof(char *));
+	if ((*prompt)->argc != 0)
+	{
+		struct_init2(&tmp, envp);
+	}
+	while(tmp->next != NULL)
+		tmp = tmp->next;
+	// if (tmp->argc > 0 && tmp->next == NULL)
+	// {
+		
+	// 	// tmp->next = malloc(sizeof(t_command));
+	// 	// tmp = tmp->next;
+	// 	// tmp->cmd = NULL;
+	// 	// tmp->argc = 0;
+	// 	// tmp->argv = NULL;
+	// 	// tmp->next = NULL;
+	// }
+	tmp->cmd = ft_strdup(split[0]);
+	tmp->argv = ft_calloc(500, sizeof(char *));
 	while (split && split[i])
 	{
-			(*prompt)->argv[j] = ft_strdup(split[i]);
+		if (split[i][0])
+		{
+			tmp->argv[j] = ft_strdup(split[i]);
 			j++;
 			i++;
+		}
+		else
+			i++;
 	}
-	(*prompt)->argv[j] = NULL;
+	tmp->argc = j;
+	tmp->argv[j] = NULL;
 }
 
 int	split_buffer(char **args, char *buffer)
 {
 	t_parse	p;
-	int code;
+	int		code;
 
 	code = 0;
 	init_parse_struct(&p);
@@ -81,25 +105,44 @@ int	split_buffer(char **args, char *buffer)
 int	parse_buffer(char *buffer, t_command **prompt, char **envp)
 {
 	char	**args;
+	char	**pipes;
 	int		code;
+	int		i;
+
+	i = 0;
 	code = 0;
-	args = ft_calloc(100, sizeof(char *));
-	if (!args)
-		return (1);
+
 	if (find_char(buffer, '|'))
 	{
-		args = ft_split(buffer, '|');
+		pipes = ft_split(buffer, '|');
+		while (pipes[i])
+		{
+			if (pipes[i][0] == ' ')
+				pipes[i]++;
+			args = ft_calloc(100, sizeof(char *));
+			code = split_buffer(args, pipes[i]);
+			if (find_char(pipes[i], '$'))
+			{
+				if (code > 0)
+					identify_dolar(prompt, args);
+			}
+			get_commands(args, prompt, envp);
+			free_args(args);
+			i++;
+		}
+		free(pipes);
 		return (1);
 	}
 	else
 	{
+		args = ft_calloc(100, sizeof(char *));
 		code = split_buffer(args, buffer);
 		if (find_char(buffer, '$'))
 		{
 			if (code > 0)
-				replace_dolar(prompt, args, envp);
+				identify_dolar(prompt, args);
 		}
-		get_commands(args, prompt);
+		get_commands(args, prompt, envp);
 		free_args(args);
 	}
 	return (0);
