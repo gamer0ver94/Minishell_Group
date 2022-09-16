@@ -88,6 +88,6 @@ void	exec_command(t_command *prompt, char **envp)
 			}
 			printf("%s: command not found\n", prompt->cmd);
 	}
-	waitpid(pid,NULL,0);
+	waitpid(pid, NULL, 0);
 	free_args(env_path);
 }
