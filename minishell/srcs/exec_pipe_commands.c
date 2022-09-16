@@ -15,16 +15,8 @@ int	count_pipes(t_command **prompt)
 	return (i);
 }
 
-void exec_pipe_commands(t_command **prompt, char **envp)
+void	exec_pipe_commands(t_command **prompt, char **envp)
 {
-	(void)prompt;
-	(void)envp;
-	int fd[2];
-	pid_t pid;
-	pid_t pid2;
-	// t_command *tmp;
-	int status;
-
 	// tmp = (*prompt);
 	if(pipe(fd) == -1)
 		exit(0);

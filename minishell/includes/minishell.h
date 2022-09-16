@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 13:25:13 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/15 00:41:15 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/15 14:49:51 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,12 @@
 #define NORMAL_CLR "\e[21m"
 #define BOLD "\e[1m"
 #define RESET_ATT "\e[0m"
+
+/*********** command **********/
+int	ft_echo(t_command *command);
+int	ft_pwd(void);
+int	ft_env(char	**envp);
+
 //utils
 void struct_init2(t_command **prompt, char **envp);
 int	find_char(char *buffer, char c);
