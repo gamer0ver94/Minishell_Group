@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 13:25:13 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/15 14:49:51 by memam            ###   ########.fr       */
+/*   Updated: 2022/09/17 11:13:00 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include "get_next_line.h"
 # include "structs.h"
 # include <signal.h>
+# include <stdbool.h>
 //STRING COLORS
 #define BLACK_CLR "\e[39m"
 #define RED_CLR "\e[41m"
@@ -46,6 +47,12 @@
 int	ft_echo(t_command *command);
 int	ft_pwd(void);
 int	ft_env(char	**envp);
+int ft_exit(char *args[]);
+//utils exit
+int get_err_code(void);
+int ft_is_sign(char c);
+
+
 
 //utils
 void struct_init2(t_command **prompt, char **envp);

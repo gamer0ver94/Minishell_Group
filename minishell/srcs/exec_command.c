@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 15:18:48 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/15 14:51:04 by memam            ###   ########.fr       */
+/*   Updated: 2022/09/17 11:23:46 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,11 @@ int    exec_builtin(t_command *prompt, char **envp)
 	if (!ft_strncmp(prompt->cmd, "env", 3))
 	{
 		ft_env(envp);
+		return (0);
+	}
+	if (!ft_strncmp(prompt->cmd, "exit", 4))
+	{
+		ft_exit(prompt->argv);
 		return (0);
 	}
 	return (1);
