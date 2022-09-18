@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 09:42:11 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/15 14:12:49 by memam            ###   ########.fr       */
+/*   Updated: 2022/09/18 13:39:29 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,10 @@ int	shell_prompt(char **argv, char **envp)
 			{
 				exec_command(prompt, envp);
 			}
-			else
+			/*else
 			{
 				exec_pipe_commands(&prompt, envp);
-			}
+			}*/
 		}
 		if (argv[1] && !ft_strncmp(argv[1], "debugg",6))
 			print_struct(prompt);

@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-int	count_pipes(t_command **prompt)
+/*int	count_pipes(t_command **prompt)
 {
 	t_command *tmp;
 	int			i;
@@ -57,4 +57,4 @@ void	exec_pipe_commands(t_command **prompt, char **envp)
 				printf("waiting problema\n");
 		}
 	}
-}
+}*/

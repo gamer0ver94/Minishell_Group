@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 15:18:48 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/17 11:23:46 by memam            ###   ########.fr       */
+/*   Updated: 2022/09/19 00:09:22 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ char	*get_single_path(char *cmd, char *env_path)
 // here is the exec (echo),(pwd),(env), 
 int    exec_builtin(t_command *prompt, char **envp)
 {
+	(void)envp;
 	if (!ft_strncmp(prompt->cmd, "echo", 4))
 	{
 		ft_echo(prompt);
@@ -50,12 +51,17 @@ int    exec_builtin(t_command *prompt, char **envp)
 	}
 	if (!ft_strncmp(prompt->cmd, "env", 3))
 	{
-		ft_env(envp);
+		ft_env(prompt);
 		return (0);
 	}
 	if (!ft_strncmp(prompt->cmd, "exit", 4))
 	{
 		ft_exit(prompt->argv);
+		return (0);
+	}
+	if (!ft_strncmp(prompt->cmd, "export", 6))
+	{
+		ft_export(prompt);
 		return (0);
 	}
 	return (1);
