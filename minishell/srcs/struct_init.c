@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 10:27:32 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/14 22:22:27 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/18 21:11:58 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void struct_init2(t_command **prompt, char **envp)
 	tmp->cmd = NULL;
 	tmp->argc = 0;
 	tmp->argv = NULL;
+	tmp->meta_char = NULL;
 	tmp->next = NULL;
 	tmp->envp = ft_calloc(500, sizeof(char *));
 	tmp->envp_val = ft_calloc(1000, sizeof(char *));
@@ -139,9 +140,11 @@ void struct_init(t_command **prompt, char **envp)
 	tmp->cmd = NULL;
 	tmp->argc = 0;
 	tmp->argv = NULL;
-	tmp->next = NULL;
+	tmp->meta_char = NULL;
+	tmp->id = 0;
 	tmp->envp = ft_calloc(500, sizeof(char *));
 	tmp->envp_val = ft_calloc(1000, sizeof(char *));
+	tmp->next = NULL;
 	while (envp[i])
 	{
 		tmp->envp[i] = ft_calloc(1000, sizeof(char));

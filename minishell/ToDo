@@ -8,3 +8,6 @@ implement redirections
 inplemente pipe
 after that just need to handle the programs
 and LEAKS
+
+
+fixes $ should be readed as arg

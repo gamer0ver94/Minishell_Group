@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 14:30:06 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/12 21:49:35 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/17 01:24:16 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,28 @@ int	ft_array_size(char **array) //5
 	return (i);
 }
 
-int	find_char(char *buffer, char c)
+int	find_char(char *buffer, char *c)
 {
-	int	i;
+	char *str;
+	size_t size;
+	size_t i;
+	char *tmp;
 
 	i = 0;
-	while (buffer[i])
+	size = ft_strlen(c);
+	str = ft_strdup(buffer);
+	tmp = str;
+	while (i < ft_strlen(buffer) - 1)
 	{
-		if (buffer[i] == c)
+		if (!ft_strncmp(str, c, size))
+		{
+			free(tmp);
 			return (1);
+		}
+		str++;
 		i++;
 	}
+	free(tmp);
 	return (0);
 }
 
@@ -123,7 +134,7 @@ void	identify_dolar(t_command **prompt, char **args)
 	i = 0;
 	while (args[i])
 	{
-		if (find_char(args[i], '$'))
+		if (find_char(args[i], "$"))
 			get_dolar_char(prompt, args, i);
 		i++;
 	}

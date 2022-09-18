@@ -6,11 +6,79 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 13:34:36 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/14 15:48:11 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/18 21:28:53 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void parse_meta_chars(char *buffer, char **meta_chars, char **exe)
+{
+	int		i;
+	int		j;
+	int		h;
+	int		a;
+	int		b;
+	
+	i = 0;
+	j = 0;
+	h = 0;
+	a = 0;
+	b = 0;
+	exe[j] = ft_calloc(50, sizeof(char));
+	meta_chars[a] = ft_calloc(50, sizeof(char));
+	while (buffer[i])
+	{
+		if (buffer [i] == '<' || buffer [i] == '>' || buffer [i] == '|'\
+			|| buffer [i] == '&')
+		{
+			while (buffer [i] == '<' || buffer [i] == '>' || buffer [i] == '|'\
+			|| buffer [i] == '&')
+			{
+				meta_chars[a][b] = buffer[i];
+				b++;
+				i++;
+			}
+			a++;
+			j++;
+			h = 0;
+			b = 0;
+			exe[j] = ft_calloc(100, sizeof(char));
+			meta_chars[a] = ft_calloc(100, sizeof(char));
+			if (buffer[i] == ' ')
+				i++;
+		}
+		else
+		{
+			exe[j][h] = buffer[i];
+			h++;
+			i++;
+		}
+	}
+	exe[j + 1] = NULL;
+	meta_chars[a] = NULL;
+}
+
+int find_meta_char (char *buffer)
+{
+	if (find_char(buffer, "|"))
+		return (1);
+	else if(find_char(buffer, "<"))
+		return (1);
+	else if (find_char(buffer, "<<"))
+		return (1);
+	else if (find_char(buffer, ">"))
+		return (1);
+	else if (find_char(buffer, ">>"))
+		return (1);
+	else if (find_char(buffer, "&&"))
+		return (1);
+	else if (find_char(buffer, "||"))
+		return (1);
+	else
+		return (0);
+	
+}
 
 void	get_commands(char **split, t_command **prompt, char **envp)
 {
@@ -53,6 +121,24 @@ void	get_commands(char **split, t_command **prompt, char **envp)
 	}
 	tmp->argc = j;
 	tmp->argv[j] = NULL;
+}
+
+void get_meta_chars(t_command **prompt, char **meta_chars)
+{
+	t_command *tmp;
+	int			i;
+
+	i = 0;
+	tmp = (*prompt);
+	while (tmp)
+	{
+		if (meta_chars[i])
+			tmp->meta_char = ft_strdup(meta_chars[i]);
+		else
+			tmp->meta_char = NULL;
+		i++;
+		tmp = tmp->next;
+	}
 }
 
 int	split_buffer(char **args, char *buffer)
@@ -102,47 +188,68 @@ int	split_buffer(char **args, char *buffer)
 	return (code);
 }
 
+void	get_id(t_command **prompt)
+{
+	t_command * tmp;
+	int i;
+
+	i = 1;
+	tmp = (*prompt);
+	while (tmp)
+	{
+		tmp->id = i;
+		tmp = tmp->next;
+		i++;
+	}
+}
+
 int	parse_buffer(char *buffer, t_command **prompt, char **envp)
 {
 	char	**args;
-	char	**pipes;
+	char	**exe;
+	char	**meta_chars;
 	int		code;
 	int		i;
-
+	exe = malloc(sizeof(char *) * 50);
+	meta_chars = malloc(sizeof(char *) * 50);
 	i = 0;
 	code = 0;
 
-	if (find_char(buffer, '|'))
+	if (find_meta_char(buffer))
 	{
-		pipes = ft_split(buffer, '|');
-		while (pipes[i])
+		(void)i;
+		parse_meta_chars(buffer, meta_chars, exe);
+		while (exe[i])
 		{
-			if (pipes[i][0] == ' ')
-				pipes[i]++;
+			if (exe[i][0] == ' ')
+				exe[i]++;
 			args = ft_calloc(100, sizeof(char *));
-			code = split_buffer(args, pipes[i]);
-			if (find_char(pipes[i], '$'))
+			code = split_buffer(args, exe[i]);
+			if (find_char(exe[i], "$"))
 			{
 				if (code > 0)
 					identify_dolar(prompt, args);
 			}
 			get_commands(args, prompt, envp);
+			get_meta_chars(prompt, meta_chars);
 			free_args(args);
 			i++;
 		}
-		free(pipes);
+		get_id(prompt);
+		free(exe);
 		return (1);
 	}
 	else
 	{
 		args = ft_calloc(100, sizeof(char *));
 		code = split_buffer(args, buffer);
-		if (find_char(buffer, '$'))
+		if (find_char(buffer, "$"))
 		{
 			if (code > 0)
 				identify_dolar(prompt, args);
 		}
 		get_commands(args, prompt, envp);
+		get_id(prompt);
 		free_args(args);
 	}
 	return (0);

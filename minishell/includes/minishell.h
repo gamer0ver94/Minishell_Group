@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 13:25:13 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/15 14:49:51 by memam            ###   ########.fr       */
+/*   Updated: 2022/09/18 23:10:17 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,9 @@ int	ft_pwd(void);
 int	ft_env(char	**envp);
 
 //utils
+char	*get_last_meta(t_command *prompt, t_command *tmp);
 void struct_init2(t_command **prompt, char **envp);
-int	find_char(char *buffer, char c);
+int	find_char(char *buffer, char *c);
 void free_args(char **args);
 void	free_prompt(t_command **prompt);
 void init_parse_struct(t_parse *p);
@@ -59,6 +60,9 @@ void struct_init(t_command **prompt, char **envp);
 char	*get_single_path(char *cmd, char *env_path);
 char	*buildin_path(char *cmd);
 t_command	*get_last(t_command *prompt);
+void f_pipe(t_command **prompt, t_command *tmp, char **envp, int **fd, int i);
+void f_and(t_command **prompt, t_command *tmp, char **envp, int **fd, int i);
+void close_pipes(t_command **prompt, int **fd);
 //
 int shell_prompt(char **argv, char **envp);
 int logo(char *path);
