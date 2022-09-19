@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:22:35 by memam             #+#    #+#             */
-/*   Updated: 2022/09/18 23:22:16 by memam            ###   ########.fr       */
+/*   Updated: 2022/09/20 00:28:32 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 *       return the index of the variable in the environment 
 *       matching the given string.
 *       the given string must be a full variable name.
-*       return 1 if the string cannot be found in the environment.
+*       return -1 if the string cannot be found in the environment.
 */
 int get_env_var_index(char **env, char *var)
 {
@@ -56,25 +56,32 @@ int get_env_var_index(char **env, char *var)
 *       return true if the operation was sucessful or false in case of error.
 */
 
-bool set_env_var(t_command *command, char *idVar, char *value)
+bool set_env_var(char ** envp, char *idVar, char *value)
 {
     int index;
     char *tmp;
 
-    index = get_env_var_index(command->envp, idVar);
+    index = get_env_var_index(envp, idVar);
     if (value == NULL)
         value = "";
     tmp = ft_strjoin("=", value);
     if (!tmp)
-        return (false);
-    if (index != -1 && command->envp[index])
+        return (1);
+    if (index != -1 && envp[index])
     {
-        free(command->envp[index]);
-        command->envp[index] = ft_strjoin(idVar, tmp);
-    }
-    //else
-        //creates a new entry
+        printf("identifier %s\n", idVar);
+        printf(" the new value  %s\n", tmp);
 
+        envp[index] = ft_strjoin(idVar, tmp);
+        printf("environment variable with the new value %s\n", envp[index]);
+    }
+    /*else
+        {
+            index = env_var_count(envp);
+            envp = realloc_env_var(envp, index + 1)
+            
+        }
+    */
     free(tmp);
-    return (true);
+    return (0);
 }

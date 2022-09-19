@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 13:25:13 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/18 23:31:35 by memam            ###   ########.fr       */
+/*   Updated: 2022/09/19 23:33:46 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,15 @@
 /*********** command **********/
 int	ft_echo(t_command *command);
 int	ft_pwd(void);
-//int	ft_env(char	**envp);
-int	ft_env(t_command *command);
+int	ft_env(char	**envp);
+//int	ft_env(t_command *command);
 int ft_exit(char *args[]);
-int ft_export(t_command * command);
+int ft_export(char **envp, char **args);
+
 
 /*********** env **********/
 int get_env_var_index(char **env, char *var);
-bool set_env_var(t_command *command, char *idVar, char *value);
+bool set_env_var(char **envp, char *idVar, char *value);
 
 
 

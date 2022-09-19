@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 12:02:06 by memam             #+#    #+#             */
-/*   Updated: 2022/09/18 23:23:11 by memam            ###   ########.fr       */
+/*   Updated: 2022/09/19 23:45:44 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,31 +69,31 @@ static char **get_idVar_value(char *arg)
 *       return 1 if one or more args not added to env. 
 */
 
-int ft_export(t_command *command)
+int ft_export(char **envp, char **args)
 {
     int i;
+    int e;
     char **tmp;
-    char **arr;
     
     i = 1;
-    arr = command->argv;
-    if (!arr[i]) // i dont know are its utile or not?
-        printf("???????????\n");
-    while (arr[i])
+    e = 0;
+    if (!args[i]) // i dont know are its utile or not?
+        while (envp[e])
+        printf("declare -x %s\n",envp[e++]);
+    while (args[i])
     {
-        if (!is_valid_env_var_idVar(arr[i]))
+        if (!is_valid_env_var_idVar(args[i]))
         {
-            printf("export: %s not a valid identifier\n", arr[i]);
+            printf("export: %s not a valid identifier\n", args[i]);
             return (1);
         }
-        else if (ft_strchr(arr[i], '=') != NULL)
+        else if (ft_strchr(args[i], '=') != NULL)
         {
-            tmp = get_idVar_value(arr[i]);
-            set_env_var(command, tmp[0], tmp[1]);
+            tmp = get_idVar_value(args[i]);
+            set_env_var(envp, tmp[0], tmp[1]);
             free(tmp);
         }
         i++;
-        
     }
     
     printf("😀");
