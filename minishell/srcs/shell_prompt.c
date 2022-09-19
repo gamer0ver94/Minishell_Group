@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 09:42:11 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/18 21:37:25 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/20 00:06:48 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,12 @@ int	shell_prompt(char **argv, char **envp)
 	{
 		prompt = malloc(sizeof(t_command));
 		ptr = parse_prompt();
-		struct_init(&prompt, envp);
+		struct_init_simple(&prompt, envp);
 		buffer = readline(ptr);
 		add_history(buffer);
 		if (ft_strlen(buffer))
 		{
-			if (!parse_buffer(buffer, &prompt, envp))
+			if (!buffer_parsing(buffer, &prompt, envp))
 				exec_command(prompt, envp);
 			else
 				exec_pipe_commands(&prompt, envp);

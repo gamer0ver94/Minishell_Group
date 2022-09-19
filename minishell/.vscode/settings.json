@@ -10,6 +10,7 @@
 		"types.h": "c",
 		"fcntl.h": "c",
 		"__config": "c",
-		"locale": "c"
+		"locale": "c",
+		"random": "c"
 	}
 }

@@ -11,3 +11,4 @@ and LEAKS
 
 
 fixes $ should be readed as arg
+verify but echo $USER "$USER" '$USER'
