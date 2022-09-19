@@ -10,17 +10,20 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef STRUCTS_H
+# define STRUCTS_H
+
 typedef struct s_command
 {
-	char	*cmd;
-	int		argc;
-	char	**argv;
-	char	**envp;
-	char	**envp_val;
-	char	*meta_char;
-	int		id;
+	char				*cmd;
+	int					argc;
+	char				**argv;
+	char				**envp;
+	char				**envp_val;
+	char				*meta_char;
+	int					id;
 	struct s_command	*next;
-}   t_command;
+}	t_command;
 
 typedef struct s_parse
 {
@@ -28,5 +31,22 @@ typedef struct s_parse
 	int	j;
 	int	l;
 	int	lock;
-	int lock_2;
+	int	lock_2;
 }	t_parse;
+
+typedef struct s_file
+{
+	int		**fd;
+	char	**meta_char;
+}	t_file;
+
+typedef struct s_helper
+{
+	struct s_command	*tmp;
+	int					i;
+	int					j;
+	int					h;
+	int					x;
+	int					y;
+}	t_helper;
+#endif

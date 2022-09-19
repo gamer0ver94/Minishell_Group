@@ -18,11 +18,7 @@ char	*parse_prompt(void)
 	char	current_dir[1024];
 	char	*tmp;
 
-	parser = ft_strdup(BLACK_CLR);
-	tmp = ft_strdup(parser);
-	free(parser);
-	parser = ft_strjoin(tmp, getenv("USER"));
-	free(tmp);
+	parser = ft_strdup(getenv("USER"));
 	tmp = ft_strjoin(parser, BOLD);
 	free(parser);
 	parser = ft_strjoin(tmp, GREEN_CLR);
@@ -47,10 +43,7 @@ int	shell_prompt(char **argv, char **envp)
 	t_command	*prompt;
 	char		*buffer;
 	char		*ptr;
-	(void)prompt;
-	(void)envp;
-	
-	
+
 	while (1)
 	{
 		prompt = malloc(sizeof(t_command));
@@ -58,19 +51,14 @@ int	shell_prompt(char **argv, char **envp)
 		struct_init(&prompt, envp);
 		buffer = readline(ptr);
 		add_history(buffer);
-		// parse_buffer(buffer, &prompt, envp);
 		if (ft_strlen(buffer))
 		{
 			if (!parse_buffer(buffer, &prompt, envp))
-			{
 				exec_command(prompt, envp);
-			}
 			else
-			{
 				exec_pipe_commands(&prompt, envp);
-			}
 		}
-		if (argv[1] && !ft_strncmp(argv[1], "debugg",6))
+		if (argv[1] && !ft_strncmp(argv[1], "debugg", 6))
 			print_struct(prompt);
 		free(buffer);
 		free(ptr);

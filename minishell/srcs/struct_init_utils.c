@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   struct_init_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/15 14:34:01 by memam             #+#    #+#             */
-/*   Updated: 2022/09/19 13:16:14 by dpaulino         ###   ########.fr       */
+/*   Created: 2022/09/19 12:43:46 by dpaulino          #+#    #+#             */
+/*   Updated: 2022/09/19 13:31:07 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	ft_env(char	**envp)
+void	init_helper(t_helper *helper, t_command **prompt)
 {
-	int		i;
-
-	i = 0;
-	while (envp[i])
-	{
-		printf("%s\n", envp[i]);
-		i++;
-	}
-	printf("😀😀😀😀😀😀😀");
-	return (0);
+	helper->tmp = (*prompt);
+	helper->i = 0;
+	helper->j = 0;
+	helper->h = 0;
+	helper->x = 0;
+	helper->y = 0;
 }

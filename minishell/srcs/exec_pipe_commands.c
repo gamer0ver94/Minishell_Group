@@ -127,9 +127,8 @@ void exec_pipe_commands(t_command **prompt, char **envp)
 	}
 	close_pipes(prompt, fd);
 	free_fd(prompt, fd);
-	while(j-- > 0)
+	while (j-- > 0)
 	{
 		waitpid(-1, NULL, 0);
 	}
 }
-	
