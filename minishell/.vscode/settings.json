@@ -11,6 +11,9 @@
 		"fcntl.h": "c",
 		"__config": "c",
 		"locale": "c",
-		"random": "c"
+		"random": "c",
+		"__mutex_base": "c",
+		"memory": "c",
+		"mutex": "c"
 	}
 }

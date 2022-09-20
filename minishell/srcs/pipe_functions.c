@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 16:37:32 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/18 23:57:32 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/20 11:50:06 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,22 @@
 
 char	*get_last_meta(t_command *prompt, t_command *tmp)
 {
-	t_command *tmp2;
+	t_command	*tmp2;
 
 	tmp2 = prompt;
-	while(tmp2)
+	while (tmp2)
 	{
-		if(tmp2->next && tmp2->next->id == tmp->id)
+		if (tmp2->next && tmp2->next->id == tmp->id)
 			return (tmp2->meta_char);
 		tmp2 = tmp2->next;
 	}
 	return (NULL);
 }
 
-void f_and(t_command **prompt, t_command *tmp, char **envp, int **fd, int i)
+void	f_and(t_command **prompt, t_command *tmp, char **envp, int **fd, int i)
 {
-	if (get_last_meta((*prompt),tmp) && !ft_strncmp(get_last_meta((*prompt),tmp), "|", 1))
+	if (get_last_meta((*prompt), tmp) \
+		&& !ft_strncmp(get_last_meta((*prompt), tmp), "|", 1))
 	{
 		if (fork() == 0)
 		{
@@ -37,17 +38,15 @@ void f_and(t_command **prompt, t_command *tmp, char **envp, int **fd, int i)
 				printf("error\n");
 				exit(1);
 			}
-			close_pipes(prompt,fd);
-			exec_command(tmp, envp);
+			close_pipes(prompt, fd);
+			exec_simple(tmp, envp);
 			exit(0);
 		}
 	}
 	else
 	{
-		exec_command(tmp, envp);
+		exec_simple(tmp, envp);
 	}
-	
-	
 }
 
 
@@ -61,13 +60,13 @@ void f_pipe(t_command **prompt, t_command *tmp, char **envp, int **fd, int i)
 			if (fork() == 0)
 			{
 				dup2(fd[i][1], STDOUT_FILENO);
-				exec_command(tmp,envp);
+				exec_simple(tmp,envp);
 				close_pipes(prompt, fd);
 				exit(0);
 			}
 		}
 		else
-			exec_command(tmp, envp);
+			exec_simple(tmp, envp);
 	}
 	else
 	{
@@ -87,7 +86,7 @@ void f_pipe(t_command **prompt, t_command *tmp, char **envp, int **fd, int i)
 				}
 			}
 			close_pipes(prompt,fd);
-			exec_command(tmp, envp);
+			exec_simple(tmp, envp);
 			exit(0);
 		}
 	}	

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_command.c                                     :+:      :+:    :+:   */
+/*   exec_simple.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 15:18:48 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/15 14:51:04 by memam            ###   ########.fr       */
+/*   Updated: 2022/09/20 11:24:08 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,11 @@ int    exec_builtin(t_command *prompt, char **envp)
 	return (1);
 }
 
-void	exec_command(t_command *prompt, char **envp)
+void	exec_simple(t_command *prompt, char **envp)
 {
 	char	*path;
 	char	**env_path;
-	pid_t	pid;
+	int		pid;
 	int		i;
 
 	i = 0;
@@ -73,20 +73,20 @@ void	exec_command(t_command *prompt, char **envp)
 	}
 	//here is the exec_builtin
 	if (exec_builtin(prompt, envp) == 0)
-		return;
+		return ;
 	pid = fork();
 	if (pid == 0)
 	{
-			while (env_path[i])
+		while (env_path[i])
+		{
+			path = get_single_path(prompt->cmd, env_path[i]);
+			if (execve(path, prompt->argv, envp) == -1)
 			{
-				path = get_single_path(prompt->cmd, env_path[i]);
-				if (execve(path, prompt->argv, envp) == -1)
-				{
-					free(path);
-					i++;
-				}
+				free(path);
+				i++;
 			}
-			printf("%s: command not found\n", prompt->cmd);
+		}
+		printf("%s: command not found\n", prompt->cmd);
 	}
 	waitpid(pid, NULL, 0);
 	free_args(env_path);

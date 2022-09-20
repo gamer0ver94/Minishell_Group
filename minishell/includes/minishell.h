@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 13:25:13 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/19 21:55:10 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/20 11:22:01 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ int			shell_prompt(char **argv, char **envp);
 int			logo(char *path);
 int			buffer_parsing(char *buffer, t_command **prompt, char **envp);
 void		print_struct(t_command *prompt);
-void		exec_command(t_command *prompt, char **envp);
-void		exec_pipe_commands(t_command **prompt, char **envp);
+void		exec_simple(t_command *prompt, char **envp);
+void		exec_complex(t_command **prompt, char **envp);
 int			cd_cmd(t_command *prompt, char **envp);
 void		get_commands(char **split, t_command **prompt, char **envp);
 /*********** Parse Functions Utils **********/
@@ -86,4 +86,10 @@ void		parse_meta_chars(char *buffer, char **meta_chars, char **exe);
 int			find_meta_char(char *buffer);
 void		get_meta_chars(t_command **prompt, char **meta_chars);
 int			parse_quotes(char **args, char *buffer);
+/*********** Exec_Complex_Utils **********/
+int			count_pipes(t_command **prompt);
+void		free_fd(t_command **prompt, int **fd);
+void		open_pipes(t_command **prompt, int **fd);
+void		close_pipes(t_command **prompt, int **fd);
+void		init_execc_struct(t_execc *exe, t_command **prompt);
 #endif

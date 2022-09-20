@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/27 17:51:34 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/19 23:59:49 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/20 11:12:51 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ typedef struct s_helper2
 	int		code;
 	int		i;
 }	t_helper2;
-
+//buffer_parsing struct helper to reduce code
 typedef struct s_tmp
 {
 	int		i;
@@ -68,4 +68,13 @@ typedef struct s_tmp
 	int		a;
 	int		b;
 }	t_tmp;
+//exec_complex_struct
+typedef struct s_execc
+{
+	t_command	*tmp;
+	int			**fd;
+	int			i;
+	int			j;
+	int			lock;
+}	t_execc;
 #endif
