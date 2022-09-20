@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:22:35 by memam             #+#    #+#             */
-/*   Updated: 2022/09/20 00:28:32 by memam            ###   ########.fr       */
+/*   Updated: 2022/09/20 15:06:17 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,15 @@
 *       count hom many original environemet variable there are.
 *       return the unmber of environemet variable.
 */
+int env_var_count(char **envp)
+{
+    int i;
 
+    i = 0;
+    while (envp[i])
+        i++;
+    return (i);
+}
 /* @ get_env_var_index
 *       searche for the given variable in the environment variables.
 *       
@@ -25,6 +33,30 @@
 *       the given string must be a full variable name.
 *       return -1 if the string cannot be found in the environment.
 */
+
+/* @ realloc_env_var
+*   
+*
+*
+*/
+char **realloc_env_var(char **envp, int index)
+{
+    char **new_var;
+    int i;
+
+    new_var = ft_calloc(index + 2, sizeof * new_var);
+    if (!new_var)
+        return (NULL);
+    i = 0;
+    while (envp[i] && i < index)
+    {
+        new_var[i] = ft_strdup(envp[i]);
+       //free(envp[i]);
+        i++;
+    }
+    return (new_var);
+}
+
 int get_env_var_index(char **env, char *var)
 {
     int i;
@@ -66,7 +98,7 @@ bool set_env_var(char ** envp, char *idVar, char *value)
         value = "";
     tmp = ft_strjoin("=", value);
     if (!tmp)
-        return (1);
+        return (NULL);
     if (index != -1 && envp[index])
     {
         printf("identifier %s\n", idVar);
@@ -75,13 +107,21 @@ bool set_env_var(char ** envp, char *idVar, char *value)
         envp[index] = ft_strjoin(idVar, tmp);
         printf("environment variable with the new value %s\n", envp[index]);
     }
-    /*else
+    else
         {
             index = env_var_count(envp);
-            envp = realloc_env_var(envp, index + 1)
-            
+            printf("index avone %d\n", index);
+            envp = realloc_env_var(envp, index);
+
+            printf("identifier %s\n", idVar);
+            printf(" the new value  %s\n", tmp);
+            if (!envp)
+                return (NULL);
+            envp[index] = ft_strjoin(idVar, tmp);
+            printf("environment variable with the new var %d %s\n", index, envp[index]);
+
         }
-    */
+    
     free(tmp);
     return (0);
 }
