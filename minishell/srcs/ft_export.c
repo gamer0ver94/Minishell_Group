@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 12:02:06 by memam             #+#    #+#             */
-/*   Updated: 2022/09/19 23:45:44 by memam            ###   ########.fr       */
+/*   Updated: 2022/09/20 17:57:33 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,21 @@
 *       or false if not.
 */
 
-bool    is_valid_env_var_idVar(char *var)
+bool	is_valid_env_var_idVar(char *var)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    if (ft_isalpha(var[i]) ==  0 && var[i] != '_')
-        return (false);
-    i++;
-    while (var[i] && var[i] != '=')
-    {
-        if (ft_isalnum(var[i]) ==  0 && var[i] != '_')
-            return (false);
-        i++;
-    }
-    return (true);
+	i = 0;
+	if (ft_isalpha(var[i]) == 0 && var[i] != '_')
+		return (false);
+	i++;
+	while (var[i] && var[i] != '=')
+	{
+		if (ft_isalnum(var[i]) == 0 && var[i] != '_')
+			return (false);
+		i++;
+	}
+	return (true);
 }
 
 /* @ get_idVar_value
@@ -42,25 +42,26 @@ bool    is_valid_env_var_idVar(char *var)
 *           of the new environment variable.
 *       or return NULL in case of error.
 */
-static char **get_idVar_value(char *arg)
-{
-    char **tmp;
-    int i;
 
-    tmp = ft_split(arg, '=');
-    if (!tmp)
-        return (NULL);
-    if (!tmp[1])
-        return (tmp);
-    i = 2;
-    while (tmp[i])
-    {
-        tmp[1] = ft_strjoin(tmp[1], "=");
-        tmp[1] = ft_strjoin(tmp[1], tmp[i]);
-        free(tmp[i]);
-        i++;
-    }
-    return (tmp);
+static	char	**get_idVar_value(char *arg)
+{
+	char	**tmp;
+	int		i;
+
+	tmp = ft_split(arg, '=');
+	if (!tmp)
+		return (NULL);
+	if (!tmp[1])
+		return (tmp);
+	i = 2;
+	while (tmp[i])
+	{
+		tmp[1] = ft_strjoin(tmp[1], "=");
+		tmp[1] = ft_strjoin(tmp[1], tmp[i]);
+		free(tmp[i]);
+		i++;
+	}
+	return (tmp);
 }
 
 /* @ ft_export:
@@ -69,34 +70,32 @@ static char **get_idVar_value(char *arg)
 *       return 1 if one or more args not added to env. 
 */
 
-int ft_export(char **envp, char **args)
+int	ft_export(char **envp, char **args)
 {
-    int i;
-    int e;
-    char **tmp;
-    
-    i = 1;
-    e = 0;
-    if (!args[i]) // i dont know are its utile or not?
-        while (envp[e])
-        printf("declare -x %s\n",envp[e++]);
-    while (args[i])
-    {
-        if (!is_valid_env_var_idVar(args[i]))
-        {
-            printf("export: %s not a valid identifier\n", args[i]);
-            return (1);
-        }
-        else if (ft_strchr(args[i], '=') != NULL)
-        {
-            tmp = get_idVar_value(args[i]);
-            set_env_var(envp, tmp[0], tmp[1]);
-            free(tmp);
-        }
-        i++;
-    }
-    
-    printf("😀");
-	printf("\n");
-    return (0);
+	int		i;
+	int		e;
+	char	**tmp;
+
+	i = 1;
+	e = 0;
+	if (!args[i])
+		while (envp[e])
+			printf("declare -x %s\n",envp[e++]);
+	while (args[i])
+	{
+		if (!is_valid_env_var_idVar(args[i]))
+		{
+			printf("export: %s not a valid identifier\n", args[i]);
+			return (1);
+		}
+		else if (ft_strchr(args[i], '=') != NULL)
+		{
+			tmp = get_idVar_value(args[i]);
+			set_env_var(envp, tmp[0], tmp[1]);
+			free(tmp);
+		}
+		i++;
+	}
+	printf("😀\n");
+	return (0);
 }

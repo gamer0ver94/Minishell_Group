@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 13:25:13 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/19 23:33:46 by memam            ###   ########.fr       */
+/*   Updated: 2022/09/20 19:43:52 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,17 @@
 #define RESET_ATT "\e[0m"
 
 /*********** command **********/
-int	ft_echo(t_command *command);
-int	ft_pwd(void);
-int	ft_env(char	**envp);
-//int	ft_env(t_command *command);
-int ft_exit(char *args[]);
-int ft_export(char **envp, char **args);
-
-
+int		ft_echo(t_command *command);
+int		ft_pwd(void);
+int		ft_env(char	**envp);
+int		ft_exit(char *args[]);
+int		ft_export(char **envp, char **args);
+int		ft_unset(char **envp, char **args);
 /*********** env **********/
-int get_env_var_index(char **env, char *var);
-bool set_env_var(char **envp, char *idVar, char *value);
-
+int		get_env_var_index(char **env, char *var);
+bool	set_env_var(char **envp, char *idVar, char *value);
+bool	is_valid_env_var_idVar(char *var);
+char	**realloc_env_var(char **envp, int index);
 
 
 //utils
