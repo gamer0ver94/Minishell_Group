@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 11:10:00 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/21 12:16:25 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/21 13:36:06 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@ int	count_pipes(t_command **prompt)
 	tmp = (*prompt);
 	while (tmp)
 	{
+		if (tmp->meta_char)
+			i++;
 		tmp = tmp->next;
-		i++;
 	}
 	return (i);
 }
@@ -31,13 +32,15 @@ void	free_fd(t_command **prompt, int **fd)
 {
 	int	i;
 
-	i = 0;
-	while (i < count_pipes(prompt) - 1)
+	i = 1;
+	while (i < count_pipes(prompt))
 	{
-		free(fd[i]);
+		if (fd[i])
+			free(fd[i]);
 		i++;
 	}
-	free (fd);
+	if (fd)
+		free (fd);
 }
 
 void	open_pipes(t_command **prompt, int **fd)
@@ -45,9 +48,10 @@ void	open_pipes(t_command **prompt, int **fd)
 	int	i;
 
 	i = 0;
-	while (i < count_pipes(prompt) - 1)
+	while (i < count_pipes(prompt))
 	{
-		fd[i] = malloc(sizeof(int) * 2);
+		if (fd)
+			fd[i] = malloc(sizeof(int) * 2);
 		if (pipe(fd[i]))
 			printf("pipe[%d] did not open", i);
 		i++;
@@ -59,10 +63,13 @@ void	close_pipes(t_command **prompt, int **fd)
 	int	i;
 
 	i = 0;
-	while (i < count_pipes(prompt) - 1)
+	while (i < count_pipes(prompt))
 	{
-		close(fd[i][0]);
-		close(fd[i][1]);
+		if (fd[i])
+		{
+			close(fd[i][0]);
+			close(fd[i][1]);
+		}
 		i++;
 	}
 }
@@ -71,7 +78,7 @@ void	init_execc_struct(t_execc *exe, t_command **prompt)
 {
 	exe->tmp = (*prompt);
 	exe->lock = 0;
-	exe->j = count_pipes(prompt) + 1;
+	exe->j = count_pipes(prompt);
 	exe->i = 0;
 	exe->fd = malloc(sizeof(int) * count_pipes(prompt));
 	open_pipes(prompt, exe->fd);

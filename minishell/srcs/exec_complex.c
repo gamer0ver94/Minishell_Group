@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 11:48:05 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/21 12:17:45 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/21 21:09:30 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ void	exec_complex(t_command **prompt, char **envp)
 			first_cmd(&exe, prompt, envp);
 		else if (exe.tmp->meta_char && !ft_strncmp(exe.tmp->meta_char, "|", 1))
 			pipef(&exe, prompt, envp);
-		else if (exe.tmp->meta_char && !ft_strncmp(exe.tmp->meta_char, ">", 1))
-		{
+		else if (exe.tmp->meta_char && !ft_strncmp(exe.tmp->meta_char, ">>", 2))
 			redirect_out(&exe, prompt, envp);
-		}
+		else if (exe.tmp->meta_char && !ft_strncmp(exe.tmp->meta_char, ">", 1))
+			redirect_out(&exe, prompt, envp);
 		else
 			last_cmd(&exe, prompt, envp);
 	}
@@ -46,6 +46,6 @@ void	exec_complex(t_command **prompt, char **envp)
 
 
 
-		// else if (exe.tmp->meta_char && !ft_strncmp(exe.tmp->meta_char, ">>", 1))
+		
 		// else if (exe.tmp->meta_char && !ft_strncmp(exe.tmp->meta_char, "<", 1))
 		// else if (exe.tmp->meta_char && !ft_strncmp(exe.tmp->meta_char, "<<", 1))
