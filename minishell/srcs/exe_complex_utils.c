@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_complex_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 11:10:00 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/20 11:20:21 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/21 12:16:25 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	free_fd(t_command **prompt, int **fd)
 		free(fd[i]);
 		i++;
 	}
+	free (fd);
 }
 
 void	open_pipes(t_command **prompt, int **fd)
@@ -72,6 +73,6 @@ void	init_execc_struct(t_execc *exe, t_command **prompt)
 	exe->lock = 0;
 	exe->j = count_pipes(prompt) + 1;
 	exe->i = 0;
-	exe->fd = malloc(sizeof(int) * count_pipes(prompt) - 1);
+	exe->fd = malloc(sizeof(int) * count_pipes(prompt));
 	open_pipes(prompt, exe->fd);
 }

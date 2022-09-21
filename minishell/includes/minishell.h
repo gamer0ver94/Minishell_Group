@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 13:25:13 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/20 11:22:01 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/20 23:37:30 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ char		*get_single_path(char *cmd, char *env_path);
 char		*buildin_path(char *cmd);
 t_command	*get_last(t_command *prompt);
 void		get_id(t_command **prompt);
-void		f_pipe(t_command **prompt, t_command *tmp, char **envp, int **fd, int i);
 void		f_and(t_command **prompt, t_command *tmp, char **envp, int **fd, int i);
 void		close_pipes(t_command **prompt, int **fd);
 /*********** Main Functions **********/
@@ -92,4 +91,9 @@ void		free_fd(t_command **prompt, int **fd);
 void		open_pipes(t_command **prompt, int **fd);
 void		close_pipes(t_command **prompt, int **fd);
 void		init_execc_struct(t_execc *exe, t_command **prompt);
+/*********** Pipe Functions **********/
+void		first_cmd(t_execc *exe, t_command **prompt, char **envp);
+void		last_cmd(t_execc *exe, t_command **prompt, char **envp);
+void		redirect_out(t_execc *exe, t_command **prompt, char **envp);
+void		pipef(t_execc *exe, t_command **prompt, char **envp);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 16:37:32 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/20 11:50:06 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/21 12:12:50 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,68 +26,89 @@ char	*get_last_meta(t_command *prompt, t_command *tmp)
 	return (NULL);
 }
 
-void	f_and(t_command **prompt, t_command *tmp, char **envp, int **fd, int i)
+void	redirect_out(t_execc *exe, t_command **prompt, char **envp)
 {
-	if (get_last_meta((*prompt), tmp) \
-		&& !ft_strncmp(get_last_meta((*prompt), tmp), "|", 1))
+	int file;
+	if (fork() == 0)
+	{
+		dup2(exe->fd[exe->i][0], STDIN_FILENO);
+		file = open(exe->tmp->next->argv[0], O_RDWR | O_CREAT, 0777);
+		dup2(file, STDOUT_FILENO);
+		close_pipes(prompt, exe->fd);
+		close(file);
+		exec_simple(exe->tmp, envp);
+		exit(0);
+	}
+	exe->tmp = exe->tmp->next->next;
+	exe->i++;
+}
+
+void	pipef(t_execc *exe, t_command **prompt, char **envp)
+{
+	if (fork() == 0)
+	{
+		dup2(exe->fd[exe->i][0], STDIN_FILENO);
+		exe->i++;
+		dup2(exe->fd[exe->i][1], STDOUT_FILENO);
+		close_pipes(prompt, exe->fd);
+		exec_simple(exe->tmp, envp);
+		exit(0);
+	}
+	exe->i++;
+	exe->tmp = exe->tmp->next;
+}
+
+void	last_cmd(t_execc *exe, t_command **prompt, char **envp)
+{
+	int 	file;
+	if (!ft_strncmp(get_last_meta((*prompt), exe->tmp), "|", 1))
 	{
 		if (fork() == 0)
 		{
-			if (dup2(fd[i][0], STDIN_FILENO) < 0)
-			{
-				printf("error\n");
-				exit(1);
-			}
-			close_pipes(prompt, fd);
-			exec_simple(tmp, envp);
-			exit(0);
+			dup2(exe->fd[exe->i][0], STDIN_FILENO);
+			close_pipes(prompt, exe->fd);
+			exec_simple(exe->tmp, envp);
+			exit (0);
 		}
 	}
 	else
 	{
-		exec_simple(tmp, envp);
-	}
-}
-
-
-void f_pipe(t_command **prompt, t_command *tmp, char **envp, int **fd, int i)
-{
-	if (get_last_meta((*prompt),tmp) && \
-	!ft_strncmp(get_last_meta((*prompt),tmp), "&&", 2))
-	{
-		if (tmp->meta_char && !ft_strncmp(tmp->meta_char, "|", 1))
+		if (access(exe->tmp->argv[0], F_OK) == 0)
+			printf("This File exists\n");
+		else
 		{
-			if (fork() == 0)
+			if(fork() == 0)
 			{
-				dup2(fd[i][1], STDOUT_FILENO);
-				exec_simple(tmp,envp);
-				close_pipes(prompt, fd);
+				file = open(exe->tmp->argv[0], O_RDWR | O_CREAT, 0777);
+				dup2(file, STDOUT_FILENO);
+				close_pipes(prompt,exe->fd);
+				close(file);
 				exit(0);
 			}
 		}
-		else
-			exec_simple(tmp, envp);
 	}
-	else
+
+	exe->tmp = exe->tmp->next;
+}
+
+void	first_cmd(t_execc *exe, t_command **prompt, char **envp)
+{
+	int file;
+	if (fork() == 0)
 	{
-		if (fork() == 0)
+		if (!ft_strncmp(exe->tmp->meta_char, ">", 1))
 		{
-			if (dup2(fd[i][0], STDIN_FILENO) < 0)
-			{
-				printf("error\n");
-				exit(1);
-			}
-			if (tmp->id != 1 && tmp->meta_char != NULL)
-			{
-				if (dup2(fd[i + 1][1], STDOUT_FILENO) < 0)
-				{
-					printf("error\n");
-					exit(1);
-				}
-			}
-			close_pipes(prompt,fd);
-			exec_simple(tmp, envp);
-			exit(0);
+			file = open(exe->tmp->next->argv[0], O_RDWR | O_CREAT, 0777);
+			dup2(file, STDOUT_FILENO);
+			close(file);
 		}
-	}	
+		else
+			dup2(exe->fd[exe->i][1], STDOUT_FILENO);
+		close_pipes(prompt, exe->fd);
+		exec_simple(exe->tmp, envp);
+		exit(0);
+	}
+	if (!ft_strncmp(exe->tmp->meta_char, ">", 1))
+		exe->tmp = exe->tmp->next;
+	exe->tmp = exe->tmp->next;
 }

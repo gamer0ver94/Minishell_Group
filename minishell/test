@@ -1,9 +1,0 @@
-Here is a simple flow chart:
-
-```mermaid
-graph TD;
-    cmd-->pipe;
-    pipe-->cmd2;
-    cmd2-->redirection;
-    redirection-->cmd3;
-```
