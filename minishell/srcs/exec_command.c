@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 15:18:48 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/20 18:44:42 by memam            ###   ########.fr       */
+/*   Updated: 2022/09/22 19:28:57 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,32 +38,32 @@ char	*get_single_path(char *cmd, char *env_path)
 // here is the exec (echo),(pwd),(env), 
 int    exec_builtin(t_command *prompt, char **envp)
 {
-	if (!ft_strncmp(prompt->cmd, "echo", 4))
+	if (!ft_strncmp(prompt->cmd, "echo", ft_strlen(prompt->cmd)))
 	{
 		ft_echo(prompt);
 		return (0);
 	}
-	if (!ft_strncmp(prompt->cmd, "pwd", 3))
+	if (!ft_strncmp(prompt->cmd, "pwd", ft_strlen(prompt->cmd)))
 	{
 		ft_pwd();
 		return (0);
 	}
-	if (!ft_strncmp(prompt->cmd, "env", 3))
+	if (!ft_strncmp(prompt->cmd, "env", ft_strlen(prompt->cmd)))
 	{
 		ft_env(envp);
 		return (0);
 	}
-	if (!ft_strncmp(prompt->cmd, "exit", 4))
+	if (!ft_strncmp(prompt->cmd, "exit", ft_strlen(prompt->cmd)))
 	{
 		ft_exit(prompt->argv);
 		return (0);
 	}
-	if (!ft_strncmp(prompt->cmd, "export", 6))
+	if (!ft_strncmp(prompt->cmd, "export", ft_strlen(prompt->cmd)))
 	{
 		ft_export(envp, prompt->argv);
 		return (0);
 	}
-	if (!ft_strncmp(prompt->cmd, "unset", 5))
+	if (!ft_strncmp(prompt->cmd, "unset", ft_strlen(prompt->cmd)))
 	{
 		ft_unset(envp, prompt->argv);
 		return (0);

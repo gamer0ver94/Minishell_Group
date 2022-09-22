@@ -6,13 +6,13 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:22:35 by memam             #+#    #+#             */
-/*   Updated: 2022/09/20 19:41:11 by memam            ###   ########.fr       */
+/*   Updated: 2022/09/22 20:10:10 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/* @ env_var_count
+/* 
 *       count hom many original environemet variable there are.
 *       return the unmber of environemet variable.
 */
@@ -25,7 +25,7 @@ int	env_var_count(char **envp)
 		i++;
 	return (i);
 }
-/* @ get_env_var_index
+/* 
 *       searche for the given variable in the environment variables.
 *       
 *       return the index of the variable in the environment 
@@ -34,11 +34,6 @@ int	env_var_count(char **envp)
 *       return -1 if the string cannot be found in the environment.
 */
 
-/* @ realloc_env_var
-*   
-*
-*
-*/
 char	**realloc_env_var(char **envp, int index)
 {
 	char	**new_var;
@@ -51,9 +46,9 @@ char	**realloc_env_var(char **envp, int index)
 	while (envp[i] && i < index)
 	{
 		new_var[i] = ft_strdup(envp[i]);
-		//free(envp[i]);
 		i++;
 	}
+	
 	return (new_var);
 }
 
@@ -79,7 +74,7 @@ int	get_env_var_index(char **env, char *var)
 	return (-1);
 }
 
-/* @ srt_env_var
+/* 
 *       add an environment variable wthit the given identifier
 *       corresponding to the given value.
 *       if the identifier already exists in the environment, the
@@ -88,7 +83,7 @@ int	get_env_var_index(char **env, char *var)
 *       return true if the operation was sucessful or false in case of error.
 */
 
-bool	set_env_var(char **envp, char *idVar, char *value)
+int	set_env_var(char **envp, char *idVar, char *value)
 {
 	int		index;
 	char	*tmp;
@@ -98,26 +93,23 @@ bool	set_env_var(char **envp, char *idVar, char *value)
 		value = "";
 	tmp = ft_strjoin("=", value);
 	if (!tmp)
-		return (NULL);
+		return (1);
 	if (index != -1 && envp[index])
 	{
-		printf("identifier %s\n", idVar);
-		printf(" the new value  %s\n", tmp);
 		envp[index] = ft_strjoin(idVar, tmp);
-		printf("environment variable with the new value %s\n", envp[index]);
 	}
 	else
 	{
 		index = env_var_count(envp);
-		printf("index avone %d\n", index);
 		envp = realloc_env_var(envp, index + 1);
-		printf("identifier %s\n", idVar);
-		printf(" the new value  %s\n", tmp);
 		if (!envp)
-			return (NULL);
+			return (1);
 		envp[index] = ft_strjoin(idVar, tmp);
-		printf("env variable with the new var %d %s\n", index, envp[index]);
 	}
+	// for (int i = 0; envp[i]; i++)
+	// 	{
+	// 		printf("  [%d]  %s\n", i, envp[i]);
+	// 	}
 	free(tmp);
 	return (0);
 }

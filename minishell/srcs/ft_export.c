@@ -6,13 +6,13 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 12:02:06 by memam             #+#    #+#             */
-/*   Updated: 2022/09/20 17:57:33 by memam            ###   ########.fr       */
+/*   Updated: 2022/09/22 19:13:18 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/*  @ is_valid_env_var_idVar:
+/*  
 *       check if the identifier is valid for evrionnment variable.
 *       return true if the identifier contains only alphanumeric or '_'
 *       or false if not.
@@ -35,7 +35,7 @@ bool	is_valid_env_var_idVar(char *var)
 	return (true);
 }
 
-/* @ get_idVar_value
+/* 
 *       here looking for the separates given into identifier et the value
 *       in the environment variable.
 *       return an array of 2 string containing the identifier and the value
@@ -43,7 +43,7 @@ bool	is_valid_env_var_idVar(char *var)
 *       or return NULL in case of error.
 */
 
-static	char	**get_idVar_value(char *arg)
+static char	**get_idVar_value(char *arg)
 {
 	char	**tmp;
 	int		i;
@@ -64,7 +64,7 @@ static	char	**get_idVar_value(char *arg)
 	return (tmp);
 }
 
-/* @ ft_export:
+/* 
 *       add the given variable to the environment variable.
 *       return 0 if all args added to env.
 *       return 1 if one or more args not added to env. 
@@ -79,8 +79,7 @@ int	ft_export(char **envp, char **args)
 	i = 1;
 	e = 0;
 	if (!args[i])
-		while (envp[e])
-			printf("declare -x %s\n",envp[e++]);
+		return (ft_env(envp));
 	while (args[i])
 	{
 		if (!is_valid_env_var_idVar(args[i]))
@@ -91,7 +90,7 @@ int	ft_export(char **envp, char **args)
 		else if (ft_strchr(args[i], '=') != NULL)
 		{
 			tmp = get_idVar_value(args[i]);
-			set_env_var(envp, tmp[0], tmp[1]);
+			envp = set_env_var(envp, tmp[0], tmp[1]);
 			free(tmp);
 		}
 		i++;
