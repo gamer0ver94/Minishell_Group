@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 12:02:06 by memam             #+#    #+#             */
-/*   Updated: 2022/09/22 22:28:47 by memam            ###   ########.fr       */
+/*   Updated: 2022/09/23 00:05:21 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,36 +34,6 @@ bool	is_valid_env_var_idVar(char *var)
 	}
 	return (true);
 }
-
-/* 
-*       here looking for the separates given into identifier et the value
-*       in the environment variable.
-*       return an array of 2 string containing the identifier and the value
-*           of the new environment variable.
-*       or return NULL in case of error.
-*/
-
-static char	**get_idVar_value(char *arg)
-{
-	char	**tmp;
-	int		i;
-
-	tmp = ft_split(arg, '=');
-	if (!tmp)
-		return (NULL);
-	if (!tmp[1])
-		return (tmp);
-	i = 2;
-	while (tmp[i])
-	{
-		tmp[1] = ft_strjoin(tmp[1], "=");
-		tmp[1] = ft_strjoin(tmp[1], tmp[i]);
-		free(tmp[i]);
-		i++;
-	}
-	return (tmp);
-}
-
 /* 
 *       add the given variable to the environment variable.
 *       return 0 if all args added to env.
@@ -74,7 +44,7 @@ int	ft_export(char **envp, char **args)
 {
 	int		i;
 	int		e;
-	char	**tmp;
+	//char	**tmp;
 
 	i = 1;
 	e = 0;
@@ -87,11 +57,9 @@ int	ft_export(char **envp, char **args)
 			printf("export: %s not a valid identifier\n", args[i]);
 			return (1);
 		}
-		else if (ft_strchr(args[i], '=') != NULL)
+		else if (args[i] != NULL)
 		{
-			tmp = get_idVar_value(args[i]);
-			set_env_var(envp, tmp[0], tmp[1]);
-			free(tmp);
+			set_env_var(envp, args[i]);
 		}
 		i++;
 	}
