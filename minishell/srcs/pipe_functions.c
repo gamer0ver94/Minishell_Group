@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 16:37:32 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/21 21:16:06 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/22 15:19:41 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,31 @@ void	first_cmd(t_execc *exe, t_command **prompt, char **envp)
 		redirect_out(exe, prompt, envp);
 		return ;
 	}
+	else if (!ft_strncmp(exe->tmp->meta_char, "<", 1))
+	{
+		redirect_in(exe, prompt, envp);
+		return ;
+	}
 	else if (fork() == 0)
 	{
 		dup2(exe->fd[exe->i][1], STDOUT_FILENO);
 		close_pipes(prompt, exe->fd);
+		exec_simple(exe->tmp, envp);
+		exit(0);
+	}
+	exe->tmp = exe->tmp->next;
+}
+
+void	redirect_in(t_execc *exe, t_command **prompt, char **envp)
+{
+	int file;
+	
+	if (fork() == 0)
+	{
+		file = open(exe->tmp->next->argv[0], O_RDWR);
+		dup2(file, STDIN_FILENO);
+		close_pipes(prompt,exe->fd);
+		close(file);
 		exec_simple(exe->tmp, envp);
 		exit(0);
 	}

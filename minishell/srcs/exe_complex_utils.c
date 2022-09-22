@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_complex_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 11:10:00 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/21 13:36:06 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/22 15:55:18 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	free_fd(t_command **prompt, int **fd)
 		i++;
 	}
 	if (fd)
-		free (fd);
+		free(fd);
 }
 
 void	open_pipes(t_command **prompt, int **fd)
@@ -52,10 +52,11 @@ void	open_pipes(t_command **prompt, int **fd)
 	{
 		if (fd)
 			fd[i] = malloc(sizeof(int) * 2);
-		if (pipe(fd[i]))
+		if (pipe(fd[i]) == -1)
 			printf("pipe[%d] did not open", i);
 		i++;
 	}
+	printf("open pipe %d\n",i);
 }
 
 void	close_pipes(t_command **prompt, int **fd)
@@ -63,12 +64,20 @@ void	close_pipes(t_command **prompt, int **fd)
 	int	i;
 
 	i = 0;
-	while (i < count_pipes(prompt))
+	(void)prompt;
+	while (fd[i])
 	{
 		if (fd[i])
 		{
-			close(fd[i][0]);
-			close(fd[i][1]);
+			if(close(fd[i][0]) == -1)
+				printf("error to close fd 0\n");
+			else
+				printf("closed pipe 0\n");
+			if(close(fd[i][1]) == -1)
+				printf("error to close fd 1\n");
+			else
+				printf("closed pipe 1\n");
+			printf("_________________");
 		}
 		i++;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 13:25:13 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/20 23:37:30 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/22 15:00:45 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,4 +96,5 @@ void		first_cmd(t_execc *exe, t_command **prompt, char **envp);
 void		last_cmd(t_execc *exe, t_command **prompt, char **envp);
 void		redirect_out(t_execc *exe, t_command **prompt, char **envp);
 void		pipef(t_execc *exe, t_command **prompt, char **envp);
+void		redirect_in(t_execc *exe, t_command **prompt, char **envp);
 #endif
