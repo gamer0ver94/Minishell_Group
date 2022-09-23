@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:22:35 by memam             #+#    #+#             */
-/*   Updated: 2022/09/23 00:09:17 by memam            ###   ########.fr       */
+/*   Updated: 2022/09/23 13:08:12 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,32 +25,16 @@ int	env_var_count(char **envp)
 		i++;
 	return (i);
 }
-/* 
-*       searche for the given variable in the environment variables.
-*       
-*       return the index of the variable in the environment 
-*       matching the given string.
-*       the given string must be a full variable name.
-*       return -1 if the string cannot be found in the environment.
-*/
 
-// char	**realloc_env_var(char **envp, int index)
-// {
-// 	char	**new_var;
-// 	int		i;
+void	free_tab(char **tab)
+{
+	int i;
 
-// 	new_var = ft_calloc(index + 1, sizeof * new_var);
-// 	if (!new_var)
-// 		return (NULL);
-// 	i = 0;
-// 	while (envp[i] && i < index)
-// 	{
-// 		new_var[i] = ft_strdup(envp[i]);
-// 		i++;
-// 	}
-	
-// 	return (new_var);
-// }
+	i = 0;
+	while (tab[i])
+		free(tab[i++]);
+	free(tab);
+}
 
 int	get_env_var_index(char **env, char *var)
 {
@@ -65,12 +49,12 @@ int	get_env_var_index(char **env, char *var)
 	{
 		if (ft_strncmp(tmp[0], env[i], ft_strlen(tmp[0])) == 0)
 		{
-			free(tmp[0]);
+			free_tab(tmp);
 			return (i);
 		}
 		i++;
 	}
-	free(tmp[0]);
+	free_tab(tmp);
 	return (-1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 12:02:06 by memam             #+#    #+#             */
-/*   Updated: 2022/09/23 00:05:21 by memam            ###   ########.fr       */
+/*   Updated: 2022/09/23 13:23:39 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,21 @@
 *       or false if not.
 */
 
-bool	is_valid_env_var_idVar(char *var)
+int	is_valid_env_var_idVar(char *var)
 {
 	int	i;
 
 	i = 0;
 	if (ft_isalpha(var[i]) == 0 && var[i] != '_')
-		return (false);
+		return (0);
 	i++;
 	while (var[i] && var[i] != '=')
 	{
 		if (ft_isalnum(var[i]) == 0 && var[i] != '_')
-			return (false);
+			return (0);
 		i++;
 	}
-	return (true);
+	return (1);
 }
 /* 
 *       add the given variable to the environment variable.
@@ -58,11 +58,13 @@ int	ft_export(char **envp, char **args)
 			return (1);
 		}
 		else if (args[i] != NULL)
-		{
+		{	printf("form export\n");
+
 			set_env_var(envp, args[i]);
 		}
 		i++;
 	}
-	printf("😀\n");
+	free(args[0]);
+	free(args[i]);
 	return (0);
 }

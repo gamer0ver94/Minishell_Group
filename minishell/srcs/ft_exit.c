@@ -6,13 +6,13 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 23:44:25 by memam             #+#    #+#             */
-/*   Updated: 2022/09/17 11:35:52 by memam            ###   ########.fr       */
+/*   Updated: 2022/09/23 11:37:06 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int _get_err_code(int err_code, bool set_err_code)
+static int _get_err_code(int err_code, int set_err_code)
 {
     static int static_err_code = 0;
     if (set_err_code)
@@ -22,21 +22,21 @@ static int _get_err_code(int err_code, bool set_err_code)
 
 int get_err_code(void)
 {
-    return (_get_err_code(0, false));
+    return (_get_err_code(0, 0));
 }
 
 int ft_is_sign(char c)
 {
     if (c == '+' || c == '-')
-        return (true);
-    return (false);
+        return (1);
+    return (0);
 }
 /*
 *@ here we check the codes error is valid or not
     0 -> sucessfully(true -> (0))
     1 - 255 -> unsucessfuly (false -> (1, 3 .... 255, (256 = 1)))
 */
-static bool ft_is_valid_exit_arg(char *args[])
+static int ft_is_valid_exit_arg(char *args[])
 {
     int i;
     int j;
@@ -50,12 +50,12 @@ static bool ft_is_valid_exit_arg(char *args[])
             if (ft_is_sign(args[i][i]))
                 j++;
             if (!ft_isdigit(args[i][j]))
-                return (false);
+                return (0);
             j++;
         }
         i++;
     }
-    return (true);
+    return (1);
 }
 
 int ft_exit(char *args[])
