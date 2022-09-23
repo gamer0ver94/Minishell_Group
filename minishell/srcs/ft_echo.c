@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 11:03:50 by memam             #+#    #+#             */
-/*   Updated: 2022/09/23 08:58:32 by memam            ###   ########.fr       */
+/*   Updated: 2022/09/23 09:03:49 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	ft_echo(t_command *command)
 		while (command->argv[i])
 		{
 			if (ft_strncmp(command->argv[i], "-n", 2) != 0)
-				printf("%s ", command->argv[i]);
+				printf("%s", command->argv[i]);
 			i++;
 		}
 		return (0);
