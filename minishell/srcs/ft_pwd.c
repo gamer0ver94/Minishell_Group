@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 12:16:26 by memam             #+#    #+#             */
-/*   Updated: 2022/09/15 14:52:32 by memam            ###   ########.fr       */
+/*   Updated: 2022/09/23 18:30:29 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,6 @@ int	ft_pwd(void)
 
 	if (getcwd(command, sizeof(command)) != NULL)
 		printf("%s\n", command);
-	printf("😀😀😀😀😀😀😀");
+	printf("\n");
 	return (0);
 }

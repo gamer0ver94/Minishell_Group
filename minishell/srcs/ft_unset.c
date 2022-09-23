@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 18:15:50 by memam             #+#    #+#             */
-/*   Updated: 2022/09/23 13:33:36 by memam            ###   ########.fr       */
+/*   Updated: 2022/09/23 18:31:11 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,27 +45,5 @@ int	ft_unset(char **envp, char **args)
 			index++;
 		}
 	}
-	
-	
-	// if (!is_valid_env_var_idVar(args[i]) || ft_strchr(args[i], '='))
-	// {
-	// 	printf("unset: %s not a valid identifier\n", args[i]);
-	// 	return (1);
-	// }
-	// else
-	// {
-	// 	int i = 0;
-	// 	index = get_env_var_index(envp, args[i]);
-	// 	if (index == -1)
-	// 		printf("unset: %s: variable not found\n", args[i]);
-		
-	// 	else
-	// 	{
-	// 		if (index != -1 && envp[index])
-	// 			envp[index] = ft_strdup(envp[index + 1]);
-	// 		//free(envp[index + 1]);
-	// 		printf("is ok %s\n", envp[index]);
-	// 	}
-	//}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:22:35 by memam             #+#    #+#             */
-/*   Updated: 2022/09/23 13:08:12 by memam            ###   ########.fr       */
+/*   Updated: 2022/09/23 16:29:08 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,17 +70,29 @@ int	get_env_var_index(char **env, char *var)
 int	set_env_var(char **envp, char *args)
 {
 	int		index;
+	char **tmp;
 
 	index = get_env_var_index(envp, args);
 	if (index != -1 && envp[index])
 	{
 		envp[index] = ft_strdup(args);
+		
 	}
 	else
 	{
 		index = env_var_count(envp);
-		envp[index] += 1;
-		envp[index] = ft_strdup(args);
+		if (!(tmp = (char **)ft_calloc(sizeof(char *), index + 1)))
+			return (1);
+		index = 0;
+		while (envp[index])
+		{
+			tmp[index] = ft_strjoin(envp[index], "");
+			index++;
+		}
+		envp = tmp;
+		
+		envp[index] = ft_strjoin(args, "");
+		free_tab(tmp);
 	}
 	return (0);
 }

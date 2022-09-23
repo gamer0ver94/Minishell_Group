@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 12:02:06 by memam             #+#    #+#             */
-/*   Updated: 2022/09/23 13:23:39 by memam            ###   ########.fr       */
+/*   Updated: 2022/09/23 16:35:14 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,9 @@ int	ft_export(char **envp, char **args)
 		{	printf("form export\n");
 
 			set_env_var(envp, args[i]);
+			break ;
 		}
 		i++;
 	}
-	free(args[0]);
-	free(args[i]);
 	return (0);
 }
