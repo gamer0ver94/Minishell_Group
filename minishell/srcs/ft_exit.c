@@ -6,8 +6,14 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 23:44:25 by memam             #+#    #+#             */
-/*   Updated: 2022/09/24 18:54:46 by memam            ###   ########.fr       */
+/*   Updated: 2022/09/24 23:33:52 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int		ft_exit(char *args[])
+{
+        //free_all
+    exit(EXIT_SUCCESS);
+}
