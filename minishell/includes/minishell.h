@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 13:25:13 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/24 16:55:34 by memam            ###   ########.fr       */
+/*   Updated: 2022/09/25 01:04:29 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int		ft_env(char	**envp);
 int		ft_exit(char *args[]);
 int		ft_export(char **envp, char **args);
 int		ft_unset(char **envp, char **args);
+int     ft_wildcards(char *args);
 /*********** env **********/
 int		get_env_var_index(char **env, char *var);
 int		env_var_count(char **envp);
