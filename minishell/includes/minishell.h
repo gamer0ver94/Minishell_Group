@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 13:25:13 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/23 14:08:38 by memam            ###   ########.fr       */
+/*   Updated: 2022/09/24 16:55:34 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,10 @@ int		ft_export(char **envp, char **args);
 int		ft_unset(char **envp, char **args);
 /*********** env **********/
 int		get_env_var_index(char **env, char *var);
+int		env_var_count(char **envp);
 int		set_env_var(char **envp, char *args);
-int 	is_valid_env_var_idVar(char *var);
+int		is_valid_env_var(char *var);
+char	**realloced_new_env(char **env, int index);
 void	free_tab(char **tab);
 
 
