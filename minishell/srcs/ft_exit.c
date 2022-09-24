@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 23:44:25 by memam             #+#    #+#             */
-/*   Updated: 2022/09/24 23:33:52 by memam            ###   ########.fr       */
+/*   Updated: 2022/09/25 01:13:21 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int		ft_exit(char *args[])
 {
-        //free_all
+           //free_all
+    (void)args;
     exit(EXIT_SUCCESS);
 }
