@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 15:18:48 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/23 14:06:47 by memam            ###   ########.fr       */
+/*   Updated: 2022/09/25 01:07:47 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,12 @@ int    exec_builtin(t_command *prompt, char **envp)
 	if (!ft_strncmp(prompt->cmd, "unset", ft_strlen(prompt->cmd)))
 	{
 		ft_unset(envp, prompt->argv);
+		return (0);
+	}
+	// pour tester int ft_wildcards(char *args)
+	if (!ft_strncmp(prompt->cmd, "123", ft_strlen(prompt->cmd)))
+	{
+		ft_wildcards(prompt->argv[1]);
 		return (0);
 	}
 	return (1);
