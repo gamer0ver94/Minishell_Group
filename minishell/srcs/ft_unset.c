@@ -6,44 +6,44 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 18:15:50 by memam             #+#    #+#             */
-/*   Updated: 2022/09/23 18:31:11 by memam            ###   ########.fr       */
+/*   Updated: 2022/09/24 18:22:07 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	ft_unset(char **envp, char **args)
+int	move_env(char **envp, int index)
 {
 	int	i;
+	int	count;
+
+	i = index;
+	count = index;
+	while (envp[i + 1])
+	{
+		envp[i] = ft_strdup(envp[i +1]);
+		envp[i + 1] = NULL;
+		i++;
+		count++;
+	}
+	envp = realloced_new_env(envp, i);
+	return (0);
+}
+
+int	ft_unset(char **envp, char **args)
+{
 	int	index;
 
-	i = 1;
-	index = 0;
-	if (!args[i])
+	index = get_env_var_index(envp, args[1]);
+	if (!args[1])
 		return (0);
 	if (ft_strchr(args[1], '=') != NULL)
 	{
-		printf("unset: %s not a valid identifier\n", args[i]);
+		printf("unset: %s not a valid identifier\n", args[1]);
 		return (1);
 	}
 	else
-	{
-		while (envp[index])
-		{
-			if (ft_strncmp(args[i], envp[index], ft_strlen(args[i])) == 0)
-			{
-				envp[index] = ft_strdup(envp[index + 1]);
-				//free(envp[index + 1]);
-				return (0);
-			}
-			else if (ft_strncmp(args[i], envp[index], ft_strlen(args[i])) == 0 && index--)
-			{
-				envp[index] = ft_strdup(envp[index - 1]);
-				//free(envp[index + 1]);
-				return (0);
-			}
-			index++;
-		}
-	}
+		if (index != -1)
+			move_env(envp, index);
 	return (0);
 }
