@@ -6,16 +6,12 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:22:35 by memam             #+#    #+#             */
-/*   Updated: 2022/09/23 16:29:08 by memam            ###   ########.fr       */
+/*   Updated: 2022/09/24 15:52:29 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/* 
-*       count hom many original environemet variable there are.
-*       return the unmber of environemet variable.
-*/
 int	env_var_count(char **envp)
 {
 	int	i;
@@ -28,7 +24,7 @@ int	env_var_count(char **envp)
 
 void	free_tab(char **tab)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (tab[i])
@@ -58,41 +54,47 @@ int	get_env_var_index(char **env, char *var)
 	return (-1);
 }
 
-/* 
-*       add an environment variable wthit the given identifier
-*       corresponding to the given value.
-*       if the identifier already exists in the environment, the
-*       value will be update.
-*       if not, it will creates a new entry.
-*       return true if the operation was sucessful or false in case of error.
-*/
+char	**realloced_new_env(char **env, int index)
+{
+	char	**tmp;
+	int		i;
+
+	tmp = (char **)ft_calloc(index + 1, sizeof * tmp);
+	if (!tmp)
+		return (NULL);
+	i = 0;
+	while (env[i] && i < index)
+	{
+		tmp[i] = ft_strdup(env[i]);
+		i++;
+	}
+	while (tmp[i])
+	{
+		env[i] = tmp[i];
+		i++;
+	}
+	free_tab(tmp);
+	return (env);
+}
 
 int	set_env_var(char **envp, char *args)
 {
 	int		index;
-	char **tmp;
+	char	*tmp;
 
 	index = get_env_var_index(envp, args);
 	if (index != -1 && envp[index])
 	{
 		envp[index] = ft_strdup(args);
-		
 	}
 	else
 	{
 		index = env_var_count(envp);
-		if (!(tmp = (char **)ft_calloc(sizeof(char *), index + 1)))
-			return (1);
-		index = 0;
-		while (envp[index])
-		{
-			tmp[index] = ft_strjoin(envp[index], "");
-			index++;
-		}
-		envp = tmp;
-		
-		envp[index] = ft_strjoin(args, "");
-		free_tab(tmp);
+		realloced_new_env(envp, index + 1);
+		tmp = envp[index -1];
+		envp[index - 1] = ft_strdup(args);
+		envp[index] = ft_strdup(tmp);
+		envp[index + 1] = NULL;
 	}
 	return (0);
 }
