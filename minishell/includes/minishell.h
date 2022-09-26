@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 13:25:13 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/26 14:21:00 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/26 15:29:00 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,4 +107,5 @@ int	set_env_var(char **envp, char *args);
 char	**realloced_new_env(char **env, int index);
 int	get_env_var_index(char **env, char *var);
 void	free_tab(char **tab);
+void	my_unset(t_command *prompt, char **envp);
 #endif

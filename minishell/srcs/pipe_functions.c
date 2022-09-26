@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 16:37:32 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/26 14:15:36 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/26 15:06:16 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,10 @@ void	first_cmd(t_execc *exe, t_command **prompt, char **envp)
 		redirect_in_complex(exe, prompt, envp);
 	else if (!ft_strncmp(exe->tmp->meta_char, "<", 1) && \
 	!ft_strncmp(exe->tmp->meta_char, "<", ft_strlen(exe->tmp->meta_char)))
+	{
 		redirect_in(exe, prompt, envp);
+		exe->tmp = NULL;
+	}
 	else
 	{
 		if (fork() == 0)
@@ -111,25 +114,19 @@ void	first_cmd(t_execc *exe, t_command **prompt, char **envp)
 
 void	redirect_in(t_execc *exe, t_command **prompt, char **envp)
 {
-	int	file;
-
-	file = 0;
 	if (access(exe->tmp->next->argv[0], F_OK) != 0)
 	{
 		write(2, "bash : ", 7);
 		write (2, exe->tmp->next->argv[0], ft_strlen(exe->tmp->next->argv[0]));
 		write (2, " No such file or directory\n", 27);
-		while (exe->tmp != NULL)
-			exe->tmp = exe->tmp->next;
 	}
 	else
 	{
 		if (fork() == 0)
 		{
-			file = open(exe->tmp->next->argv[0], O_RDONLY);
-			dup2(file, STDIN_FILENO);
+			exe->fd[exe->i][0] = open(exe->tmp->next->argv[0], O_RDONLY);
+			dup2(exe->fd[exe->i][0], STDIN_FILENO);
 			close_pipes(prompt, exe->fd);
-			close(file);
 			exec_simple(exe->tmp, envp);
 			exit(0);
 		}
@@ -152,7 +149,6 @@ void redirect_in_complex(t_execc *exe, t_command **prompt, char **envp)
 	while (1)
 	{
 		buffer = readline("> ");
-		rl_on_new_line();
 		if (!ft_strncmp(buffer, a, ft_strlen(a)))
 		{
 			free(buffer);

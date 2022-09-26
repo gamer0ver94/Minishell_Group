@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 15:18:48 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/26 14:32:45 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/26 15:29:31 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ int    exec_builtin(t_command *prompt, char **envp)
 	if (!ft_strncmp(prompt->cmd, "unset", 5)
 		&& !ft_strncmp(prompt->cmd, "unset", ft_strlen(prompt->cmd)))
 	{
-		ft_unset(envp, prompt->argv);
+		// ft_unset(envp, prompt->argv);
+		my_unset(prompt,envp);
 		return (0);
 	}
 	// pour tester int ft_wildcards(char *args)

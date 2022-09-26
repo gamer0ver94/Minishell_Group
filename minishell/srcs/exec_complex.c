@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 11:48:05 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/26 14:13:37 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/26 15:02:13 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 void	wait_childs(t_execc *exe)
 {
-	while (exe->j-- > 0)
+	while (exe->j > 0)
 	{
 		waitpid(-1, NULL, 0);
+		exe->j--;
 	}
 }
 
@@ -29,7 +30,6 @@ void	exec_complex(t_command **prompt, char **envp)
 	(void)envp;
 	while (exe->tmp)
 	{
-		write(2, "as\n", 3);
 		if (exe->tmp->id == 1)
 			first_cmd(exe, prompt, envp);
 		else if (exe->tmp->meta_char && !ft_strncmp(exe->tmp->meta_char, "|", 1))
