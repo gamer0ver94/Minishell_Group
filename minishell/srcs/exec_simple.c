@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 15:18:48 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/25 01:07:47 by memam            ###   ########.fr       */
+/*   Updated: 2022/09/26 13:20:00 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,38 +38,45 @@ char	*get_single_path(char *cmd, char *env_path)
 // here is the exec (echo),(pwd),(env), 
 int    exec_builtin(t_command *prompt, char **envp)
 {
-	if (!ft_strncmp(prompt->cmd, "echo", ft_strlen(prompt->cmd)))
+	if (!ft_strncmp(prompt->cmd, "echo", 4)
+		&& ft_strncmp(prompt->cmd, "echo", ft_strlen(prompt->cmd)))
 	{
 		ft_echo(prompt);
 		return (0);
 	}
-	if (!ft_strncmp(prompt->cmd, "pwd", ft_strlen(prompt->cmd)))
+	if (!ft_strncmp(prompt->cmd, "pwd", 3)
+			&& ft_strncmp(prompt->cmd, "pwd", ft_strlen(prompt->cmd)))
 	{
 		ft_pwd();
 		return (0);
 	}
-	if (!ft_strncmp(prompt->cmd, "env", ft_strlen(prompt->cmd)))
+	if (!ft_strncmp(prompt->cmd, "env", 3)
+		&& ft_strncmp(prompt->cmd, "env", ft_strlen(prompt->cmd)))
 	{
 		ft_env(envp);
 		return (0);
 	}
-	if (!ft_strncmp(prompt->cmd, "export", ft_strlen(prompt->cmd)))
+	if (!ft_strncmp(prompt->cmd, "export", 6)
+		&& ft_strncmp(prompt->cmd, "export", ft_strlen(prompt->cmd)))
 	{
 		ft_export(envp, prompt->argv);
 		return (0);
 	}
-	if (!ft_strncmp(prompt->cmd, "exit", ft_strlen(prompt->cmd)))
+	if (!ft_strncmp(prompt->cmd, "exit", 4)
+		&& ft_strncmp(prompt->cmd, "exit", ft_strlen(prompt->cmd)))
 	{
-		ft_exit(prompt->argv);
+		ft_exit(prompt);
 		return (0);
 	}
-	if (!ft_strncmp(prompt->cmd, "unset", ft_strlen(prompt->cmd)))
+	if (!ft_strncmp(prompt->cmd, "unset", 5)
+		&& ft_strncmp(prompt->cmd, "unset", ft_strlen(prompt->cmd)))
 	{
 		ft_unset(envp, prompt->argv);
 		return (0);
 	}
 	// pour tester int ft_wildcards(char *args)
-	if (!ft_strncmp(prompt->cmd, "123", ft_strlen(prompt->cmd)))
+	if (!ft_strncmp(prompt->cmd, "ls", 2)
+		&& ft_strncmp(prompt->cmd, "ls", ft_strlen(prompt->cmd)))
 	{
 		ft_wildcards(prompt->argv[1]);
 		return (0);
