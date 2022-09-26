@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 16:37:32 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/25 01:52:54 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/26 12:05:37 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,26 +84,18 @@ void	last_cmd(t_execc *exe, t_command **prompt, char **envp)
 
 void	first_cmd(t_execc *exe, t_command **prompt, char **envp)
 {
-	if (!ft_strncmp(exe->tmp->meta_char, ">>", 2))
-	{
+	if (!ft_strncmp(exe->tmp->meta_char, ">>", 2) && \
+	!ft_strncmp(exe->tmp->meta_char, ">>", ft_strlen(exe->tmp->meta_char)))
 		redirect_out(exe, prompt, envp);
-		return ;
-	}
-	else if (!ft_strncmp(exe->tmp->meta_char, ">", 1))
-	{
+	else if (!ft_strncmp(exe->tmp->meta_char, ">", 1) && \
+	!ft_strncmp(exe->tmp->meta_char, ">", ft_strlen(exe->tmp->meta_char)))
 		redirect_out(exe, prompt, envp);
-		return ;
-	}
-	else if (!ft_strncmp(exe->tmp->meta_char, "<<", 2))
-	{
+	else if (!ft_strncmp(exe->tmp->meta_char, "<<", 2) && \
+	!ft_strncmp(exe->tmp->meta_char, "<<", ft_strlen(exe->tmp->meta_char)))
 		redirect_in_complex(exe, prompt, envp);
-		return ;
-	}
-	else if (!ft_strncmp(exe->tmp->meta_char, "<", 1))
-	{
+	else if (!ft_strncmp(exe->tmp->meta_char, "<", 1) && \
+	!ft_strncmp(exe->tmp->meta_char, "<", ft_strlen(exe->tmp->meta_char)))
 		redirect_in(exe, prompt, envp);
-		return ;
-	}
 	else
 	{
 		if (fork() == 0)
@@ -113,31 +105,36 @@ void	first_cmd(t_execc *exe, t_command **prompt, char **envp)
 			exec_simple(exe->tmp, envp);
 			exit(0);
 		}
+		exe->tmp = exe->tmp->next;
 	}
-	exe->tmp = exe->tmp->next;
 }
 
 void	redirect_in(t_execc *exe, t_command **prompt, char **envp)
 {
-	int file;
-	
+	int	file;
+
+	file = 0;
 	if (access(exe->tmp->next->argv[0], F_OK) != 0)
 	{
 		write(2, "bash : ", 7);
-		write (2,exe->tmp->next->argv[0], ft_strlen(exe->tmp->next->argv[0]));
-		write(2," No such file or directory\n", 27);
-		exit(0);
+		write (2, exe->tmp->next->argv[0], ft_strlen(exe->tmp->next->argv[0]));
+		write (2, " No such file or directory\n", 27);
+		while (exe->tmp != NULL)
+			exe->tmp = exe->tmp->next;
 	}
-	if (fork() == 0)
+	else
 	{
-		file = open(exe->tmp->next->argv[0], O_RDWR);
-		dup2(file, STDIN_FILENO);
-		close_pipes(prompt,exe->fd);
-		close(file);
-		exec_simple(exe->tmp, envp);
-		exit(0);
+		if (fork() == 0)
+		{
+			file = open(exe->tmp->next->argv[0], O_RDONLY);
+			dup2(file, STDIN_FILENO);
+			close_pipes(prompt, exe->fd);
+			close(file);
+			exec_simple(exe->tmp, envp);
+			exit(0);
+		}
+		exe->tmp = exe->tmp->next;
 	}
-	exe->tmp = exe->tmp->next;
 }
 
 void redirect_in_complex(t_execc *exe, t_command **prompt, char **envp)
@@ -145,9 +142,9 @@ void redirect_in_complex(t_execc *exe, t_command **prompt, char **envp)
 	char	*buffer;
 	char	*res;
 	char	*a;
-	int file[2];
+	int		file[2];
 
-	res = ft_calloc(100,sizeof(res));
+	res = ft_calloc(100, sizeof(res));
 	pipe(file);
 	(void)prompt;
 	(void)envp;
@@ -178,5 +175,3 @@ void redirect_in_complex(t_execc *exe, t_command **prompt, char **envp)
 	close(file[1]);
 	exe->tmp = exe->tmp->next;
 }
-
-// for red in put if there in no valid file then display error
