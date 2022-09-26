@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_simple.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 15:18:48 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/22 13:28:06 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/25 00:46:07 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int    exec_builtin(t_command *prompt, char **envp)
 	return (1);
 }
 
-void	exec_simple(t_command *prompt, char **envp)
+int	exec_simple(t_command *prompt, char **envp)
 {
 	char	*path;
 	char	**env_path;
@@ -69,11 +69,15 @@ void	exec_simple(t_command *prompt, char **envp)
 	if (!ft_strncmp(prompt->cmd, "cd", 2))
 	{
 		cd_cmd(prompt, envp);
-		return ;
+		free_args(env_path);
+		return (1);
 	}
 	//here is the exec_builtin
 	if (exec_builtin(prompt, envp) == 0)
-		return ;
+	{
+		free_args(env_path);
+		return (1);
+	}
 	pid = fork();
 	if (pid == 0)
 	{
@@ -86,8 +90,11 @@ void	exec_simple(t_command *prompt, char **envp)
 				i++;
 			}
 		}
-		printf("%s: command not found\n", prompt->cmd);
+		write(2, prompt->cmd, ft_strlen(prompt->cmd));
+		write(2, ": command not found\n", 20);
+		return (-1);
 	}
 	waitpid(pid, NULL, 0);
 	free_args(env_path);
+	return (0);
 }

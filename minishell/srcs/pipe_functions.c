@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 16:37:32 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/22 15:19:41 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/25 01:52:54 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,15 @@ void	redirect_out(t_execc *exe, t_command **prompt, char **envp)
 	int	file;
 
 	if (fork() == 0)
-	{
-		dup2(exe->fd[exe->i][0], STDIN_FILENO);
+	{	
+		if (exe->tmp->id != 1)
+			dup2(exe->fd[exe->i][0], STDIN_FILENO);
 		if (access(exe->tmp->next->argv[0], F_OK) == 0 \
-			&& !ft_strncmp(exe->tmp->meta_char, ">>", 2))
-				file = open(exe->tmp->next->argv[0], O_RDWR | O_APPEND);
+				&& !ft_strncmp(exe->tmp->meta_char, ">>", 2))
+			file = open(exe->tmp->next->argv[0], O_RDWR | O_APPEND);
 		else if (access(exe->tmp->next->argv[0], F_OK) == 0 \
-			&& !ft_strncmp(exe->tmp->meta_char, ">", 1))
-				file = open(exe->tmp->next->argv[0], O_RDWR | O_TRUNC);
+				&& !ft_strncmp(exe->tmp->meta_char, ">", 1))
+			file = open(exe->tmp->next->argv[0], O_RDWR | O_TRUNC);
 		else
 			file = open(exe->tmp->next->argv[0], O_RDWR | O_CREAT, 0777);
 		dup2(file, STDOUT_FILENO);
@@ -93,17 +94,25 @@ void	first_cmd(t_execc *exe, t_command **prompt, char **envp)
 		redirect_out(exe, prompt, envp);
 		return ;
 	}
+	else if (!ft_strncmp(exe->tmp->meta_char, "<<", 2))
+	{
+		redirect_in_complex(exe, prompt, envp);
+		return ;
+	}
 	else if (!ft_strncmp(exe->tmp->meta_char, "<", 1))
 	{
 		redirect_in(exe, prompt, envp);
 		return ;
 	}
-	else if (fork() == 0)
+	else
 	{
-		dup2(exe->fd[exe->i][1], STDOUT_FILENO);
-		close_pipes(prompt, exe->fd);
-		exec_simple(exe->tmp, envp);
-		exit(0);
+		if (fork() == 0)
+		{
+			dup2(exe->fd[exe->i][1], STDOUT_FILENO);
+			close_pipes(prompt, exe->fd);
+			exec_simple(exe->tmp, envp);
+			exit(0);
+		}
 	}
 	exe->tmp = exe->tmp->next;
 }
@@ -112,6 +121,13 @@ void	redirect_in(t_execc *exe, t_command **prompt, char **envp)
 {
 	int file;
 	
+	if (access(exe->tmp->next->argv[0], F_OK) != 0)
+	{
+		write(2, "bash : ", 7);
+		write (2,exe->tmp->next->argv[0], ft_strlen(exe->tmp->next->argv[0]));
+		write(2," No such file or directory\n", 27);
+		exit(0);
+	}
 	if (fork() == 0)
 	{
 		file = open(exe->tmp->next->argv[0], O_RDWR);
@@ -123,3 +139,44 @@ void	redirect_in(t_execc *exe, t_command **prompt, char **envp)
 	}
 	exe->tmp = exe->tmp->next;
 }
+
+void redirect_in_complex(t_execc *exe, t_command **prompt, char **envp)
+{
+	char	*buffer;
+	char	*res;
+	char	*a;
+	int file[2];
+
+	res = ft_calloc(100,sizeof(res));
+	pipe(file);
+	(void)prompt;
+	(void)envp;
+	a = ft_strdup(exe->tmp->next->argv[0]);
+	while (1)
+	{
+		buffer = readline("> ");
+		rl_on_new_line();
+		if (!ft_strncmp(buffer, a, ft_strlen(a)))
+		{
+			free(buffer);
+			break ;
+		}
+		write(file[1], buffer, ft_strlen(buffer));
+		write(file[1], "\n", 1);
+		free(buffer);
+	}
+	if (fork() == 0)
+	{
+		dup2(file[0], STDIN_FILENO);
+		close_pipes(prompt, exe->fd);
+		close(file[0]);
+		close(file[1]);
+		exec_simple(exe->tmp, envp);
+		exit(0);
+	}
+	close(file[0]);
+	close(file[1]);
+	exe->tmp = exe->tmp->next;
+}
+
+// for red in put if there in no valid file then display error

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 12:07:26 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/22 13:12:09 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/24 23:06:46 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)envp;
 	(void)argv;
 
-	signal(SIGSEGV, &sighangler);
+	// signal(SIGSEGV, &sighangler);
 	signal(SIGQUIT, &sighangler);
 	if (argc > 2)
 	{

@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 09:42:11 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/20 17:54:51 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/25 01:45:39 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	shell_prompt(char **argv, char **envp)
 	t_command	*prompt;
 	char		*buffer;
 	char		*ptr;
-
 	while (1)
 	{
 		prompt = malloc(sizeof(t_command));

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 13:25:13 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/22 15:00:45 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/23 15:45:27 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int			shell_prompt(char **argv, char **envp);
 int			logo(char *path);
 int			buffer_parsing(char *buffer, t_command **prompt, char **envp);
 void		print_struct(t_command *prompt);
-void		exec_simple(t_command *prompt, char **envp);
+int			exec_simple(t_command *prompt, char **envp);
 void		exec_complex(t_command **prompt, char **envp);
 int			cd_cmd(t_command *prompt, char **envp);
 void		get_commands(char **split, t_command **prompt, char **envp);
@@ -87,7 +87,7 @@ void		get_meta_chars(t_command **prompt, char **meta_chars);
 int			parse_quotes(char **args, char *buffer);
 /*********** Exec_Complex_Utils **********/
 int			count_pipes(t_command **prompt);
-void		free_fd(t_command **prompt, int **fd);
+void		free_fd(t_execc *exe, t_command **prompt);
 void		open_pipes(t_command **prompt, int **fd);
 void		close_pipes(t_command **prompt, int **fd);
 void		init_execc_struct(t_execc *exe, t_command **prompt);
@@ -97,4 +97,6 @@ void		last_cmd(t_execc *exe, t_command **prompt, char **envp);
 void		redirect_out(t_execc *exe, t_command **prompt, char **envp);
 void		pipef(t_execc *exe, t_command **prompt, char **envp);
 void		redirect_in(t_execc *exe, t_command **prompt, char **envp);
+void		alloc_fd(t_execc *exe, t_command **prompt);
+void redirect_in_complex(t_execc *exe, t_command **prompt, char **envp);
 #endif
