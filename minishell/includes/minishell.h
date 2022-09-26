@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 13:25:13 by dpaulino          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/09/26 12:18:14 by memam            ###   ########.fr       */
+=======
+/*   Updated: 2022/09/23 15:45:27 by dpaulino         ###   ########.fr       */
+>>>>>>> main
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +46,7 @@
 # define NORMAL_CLR "\e[21m"
 # define BOLD "\e[1m"
 # define RESET_ATT "\e[0m"
+<<<<<<< HEAD
 
 
 /*********** command **********/
@@ -60,6 +65,13 @@ int		is_valid_env_var(char *var);
 char	**realloced_new_env(char **env, int index);
 void	free_tab(char **tab);
 
+=======
+
+/*********** Commands **********/
+int			ft_echo(t_command *command);
+int			ft_pwd(void);
+int			ft_env(char	**envp);
+>>>>>>> main
 
 /*********** Utils Functions**********/
 void	    parse_phase_one(t_helper2 *buf_s, t_command **prompt, char *buffer, char **envp);
@@ -86,7 +98,11 @@ int			shell_prompt(char **argv, char **envp);
 int			logo(char *path);
 int			buffer_parsing(char *buffer, t_command **prompt, char **envp);
 void		print_struct(t_command *prompt);
+<<<<<<< HEAD
 void		exec_simple(t_command *prompt, char **envp);
+=======
+int			exec_simple(t_command *prompt, char **envp);
+>>>>>>> main
 void		exec_complex(t_command **prompt, char **envp);
 int			cd_cmd(t_command *prompt, char **envp);
 void		get_commands(char **split, t_command **prompt, char **envp);
@@ -100,7 +116,11 @@ void		get_meta_chars(t_command **prompt, char **meta_chars);
 int			parse_quotes(char **args, char *buffer);
 /*********** Exec_Complex_Utils **********/
 int			count_pipes(t_command **prompt);
+<<<<<<< HEAD
 void		free_fd(t_command **prompt, int **fd);
+=======
+void		free_fd(t_execc *exe, t_command **prompt);
+>>>>>>> main
 void		open_pipes(t_command **prompt, int **fd);
 void		close_pipes(t_command **prompt, int **fd);
 void		init_execc_struct(t_execc *exe, t_command **prompt);
@@ -110,4 +130,9 @@ void		last_cmd(t_execc *exe, t_command **prompt, char **envp);
 void		redirect_out(t_execc *exe, t_command **prompt, char **envp);
 void		pipef(t_execc *exe, t_command **prompt, char **envp);
 void		redirect_in(t_execc *exe, t_command **prompt, char **envp);
+<<<<<<< HEAD
+=======
+void		alloc_fd(t_execc *exe, t_command **prompt);
+void redirect_in_complex(t_execc *exe, t_command **prompt, char **envp);
+>>>>>>> main
 #endif

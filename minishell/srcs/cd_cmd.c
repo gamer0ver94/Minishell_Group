@@ -6,7 +6,11 @@
 /*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 17:07:00 by dpaulino          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/09/20 10:57:21 by dpaulino         ###   ########.fr       */
+=======
+/*   Updated: 2022/09/26 12:52:29 by dpaulino         ###   ########.fr       */
+>>>>>>> main
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +32,10 @@ int	cd_cmd(t_command *prompt, char **envp)
 			}
 			i++;
 		}
+	}
+	else if (!(*prompt).argv[1])
+	{
+		chdir(getenv("HOME"));
 	}
 	else
 		perror("bash");

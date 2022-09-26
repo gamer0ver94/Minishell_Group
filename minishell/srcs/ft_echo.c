@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 11:03:50 by memam             #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/09/24 18:52:53 by memam            ###   ########.fr       */
+=======
+/*   Updated: 2022/09/26 12:54:59 by dpaulino         ###   ########.fr       */
+>>>>>>> main
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,3 +48,4 @@ int	ft_echo(t_command *command)
 	}
 	return (0);
 }
+//this function needs to handle -n
