@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_prompt.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 09:42:11 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/26 14:15:57 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/26 23:11:56 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,11 @@
 char	*parse_prompt(void)
 {
 	char	*parser;
-	char	current_dir[1024];
+	//char	current_dir[1024];
 	char	*tmp;
 
-	parser = ft_strdup(getenv("USER"));
+	parser = NULL;
+	//parser = ft_strdup(getenv("USER"));
 	tmp = ft_strjoin(parser, BOLD);
 	free(parser);
 	parser = ft_strjoin(tmp, GREEN_CLR);
@@ -29,7 +30,7 @@ char	*parse_prompt(void)
 	free(tmp);
 	tmp = ft_strjoin(parser, "~");
 	free(parser);
-	parser = ft_strjoin(tmp, getcwd(current_dir, 1024));
+	//parser = ft_strjoin(tmp, getcwd(current_dir, 1024));
 	free(tmp);
 	tmp = ft_strjoin(parser, WHITE_CLR);
 	free(parser);
