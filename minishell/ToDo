@@ -4,6 +4,17 @@ use that struct to replace the $sign with the correct variable.✅
 handle $dolar when it is between quotes and still have a space with other caracters.✅
 handle signals
 handle $?
+<<<<<<< HEAD
+edit function cd when there is no argument than shold display the HOME variable as current pwd
+implement redirections
+inplemente pipe
+after that just need to handle the programs
+and LEAKS
+
+
+fixes $ should be readed as arg
+verify but echo $USER "$USER" '$USER'
+=======
 edit function cd when there is no argument than shold display the HOME variable as current pwd ✅
 implement redirections✅
 inplemente pipe✅
@@ -14,3 +25,4 @@ LEAKS
 bugged with "$USER""$USER"'$USER' and not hadle not closed quotes
 when using cat < file this command do what is supose to do except that dont return the prompt
 prompt text get bugged when it is 2 big
+>>>>>>> main
