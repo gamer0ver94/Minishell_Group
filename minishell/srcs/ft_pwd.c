@@ -1,19 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/31 15:57:06 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/08/31 15:57:57 by dpaulino         ###   ########.fr       */
+/*   Created: 2022/09/15 12:16:26 by memam             #+#    #+#             */
+/*   Updated: 2022/09/20 10:59:05 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
+#include "../includes/minishell.h"
 
-int main(int argc, char **argv, char **envp)
+int	ft_pwd(void)
 {
-    
-    return (0);
+	char	command[1000];
+
+	if (getcwd(command, sizeof(command)) != NULL)
+		printf("%s", command);
+	printf("😀😀😀😀😀😀😀\n");
+	return (0);
 }

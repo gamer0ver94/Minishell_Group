@@ -1,22 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/31 00:30:56 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/02 18:18:53 by dpaulino         ###   ########.fr       */
+/*   Created: 2022/09/15 14:34:01 by memam             #+#    #+#             */
+/*   Updated: 2022/09/20 10:59:34 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
+#include "../includes/minishell.h"
 
-int main (int argc, char **argv, char **envp)
+int	ft_env(char	**envp)
 {
-    (void)argc;
-	(void)argv;
-	(void)envp;
-    printf("goodbye\n");
-    exit (0);
+	int		i;
+
+	i = 0;
+	while (envp[i])
+	{
+		printf("%s\n", envp[i]);
+		i++;
+	}
+	printf("😀😀😀😀😀😀😀\n");
+	return (0);
 }

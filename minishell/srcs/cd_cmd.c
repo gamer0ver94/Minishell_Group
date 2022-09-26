@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 17:07:00 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/07 15:18:39 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/26 12:52:29 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,12 @@ int	cd_cmd(t_command *prompt, char **envp)
 			i++;
 		}
 	}
+	else if (!(*prompt).argv[1])
+	{
+		chdir(getenv("HOME"));
+	}
 	else
 		perror("bash");
 	return (0);
 }
-//need to update oldpwd and pwd
+//PS need to update oldpwd and pwd
