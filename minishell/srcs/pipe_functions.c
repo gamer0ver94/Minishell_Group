@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 16:37:32 by dpaulino          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/09/22 15:19:41 by dpaulino         ###   ########.fr       */
-=======
-/*   Updated: 2022/09/26 12:05:37 by dpaulino         ###   ########.fr       */
->>>>>>> main
+/*   Updated: 2022/09/26 13:41:17 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +31,6 @@ void	redirect_out(t_execc *exe, t_command **prompt, char **envp)
 	int	file;
 
 	if (fork() == 0)
-<<<<<<< HEAD
-	{
-		dup2(exe->fd[exe->i][0], STDIN_FILENO);
-		if (access(exe->tmp->next->argv[0], F_OK) == 0 \
-			&& !ft_strncmp(exe->tmp->meta_char, ">>", 2))
-				file = open(exe->tmp->next->argv[0], O_RDWR | O_APPEND);
-		else if (access(exe->tmp->next->argv[0], F_OK) == 0 \
-			&& !ft_strncmp(exe->tmp->meta_char, ">", 1))
-				file = open(exe->tmp->next->argv[0], O_RDWR | O_TRUNC);
-=======
 	{	
 		if (exe->tmp->id != 1)
 			dup2(exe->fd[exe->i][0], STDIN_FILENO);
@@ -54,7 +40,6 @@ void	redirect_out(t_execc *exe, t_command **prompt, char **envp)
 		else if (access(exe->tmp->next->argv[0], F_OK) == 0 \
 				&& !ft_strncmp(exe->tmp->meta_char, ">", 1))
 			file = open(exe->tmp->next->argv[0], O_RDWR | O_TRUNC);
->>>>>>> main
 		else
 			file = open(exe->tmp->next->argv[0], O_RDWR | O_CREAT, 0777);
 		dup2(file, STDOUT_FILENO);
@@ -99,48 +84,6 @@ void	last_cmd(t_execc *exe, t_command **prompt, char **envp)
 
 void	first_cmd(t_execc *exe, t_command **prompt, char **envp)
 {
-<<<<<<< HEAD
-	if (!ft_strncmp(exe->tmp->meta_char, ">>", 2))
-	{
-		redirect_out(exe, prompt, envp);
-		return ;
-	}
-	else if (!ft_strncmp(exe->tmp->meta_char, ">", 1))
-	{
-		redirect_out(exe, prompt, envp);
-		return ;
-	}
-	else if (!ft_strncmp(exe->tmp->meta_char, "<", 1))
-	{
-		redirect_in(exe, prompt, envp);
-		return ;
-	}
-	else if (fork() == 0)
-	{
-		dup2(exe->fd[exe->i][1], STDOUT_FILENO);
-		close_pipes(prompt, exe->fd);
-		exec_simple(exe->tmp, envp);
-		exit(0);
-	}
-	exe->tmp = exe->tmp->next;
-}
-
-void	redirect_in(t_execc *exe, t_command **prompt, char **envp)
-{
-	int file;
-	
-	if (fork() == 0)
-	{
-		file = open(exe->tmp->next->argv[0], O_RDWR);
-		dup2(file, STDIN_FILENO);
-		close_pipes(prompt,exe->fd);
-		close(file);
-		exec_simple(exe->tmp, envp);
-		exit(0);
-	}
-	exe->tmp = exe->tmp->next;
-}
-=======
 	if (!ft_strncmp(exe->tmp->meta_char, ">>", 2) && \
 	!ft_strncmp(exe->tmp->meta_char, ">>", ft_strlen(exe->tmp->meta_char)))
 		redirect_out(exe, prompt, envp);
@@ -232,4 +175,3 @@ void redirect_in_complex(t_execc *exe, t_command **prompt, char **envp)
 	close(file[1]);
 	exe->tmp = exe->tmp->next;
 }
->>>>>>> main

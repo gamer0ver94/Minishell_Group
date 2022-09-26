@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_simple.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 15:18:48 by dpaulino          #+#    #+#             */
-<<<<<<< HEAD:minishell/srcs/exec_simple.c
-/*   Updated: 2022/09/26 13:20:00 by memam            ###   ########.fr       */
-=======
-/*   Updated: 2022/09/26 12:21:10 by dpaulino         ###   ########.fr       */
->>>>>>> main:minishell/srcs/exec_command.c
+/*   Updated: 2022/09/26 13:34:54 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,35 +38,20 @@ char	*get_single_path(char *cmd, char *env_path)
 // here is the exec (echo),(pwd),(env), 
 int    exec_builtin(t_command *prompt, char **envp)
 {
-<<<<<<< HEAD:minishell/srcs/exec_simple.c
-	if (!ft_strncmp(prompt->cmd, "echo", 4)
-		&& ft_strncmp(prompt->cmd, "echo", ft_strlen(prompt->cmd)))
-=======
 	if (!ft_strncmp(prompt->cmd, "echo", 4) && \
 		!ft_strncmp(prompt->cmd, "echo", ft_strlen(prompt->cmd)))
->>>>>>> main:minishell/srcs/exec_command.c
 	{
 		ft_echo(prompt);
 		return (0);
 	}
-<<<<<<< HEAD:minishell/srcs/exec_simple.c
-	if (!ft_strncmp(prompt->cmd, "pwd", 3)
-			&& ft_strncmp(prompt->cmd, "pwd", ft_strlen(prompt->cmd)))
-=======
 	if (!ft_strncmp(prompt->cmd, "pwd", 3) && \
 		!ft_strncmp(prompt->cmd, "echo", ft_strlen(prompt->cmd)))
->>>>>>> main:minishell/srcs/exec_command.c
 	{
 		ft_pwd();
 		return (0);
 	}
-<<<<<<< HEAD:minishell/srcs/exec_simple.c
-	if (!ft_strncmp(prompt->cmd, "env", 3)
-		&& ft_strncmp(prompt->cmd, "env", ft_strlen(prompt->cmd)))
-=======
 	if (!ft_strncmp(prompt->cmd, "env", 3) && \
 		!ft_strncmp(prompt->cmd, "echo", ft_strlen(prompt->cmd)))
->>>>>>> main:minishell/srcs/exec_command.c
 	{
 		ft_env(envp);
 		return (0);
@@ -103,18 +84,10 @@ int    exec_builtin(t_command *prompt, char **envp)
 	return (1);
 }
 
-<<<<<<< HEAD:minishell/srcs/exec_simple.c
-void	exec_simple(t_command *prompt, char **envp)
-{
-	char	*path;
-	char	**env_path;
-	int		pid;
-=======
 int	exec_simple(t_command *prompt, char **envp)
 {
 	char	*path;
 	char	**env_path;
->>>>>>> main:minishell/srcs/exec_command.c
 	int		i;
 
 	i = 0;
@@ -128,19 +101,12 @@ int	exec_simple(t_command *prompt, char **envp)
 	}
 	//here is the exec_builtin
 	if (exec_builtin(prompt, envp) == 0)
-<<<<<<< HEAD:minishell/srcs/exec_simple.c
-		return ;
-	pid = fork();
-	if (pid == 0)
-	{
-=======
 	{
 		free_args(env_path);
 		return (1);
 	}
 	if (fork() == 0)
 	{
->>>>>>> main:minishell/srcs/exec_command.c
 		while (env_path[i])
 		{
 			path = get_single_path(prompt->cmd, env_path[i]);
@@ -150,12 +116,7 @@ int	exec_simple(t_command *prompt, char **envp)
 				i++;
 			}
 		}
-<<<<<<< HEAD:minishell/srcs/exec_simple.c
 		printf("%s: command not found\n", prompt->cmd);
-=======
-		write(2, prompt->cmd, ft_strlen(prompt->cmd));
-		write(2, ": command not found\n", 20);
->>>>>>> main:minishell/srcs/exec_command.c
 	}
 	waitpid(-1, NULL, 0);
 	free_args(env_path);

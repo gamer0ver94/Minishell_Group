@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 12:16:26 by memam             #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/09/24 18:53:06 by memam            ###   ########.fr       */
-=======
-/*   Updated: 2022/09/20 10:59:05 by dpaulino         ###   ########.fr       */
->>>>>>> main
+/*   Updated: 2022/09/26 13:38:33 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +17,7 @@ int	ft_pwd(void)
 	char	command[1000];
 
 	if (getcwd(command, sizeof(command)) != NULL)
-<<<<<<< HEAD
 		printf("%s\n", command);
 	printf("\n");
-=======
-		printf("%s", command);
-	printf("😀😀😀😀😀😀😀\n");
->>>>>>> main
 	return (0);
 }
