@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_simple.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 15:18:48 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/26 15:29:31 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/28 16:28:06 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+extern int g_status;
 
 char	*buildin_path(char *cmd)
 {
@@ -90,6 +92,7 @@ int	exec_simple(t_command *prompt, char **envp)
 	char	*path;
 	char	**env_path;
 	int		i;
+	int		status;
 
 	i = 0;
 	env_path = ft_split(getenv("PATH"), ':');
@@ -108,19 +111,40 @@ int	exec_simple(t_command *prompt, char **envp)
 	}
 	if (fork() == 0)
 	{
-		while (env_path[i])
+		if (access(prompt->argv[0], F_OK) == 0)
+			execve(prompt->argv[0], prompt->argv, envp);
+		else
 		{
-			path = get_single_path(prompt->cmd, env_path[i]);
-			if (execve(path, prompt->argv, envp) == -1)
+			while (env_path[i])
 			{
-				free(path);
-				i++;
+				path = get_single_path(prompt->cmd, env_path[i]);
+				if (execve(path, prompt->argv, envp) == -1)
+				{
+					free(path);
+					i++;
+				}
 			}
+			write(2, prompt->cmd, ft_strlen(prompt->cmd));
+			write(2, ": command not found\n", 20);
+			exit(127);
 		}
-		write(2, prompt->cmd, ft_strlen(prompt->cmd));
-		write(2, ": command not found\n", 20);
 	}
-	waitpid(-1, NULL, 0);
+	if (waitpid(-1, &status, 0) > 0)
+	{
+		if (WIFEXITED(status) && !WEXITSTATUS(status))
+		{
+			g_status = 0;
+		}
+		else if (WIFEXITED(status) && WEXITSTATUS(status))
+		{
+			if (WEXITSTATUS(status) == 127)
+				g_status = 127;
+			else
+				g_status = 1;
+		}
+		else
+			g_status = 1;
+	}
 	free_args(env_path);
 	return (0);
 }

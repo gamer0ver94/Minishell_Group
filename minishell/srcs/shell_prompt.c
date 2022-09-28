@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   shell_prompt.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 09:42:11 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/26 15:02:41 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/28 16:02:28 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+extern int	g_status;
 
 char	*parse_prompt(void)
 {
@@ -43,6 +45,7 @@ int	shell_prompt(char **argv, char **envp)
 	t_command	*prompt;
 	char		*buffer;
 	char		*ptr;
+	g_status = 0;
 	while (1)
 	{
 		prompt = malloc(sizeof(t_command));

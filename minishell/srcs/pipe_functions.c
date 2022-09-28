@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 16:37:32 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/26 15:06:16 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/28 16:04:37 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+extern int g_status;
 
 char	*get_last_meta(t_command *prompt, t_command *tmp)
 {
@@ -119,6 +121,7 @@ void	redirect_in(t_execc *exe, t_command **prompt, char **envp)
 		write(2, "bash : ", 7);
 		write (2, exe->tmp->next->argv[0], ft_strlen(exe->tmp->next->argv[0]));
 		write (2, " No such file or directory\n", 27);
+		g_status = 1;
 	}
 	else
 	{

@@ -6,29 +6,40 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 21:31:03 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/20 00:06:04 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/28 16:01:24 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+extern int	g_status;
 
 char	*get_dolar_var(char *tmp2, t_command **prompt)
 {
 	int	i;
 
 	i = 0;
-	while ((*prompt)->envp[i])
+	if (!ft_strncmp(tmp2, "?", 1))
 	{
-		if (!ft_strncmp(tmp2, (*prompt)->envp[i], \
-			ft_strlen((*prompt)->envp[i])) \
-		&& !ft_strncmp(tmp2, (*prompt)->envp[i], ft_strlen(tmp2)))
-		{
-			ft_bzero(tmp2, ft_strlen(tmp2));
-			tmp2 = ft_strdup((*prompt)->envp_val[i]);
-			return (tmp2);
-		}
-		i++;
+		tmp2 = ft_strdup(ft_itoa(g_status));
+		return(tmp2);
 	}
+	else
+	{
+		while ((*prompt)->envp[i])
+		{
+			if (!ft_strncmp(tmp2, (*prompt)->envp[i], \
+				ft_strlen((*prompt)->envp[i])) \
+			&& !ft_strncmp(tmp2, (*prompt)->envp[i], ft_strlen(tmp2)))
+			{
+				ft_bzero(tmp2, ft_strlen(tmp2));
+				tmp2 = ft_strdup((*prompt)->envp_val[i]);
+				return (tmp2);
+			}
+			i++;
+		}
+	}
+	
 	ft_bzero(tmp2, ft_strlen(tmp2));
 	return (tmp2);
 }
