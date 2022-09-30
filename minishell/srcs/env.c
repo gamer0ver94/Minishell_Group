@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:22:35 by memam             #+#    #+#             */
-/*   Updated: 2022/09/24 15:52:29 by memam            ###   ########.fr       */
+/*   Updated: 2022/09/30 14:11:32 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char	**realloced_new_env(char **env, int index)
 		env[i] = tmp[i];
 		i++;
 	}
-	free_tab(tmp);
+	free_args(tmp);
 	return (env);
 }
 

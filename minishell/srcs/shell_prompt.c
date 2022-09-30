@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 09:42:11 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/26 23:23:49 by memam            ###   ########.fr       */
+/*   Updated: 2022/09/30 19:04:56 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,19 @@ int	shell_prompt(char **argv, char **envp)
 	char		*ptr;
 	while (1)
 	{
+		
 		prompt = malloc(sizeof(t_command));
 		ptr = parse_prompt();
 		struct_init_simple(&prompt, envp);
 		buffer = readline("MINISHELL $ ");
+		add_history(buffer);
 		if (ft_strlen(buffer))
 		{
 			if (!buffer_parsing(buffer, &prompt, envp))
 				exec_simple(prompt, envp);
-			else
-				exec_complex(&prompt, envp);
-			// add_history(buffer);
+			//else
+				// exec_complex(&prompt, envp);
+			
 		}
 		if (argv[1] && !ft_strncmp(argv[1], "debugg", 6))
 			print_struct(prompt);

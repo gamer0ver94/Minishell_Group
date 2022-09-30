@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 13:25:13 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/26 14:21:00 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/28 17:31:49 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 # include "get_next_line.h"
 # include "structs.h"
 # include <signal.h>
+# include <sys/types.h> //opendir, readdir, closedir
+# include <dirent.h> //opendir, readdir, closedir
 /*********** Colors **********/
 # define BLACK_CLR "\e[39m"
 # define RED_CLR "\e[41m"
@@ -50,7 +52,9 @@ int		ft_env(char	**envp);
 int		ft_exit(t_command *command);
 int		ft_export(char **envp, char **args);
 int		ft_unset(char **envp, char **args);
-int     ft_wildcards(char *args);
+void	ft_signal(void);
+/*********** Bonus **********/
+int		ft_wildcards(char *args);
 
 /*********** Utils Functions**********/
 void	    parse_phase_one(t_helper2 *buf_s, t_command **prompt, char *buffer, char **envp);
@@ -102,9 +106,9 @@ void		redirect_out(t_execc *exe, t_command **prompt, char **envp);
 void		pipef(t_execc *exe, t_command **prompt, char **envp);
 void		redirect_in(t_execc *exe, t_command **prompt, char **envp);
 void		alloc_fd(t_execc *exe, t_command **prompt);
-void redirect_in_complex(t_execc *exe, t_command **prompt, char **envp);
-int	set_env_var(char **envp, char *args);
-char	**realloced_new_env(char **env, int index);
-int	get_env_var_index(char **env, char *var);
-void	free_tab(char **tab);
+void 		redirect_in_complex(t_execc *exe, t_command **prompt, char **envp);
+int			set_env_var(char **envp, char *args);
+char		**realloced_new_env(char **env, int index);
+int			get_env_var_index(char **env, char *var);
+void		free_tab(char **tab);
 #endif

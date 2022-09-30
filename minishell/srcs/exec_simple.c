@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_simple.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 15:18:48 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/26 14:32:45 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/30 20:39:22 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,15 @@ int    exec_builtin(t_command *prompt, char **envp)
 		ft_exit(prompt);
 		return (0);
 	}
-	if (!ft_strncmp(prompt->cmd, "unset", 5)
+	if (!ft_strncmp(prompt->cmd, "unset", 6)
 		&& !ft_strncmp(prompt->cmd, "unset", ft_strlen(prompt->cmd)))
 	{
 		ft_unset(envp, prompt->argv);
 		return (0);
 	}
 	// pour tester int ft_wildcards(char *args)
-	if (!ft_strncmp(prompt->cmd, "ls", 2)
-		&& ft_strncmp(prompt->cmd, "ls", ft_strlen(prompt->cmd)))
+	if (!ft_strncmp(prompt->cmd, "mah", 4)
+		&& !ft_strncmp(prompt->cmd, "mah", ft_strlen(prompt->cmd)))
 	{
 		ft_wildcards(prompt->argv[1]);
 		return (0);
@@ -92,17 +92,21 @@ int	exec_simple(t_command *prompt, char **envp)
 
 	i = 0;
 	env_path = ft_split(getenv("PATH"), ':');
-	path = buildin_path(prompt->cmd);
+	//path = buildin_path(prompt->cmd);
 	if (!ft_strncmp(prompt->cmd, "cd", 2))
 	{
 		cd_cmd(prompt, envp);
 		free_args(env_path);
+		free(prompt->argv[0]);
 		return (1);
 	}
+	
+
 	//here is the exec_builtin
 	if (exec_builtin(prompt, envp) == 0)
 	{
-		free_args(env_path);
+		free(prompt->argv[0]);
+		free_args(env_path); 
 		return (1);
 	}
 	if (fork() == 0)
@@ -118,8 +122,10 @@ int	exec_simple(t_command *prompt, char **envp)
 		}
 		write(2, prompt->cmd, ft_strlen(prompt->cmd));
 		write(2, ": command not found\n", 20);
+		exit(0);
 	}
 	waitpid(-1, NULL, 0);
 	free_args(env_path);
+	free(prompt->argv[0]);
 	return (0);
 }

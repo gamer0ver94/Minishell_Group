@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 17:07:00 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/27 00:04:30 by memam            ###   ########.fr       */
+/*   Updated: 2022/09/30 19:13:43 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,3 @@ int	cd_cmd(t_command *prompt, char **envp)
 		perror("bash");
 	return (0);
 }
-//PS need to update oldpwd and pwd

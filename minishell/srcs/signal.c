@@ -1,42 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/29 12:07:26 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/30 19:05:14 by memam            ###   ########.fr       */
+/*   Created: 2022/09/28 14:22:20 by memam             #+#    #+#             */
+/*   Updated: 2022/09/30 16:38:24 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void sighangler(int signal)
+void	signal_handler(int sig)
 {
-	if (signal == SIGSEGV)
+	if (sig == SIGINT)
 	{
-		printf("\nThank you for using MINISHELL\n");
-		exit (0);
-	}
-	if (signal == SIGQUIT)
-		(void)signal;
+		printf("\nMinshell $");
+		//rl_replace_line("", 1);
+		rl_redisplay();	
+	}	
 }
 
-int	main(int argc, char **argv, char **envp)
+void	ft_signal(void)
 {
-	(void)envp;
-	(void)argv;
-
-	// signal(SIGSEGV, &sighangler);
-	//signal(SIGQUIT, &sighangler);
-	ft_signal();
-	if (argc > 2)
-	{
-		printf("no need argv\n");
-		return (1);
-	}
-	logo("assets/logo.txt");
-	shell_prompt(argv, envp);
-	return (0);
+	signal(SIGINT, signal_handler);
+	signal(SIGQUIT, SIG_IGN);
 }

@@ -6,46 +6,49 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 00:48:30 by memam             #+#    #+#             */
-/*   Updated: 2022/09/26 12:08:12 by memam            ###   ########.fr       */
+/*   Updated: 2022/09/30 16:48:21 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+//opendir, readdir, closedir
+char	**get_list_repertoire(char *rep_courant)
+{
+	DIR				*dir;
+	struct dirent	*list;
+	char			**my_list;
+	int				i;
+
+	i = 0;
+	my_list = NULL;
+	list = NULL;
+	dir = opendir(rep_courant);
+	if (dir == NULL)
+	{
+		perror("opendir");
+		return (NULL);
+	}
+	while ((list = readdir(dir)) != NULL)
+	{
+		my_list[i++] = list->d_name;
+		printf("hi\n");
+		printf("%s\n", my_list[0]);
+	}
+	return (my_list);
+}
 
 int	ft_wildcards(char *args)
 {
-	int		i;
-	char	**tmp;
+	char	*rep_courant;
+	char	**list;
 
-	i = 0;
-	tmp = ft_split(args, '*');
-	if (!tmp)
+	rep_courant = ".";
+	if (!args)
 		return (1);
-	i = 0;
-	char *name = tmp[0];
-	if (name[i] && tmp[1] == NULL)
-	{
-		while (name[i] != '\0')
-		{
-			printf("it ok\n");
-			i++;
-		}
-		printf("tmp[0] %s\n", name);
-	}
-	else
-	{
-		int		index;
-
-		index = 0;
-		while (tmp[1][index])
-		{
-			if (tmp[1][index] == '.')
-				printf("i be one file\n");
-			else if (ft_isalnum(tmp[1][index]) != 0)
-				printf("i be one répertoire\n");
-			index++;
-		}
-	}
-	free_tab(tmp);
+	list = get_list_repertoire(rep_courant);
+	
+	
+	
+	
 	return (0);
 }
