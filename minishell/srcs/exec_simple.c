@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_simple.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 15:18:48 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/28 16:28:06 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/30 11:40:28 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ int	exec_simple(t_command *prompt, char **envp)
 			if (WEXITSTATUS(status) == 127)
 				g_status = 127;
 			else
-				g_status = 1;
+				g_status = 2;
 		}
 		else
 			g_status = 1;

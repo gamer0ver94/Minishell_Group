@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 11:10:00 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/26 15:04:17 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/30 14:22:48 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ int	count_pipes(t_command **prompt)
 			i++;
 		else if (tmp->meta_char && !ft_strncmp(tmp->meta_char, "<", 1))
 			i++;
-		else if (tmp->meta_char && !ft_strncmp(tmp->meta_char, "<", 1))
+		else if (tmp->meta_char && !ft_strncmp(tmp->meta_char, ">", 1))
+			i++;
+		else if (tmp->meta_char && !ft_strncmp(tmp->meta_char, ">>", 1))
 			i++;
 		tmp = tmp->next;
 	}
