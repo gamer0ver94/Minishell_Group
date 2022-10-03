@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_redir_out.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:31:03 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/30 14:50:21 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/03 10:38:15 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,32 @@
 
 void	redirect_out(t_execc *exe, t_command **prompt, char **envp)
 {
-	int file;
-	
+	t_command *tmp2;
+
+	tmp2 = exe->tmp;
 	if (fork() == 0)
 	{	
-		if (access(exe->tmp->next->argv[0], F_OK) == 0 \
-				&& !ft_strncmp(exe->tmp->meta_char, ">>", 2))
-			file = open(exe->tmp->next->argv[0], O_RDWR | O_APPEND);
-		else if (access(exe->tmp->next->argv[0], F_OK) == 0 \
-				&& !ft_strncmp(exe->tmp->meta_char, ">", 1))
-			file = open(exe->tmp->next->argv[0], O_RDWR | O_TRUNC);
-		else
-			file = open(exe->tmp->next->argv[0], O_RDWR | O_CREAT, 0777);
-		if (exe->tmp->id == 1 && !exe->tmp->next->meta_char)
-			dup2(file, STDOUT_FILENO);
-		if (exe->tmp->next->next && exe->tmp->next->meta_char)
-			dup2(file, STDIN_FILENO);
-		close(file);
-		close_pipes(prompt, exe->fd);
+		while (tmp2->meta_char && !ft_strncmp(tmp2->meta_char, ">", 1))
+		{
+			if (access(tmp2->next->argv[0], F_OK) == 0 \
+				&& !ft_strncmp(tmp2->meta_char, ">>", 2))
+				exe->fd[exe->i + 1][1] = open(tmp2->next->argv[0], O_RDWR | O_APPEND);
+			else if (access(tmp2->next->argv[0], F_OK) == 0 \
+				&& !ft_strncmp(tmp2->meta_char, ">", 1))
+				exe->fd[exe->i + 1][1] = open(tmp2->next->argv[0], O_RDWR | O_TRUNC);
+			else
+				exe->fd[exe->i + 1][1] = open(tmp2->next->argv[0], O_RDWR | O_CREAT, 0777);
+			exe->i++;
+			tmp2 = tmp2->next;
+		}
+		if (get_last_meta((*prompt), exe->tmp) && !ft_strncmp(get_last_meta((*prompt), exe->tmp), "|", 1))
+			dup2(exe->fd[exe->i - 2][0], STDIN_FILENO);
+		dup2(exe->fd[exe->i - 1][1], STDOUT_FILENO);
 		exec_simple(exe->tmp, envp);
+		close_pipes(prompt, exe->fd);
 		exit(0);
 	}
-	if (exe->tmp->next->next)
-		exe->tmp = exe->tmp->next->next;
+	exe->i++;
+	while (exe->tmp->next && !ft_strncmp(exe->tmp->meta_char, ">", 1))
+		exe->tmp = exe->tmp->next;
 }

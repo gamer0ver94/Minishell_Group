@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_redir_in.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:31:33 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/30 14:16:07 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/03 10:25:14 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	redirect_in(t_execc *exe, t_command **prompt, char **envp)
 		{
 			exe->fd[exe->i][0] = open(exe->tmp->next->argv[0], O_RDONLY);
 			dup2(exe->fd[exe->i][0], STDIN_FILENO);
-			if (exe->tmp->next->meta_char && !ft_strncmp(exe->tmp->next->meta_char, "|", 1))
 				dup2(exe->fd[exe->i + 1][1], STDOUT_FILENO);
 			close_pipes(prompt, exe->fd);
 			exec_simple(exe->tmp, envp);

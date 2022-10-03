@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 13:25:13 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/26 15:29:00 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/02 18:22:19 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,6 @@ void		open_pipes(t_command **prompt, int **fd);
 void		close_pipes(t_command **prompt, int **fd);
 void		init_execc_struct(t_execc *exe, t_command **prompt);
 /*********** Pipe Functions **********/
-void		first_cmd(t_execc *exe, t_command **prompt, char **envp);
-void		last_cmd(t_execc *exe, t_command **prompt, char **envp);
 void		redirect_out(t_execc *exe, t_command **prompt, char **envp);
 void		pipef(t_execc *exe, t_command **prompt, char **envp);
 void		redirect_in(t_execc *exe, t_command **prompt, char **envp);
@@ -108,4 +106,5 @@ char	**realloced_new_env(char **env, int index);
 int	get_env_var_index(char **env, char *var);
 void	free_tab(char **tab);
 void	my_unset(t_command *prompt, char **envp);
+void	last_cmd(t_execc *exe, t_command **prompt, char **envp);
 #endif
