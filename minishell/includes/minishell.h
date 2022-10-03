@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 13:25:13 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/02 18:22:19 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/03 13:29:04 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,11 +93,10 @@ int			parse_quotes(char **args, char *buffer);
 int			count_pipes(t_command **prompt);
 void		free_fd(t_execc *exe, t_command **prompt);
 void		open_pipes(t_command **prompt, int **fd);
-void		close_pipes(t_command **prompt, int **fd);
 void		init_execc_struct(t_execc *exe, t_command **prompt);
 /*********** Pipe Functions **********/
-void		redirect_out(t_execc *exe, t_command **prompt, char **envp);
-void		pipef(t_execc *exe, t_command **prompt, char **envp);
+void	redirect_out(t_execc *exe, t_command **prompt, char **envp);
+void	pipef(t_execc *exe, t_command **prompt, char **envp);
 void		redirect_in(t_execc *exe, t_command **prompt, char **envp);
 void		alloc_fd(t_execc *exe, t_command **prompt);
 void redirect_in_complex(t_execc *exe, t_command **prompt, char **envp);
@@ -107,4 +106,7 @@ int	get_env_var_index(char **env, char *var);
 void	free_tab(char **tab);
 void	my_unset(t_command *prompt, char **envp);
 void	last_cmd(t_execc *exe, t_command **prompt, char **envp);
+void	close_files(t_command **prompt, int **file);
+void	alloc_files(t_execc *exe, t_command **prompt);
+void	open_files(t_command **prompt, int **file);
 #endif

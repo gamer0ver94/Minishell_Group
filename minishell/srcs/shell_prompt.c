@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_prompt.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 09:42:11 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/28 16:02:28 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/03 12:07:40 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	shell_prompt(char **argv, char **envp)
 			print_struct(prompt);
 		free(buffer);
 		free(ptr);
-		// if (prompt->argc)
+		if (prompt->argc)
 			free_prompt(&prompt);
 	}
 	return (0);

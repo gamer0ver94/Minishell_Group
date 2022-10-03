@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_complex_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 11:10:00 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/03 10:24:03 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/03 13:40:31 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,6 @@ int	count_pipes(t_command **prompt)
 	while (tmp)
 	{
 		if (tmp->meta_char && !ft_strncmp(tmp->meta_char, "|", 1))
-			i++;
-		else if (tmp->meta_char && !ft_strncmp(tmp->meta_char, "<", 1))
-			i++;
-		else if (tmp->meta_char && !ft_strncmp(tmp->meta_char, ">", 1))
-			i++;
-		else if (tmp->meta_char && !ft_strncmp(tmp->meta_char, ">>", 1))
 			i++;
 		tmp = tmp->next;
 	}
@@ -55,6 +49,7 @@ void	alloc_fd(t_execc *exe, t_command **prompt)
 
 	i = 0;
 	(void)prompt;
+	exe->fd = malloc(sizeof(int *) * count_pipes(prompt));
 	while (i < exe->j)
 	{
 		exe->fd[i] = malloc(sizeof(int) * 2);
@@ -97,9 +92,11 @@ void	init_execc_struct(t_execc *exe, t_command **prompt)
 {
 	exe->tmp = (*prompt);
 	exe->lock = 0;
-	exe->j = count_pipes(prompt);
 	exe->i = 0;
-	exe->fd = malloc(sizeof(int *) * exe->j);
+	exe->h = 0;
+	exe->j = count_pipes(prompt);
 	alloc_fd(exe, prompt);
+	alloc_files(exe, prompt);
 	open_pipes(prompt, exe->fd);
+	open_files(prompt, exe->files);
 }
