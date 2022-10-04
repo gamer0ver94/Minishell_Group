@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 10:27:32 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/04 16:14:48 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/05 00:25:34 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,6 @@ void	free_prompt(t_command **prompt)
 
 	tmp = (*prompt);
 	i = 0;
-	while (tmp->envp_val[i] != NULL)
-		free(tmp->envp_val[i++]);
-	free(tmp->envp_val);
-	i = 0;
-	while (tmp->envp[i] != NULL)
-		free(tmp->envp[i++]);
-	free(tmp->envp_val);
 	while (tmp)
 	{
 		i = 0;
@@ -51,11 +44,20 @@ void	free_prompt(t_command **prompt)
 			free(tmp->cmd);
 		if (tmp->meta_char)
 			free(tmp->meta_char);
-		while (tmp && tmp->argv[i] != NULL)
-			free(tmp->argv[i++]);
+		while (tmp->argv && tmp->argv[i])
+		{
+			free(tmp->argv[i]);
+			i++;
+		}
+		while (tmp->envp_val[i])
+			free(tmp->envp_val[i++]);
+		free(tmp->envp_val);
+		i = 0;
+		while (tmp->envp[i])
+			free(tmp->envp[i++]);
+		free(tmp->envp);
 		free(tmp->argv);
 		i = 0;
-		free_prompt_util(tmp, i);
 		aux = tmp;
 		tmp = tmp->next;
 		free(aux);

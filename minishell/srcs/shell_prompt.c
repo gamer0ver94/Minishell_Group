@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 09:42:11 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/04 16:18:55 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/05 00:27:36 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,22 +51,21 @@ int	shell_prompt(char **argv, char **envp)
 		prompt = malloc(sizeof(t_command));
 		ptr = parse_prompt();
 		buffer = readline("MINISHELL $ ");
-		struct_init_simple(&prompt, envp);
 		if (*buffer)
 		{
-			// if (!buffer_parsing(buffer, &prompt, envp))
-			// 	exec_simple(prompt, envp);
-			// // else
-			// 	// exec_complex(&prompt, envp);
-			// add_history(buffer);
+			struct_init_simple(&prompt, envp);
+			if (!buffer_parsing(buffer, &prompt, envp))
+				exec_simple(prompt, envp);
+			else
+				exec_complex(&prompt, envp);
+			add_history(buffer);
 		}
 		if (argv[1] && !ft_strncmp(argv[1], "debugg", 6))
 			print_struct(prompt);
+		if (*buffer)
+			free_prompt(&prompt);
 		free(buffer);
 		free(ptr);
-		if (prompt->argc)
-			free_prompt(&prompt);
-		free(prompt);
 	}
 	return (0);
 }
