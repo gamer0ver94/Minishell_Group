@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 21:26:50 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/19 21:54:22 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/04 13:36:12 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,4 @@ void	parse_phase_one(t_helper2 *buf_s, t_command **prompt, char *buffer, char **
 		buf_s->i++;
 	}
 	get_id(prompt);
-	free(buf_s->exe);
 }

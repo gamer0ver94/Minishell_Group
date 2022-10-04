@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 13:25:13 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/03 13:29:04 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/04 12:19:38 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,4 +109,5 @@ void	last_cmd(t_execc *exe, t_command **prompt, char **envp);
 void	close_files(t_command **prompt, int **file);
 void	alloc_files(t_execc *exe, t_command **prompt);
 void	open_files(t_command **prompt, int **file);
+void	free_matrix(char **matrix);
 #endif

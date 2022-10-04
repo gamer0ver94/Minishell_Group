@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_redir_in.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:31:33 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/03 14:59:36 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/04 10:15:24 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ void redirect_in_complex(t_execc *exe, t_command **prompt, char **envp)
 	if (fork() == 0)
 	{
 		dup2(file[0], STDIN_FILENO);
+		if (exe->tmp->next->meta_char)
+			dup2(exe->fd[exe->i][1], STDOUT_FILENO);
 		close_pipes(prompt, exe->fd);
 		close(file[0]);
 		close(file[1]);

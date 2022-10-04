@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 21:32:24 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/20 00:02:39 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/04 14:54:56 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ void	get_meta_chars(t_command **prompt, char **meta_chars)
 	while (tmp)
 	{
 		if (meta_chars[i])
+		{
 			tmp->meta_char = ft_strdup(meta_chars[i]);
+		}
 		else
 			tmp->meta_char = NULL;
 		i++;

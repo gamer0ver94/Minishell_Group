@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 13:34:36 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/19 22:10:17 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/04 14:42:30 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@ void	get_commands(char **split, t_command **prompt, char **envp)
 	while (split && split[i])
 	{
 		if (split[i][0])
+		{
 			tmp->argv[j++] = ft_strdup(split[i++]);
+		}
 		else
 			i++;
 	}
@@ -86,29 +88,36 @@ int	parse_quotes(char **args, char *buffer)
 
 int	buffer_parsing(char *buffer, t_command **prompt, char **envp)
 {
-	t_helper2	buf_s;
-
-	buf_s.exe = malloc(sizeof(char *) * 50);
-	buf_s.meta_chars = malloc(sizeof(char *) * 50);
-	buf_s.i = 0;
-	buf_s.code = 0;
+	t_helper2	*buf_s;
+	
+	buf_s = malloc(sizeof(t_helper));
+	buf_s->exe = malloc(sizeof(char *) * 50);
+	buf_s->meta_chars = malloc(sizeof(char *) * 50);
+	buf_s->i = 0;
+	buf_s->code = 0;
 	if (find_meta_char(buffer))
 	{
-		parse_phase_one(&buf_s, prompt, buffer, envp);
+		parse_phase_one(buf_s, prompt, buffer, envp);
+		free_matrix(buf_s->meta_chars);
+		free_matrix(buf_s->exe);
+		free(buf_s);
 		return (1);
 	}
 	else
 	{
-		buf_s.args = ft_calloc(100, sizeof(char *));
-		buf_s.code = parse_quotes(buf_s.args, buffer);
+		buf_s->args = ft_calloc(100, sizeof(char *));
+		buf_s->code = parse_quotes(buf_s->args, buffer);
 		if (find_char(buffer, "$"))
 		{
-			if (buf_s.code > 0)
-				identify_dolar(prompt, buf_s.args);
+			if (buf_s->code > 0)
+				identify_dolar(prompt, buf_s->args);
 		}
-		get_commands(buf_s.args, prompt, envp);
+		get_commands(buf_s->args, prompt, envp);
 		get_id(prompt);
-		free_args(buf_s.args);
+		free_args(buf_s->args);
+		free(buf_s->exe);
+		free(buf_s->meta_chars);
+		free(buf_s);
 	}
 	return (0);
 }

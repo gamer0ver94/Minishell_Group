@@ -1,6 +1,6 @@
 CC = gcc
-CCFLAGS = -Wall -Wextra -Werror
-LDFLAGS = -lreadline -g
+CCFLAGS = -Wall -Wextra -Werror -g
+LDFLAGS = -lreadline
 LIBFT	=	-lft -L libft
 APPNAME = minishell
 EXT = .c
