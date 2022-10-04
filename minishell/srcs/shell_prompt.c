@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 09:42:11 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/30 19:04:56 by memam            ###   ########.fr       */
+/*   Updated: 2022/10/03 14:22:55 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int	shell_prompt(char **argv, char **envp)
 		free(ptr);
 		if (prompt->argc)
 			free_prompt(&prompt);
+		
 	}
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buffer_parsing.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 13:34:36 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/19 22:10:17 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/03 14:23:02 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

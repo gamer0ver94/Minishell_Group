@@ -6,15 +6,16 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 23:44:25 by memam             #+#    #+#             */
-/*   Updated: 2022/09/26 12:16:35 by memam            ###   ########.fr       */
+/*   Updated: 2022/10/04 16:00:19 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int		ft_exit(t_command *command)
+int	ft_exit(char **args)
 {
-           //free_all
-    (void)command;
-    exit(EXIT_SUCCESS);
+	//free_all
+	free_args(args);
+	//(void)args;
+	exit(EXIT_SUCCESS);
 }

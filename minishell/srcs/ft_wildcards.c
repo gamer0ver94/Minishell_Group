@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 00:48:30 by memam             #+#    #+#             */
-/*   Updated: 2022/09/30 16:48:21 by memam            ###   ########.fr       */
+/*   Updated: 2022/10/01 15:26:42 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@ char	**get_list_repertoire(char *rep_courant)
 	DIR				*dir;
 	struct dirent	*list;
 	char			**my_list;
-	int				i;
+	int				i, c;
 
 	i = 0;
+	c = 0;
 	my_list = NULL;
 	list = NULL;
 	dir = opendir(rep_courant);
@@ -30,10 +31,12 @@ char	**get_list_repertoire(char *rep_courant)
 	}
 	while ((list = readdir(dir)) != NULL)
 	{
-		my_list[i++] = list->d_name;
-		printf("hi\n");
-		printf("%s\n", my_list[0]);
+		my_list[i] = list->d_name;
+		my_list[i] = ft_strjoin(list->d_name, "");
+		i++;
 	}
+	printf("%s\n", my_list[2]);
+
 	return (my_list);
 }
 
