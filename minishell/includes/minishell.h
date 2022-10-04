@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 13:25:13 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/28 17:31:49 by memam            ###   ########.fr       */
+/*   Updated: 2022/10/04 16:15:29 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,16 @@
 int		ft_echo(t_command *command);
 int		ft_pwd(void);
 int		ft_env(char	**envp);
-int		ft_exit(t_command *command);
+int		ft_exit(char **args);
 int		ft_export(char **envp, char **args);
 int		ft_unset(char **envp, char **args);
 void	ft_signal(void);
+int		exec_builtin(t_command *prompt, char **envp);
 /*********** Bonus **********/
 int		ft_wildcards(char *args);
 
 /*********** Utils Functions**********/
-void	    parse_phase_one(t_helper2 *buf_s, t_command **prompt, char *buffer, char **envp);
+void		parse_phase_one(t_helper2 *buf_s, t_command **prompt, char *buffer, char **envp);
 void		init_helper(t_helper *helper, t_command **prompt);
 char		*get_last_meta(t_command *prompt, t_command *tmp);
 void		init_envp_simple(t_helper *help, char **envp);
