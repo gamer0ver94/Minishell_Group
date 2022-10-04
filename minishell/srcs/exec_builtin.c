@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 16:04:54 by memam             #+#    #+#             */
-/*   Updated: 2022/10/04 16:17:24 by memam            ###   ########.fr       */
+/*   Updated: 2022/10/04 17:54:09 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	builtin_env(t_command *prompt, char **envp)
 {
 	if (!ft_strncmp(prompt->cmd, "env", 3) && \
-		!ft_strncmp(prompt->cmd, "echo", ft_strlen(prompt->cmd)))
+		!ft_strncmp(prompt->cmd, "env", ft_strlen(prompt->cmd)))
 	{
 		ft_env(envp);
 		return (0);
@@ -44,7 +44,7 @@ int	builtin(t_command *prompt)
 		return (0);
 	}
 	if (!ft_strncmp(prompt->cmd, "pwd", 3) && \
-		!ft_strncmp(prompt->cmd, "echo", ft_strlen(prompt->cmd)))
+		!ft_strncmp(prompt->cmd, "pwd", ft_strlen(prompt->cmd)))
 	{
 		ft_pwd();
 		return (0);
@@ -58,16 +58,16 @@ int	builtin(t_command *prompt)
 	return (1);
 }
 
-int	exec_builtin(t_command *prompt, char **envp)
-{
-	builtin(prompt);
-	builtin_env(prompt, envp);
-	// pour tester int ft_wildcards(char *args)
-	if (!ft_strncmp(prompt->cmd, "mah", 4)
-		&& !ft_strncmp(prompt->cmd, "mah", ft_strlen(prompt->cmd)))
-	{
-		ft_wildcards(prompt->argv[1]);
-		return (0);
-	}
-	return (1);
-}
+// int	exec_builtin(t_command *prompt, char **envp)
+// {
+// 	builtin(prompt);
+// 	builtin_env(prompt, envp);
+// 	// pour tester int ft_wildcards(char *args)
+// 	if (!ft_strncmp(prompt->cmd, "mah", 4)
+// 		&& !ft_strncmp(prompt->cmd, "mah", ft_strlen(prompt->cmd)))
+// 	{
+// 		ft_wildcards(prompt->argv[1]);
+// 		return (0);
+// 	}
+// 	return (1);
+// }

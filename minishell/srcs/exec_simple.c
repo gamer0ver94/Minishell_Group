@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 15:18:48 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/04 16:14:22 by memam            ###   ########.fr       */
+/*   Updated: 2022/10/04 18:00:09 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,8 @@ int	exec_simple(t_command *prompt, char **envp)
 		free(prompt->argv[0]);
 		return (1);
 	}
-	
-
 	//here is the exec_builtin
-	if (exec_builtin(prompt, envp) == 0)
+	if (builtin_env(prompt, envp) == 0 ||builtin(prompt) == 0)
 	{
 		free(prompt->argv[0]);
 		free_args(env_path); 

@@ -1,6 +1,6 @@
 CC = gcc
 CCFLAGS = -Wall -Wextra -Werror
-LDFLAGS = -lreadline -g
+LDFLAGS = -lreadline -g3
 LIBFT	=	-lft -L libft
 APPNAME = minishell
 EXT = .c
@@ -20,7 +20,7 @@ $(APPNAME): $(OBJ)
 
 
 $(OBJDIR)/%.o: $(SRCDIR)/%$(EXT)
-	$(CC) $(CCFLAGS) -o $@ -c $<
+	$(CC) -g3 $(CCFLAGS) -o $@ -c $<
 
 clean:
 	$(RM) $(DELOBJ) $(DEP) $(APPNAME)

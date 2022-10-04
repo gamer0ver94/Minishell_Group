@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:22:35 by memam             #+#    #+#             */
-/*   Updated: 2022/10/04 16:22:16 by memam            ###   ########.fr       */
+/*   Updated: 2022/10/04 18:27:33 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ int	set_env_var(char **envp, char *args)
 	{
 		tmp2 = ft_strdup(args);
 		envp[index] = tmp2;
-		free(tmp2);
 	}
 	else
 	{
@@ -100,7 +99,7 @@ int	set_env_var(char **envp, char *args)
 		envp[index - 1] = tmp2;
 		envp[index] = tmp;
 		envp[index + 1] = NULL;
-		free(tmp2);
 	}
+	free(tmp2);
 	return (0);
 }
