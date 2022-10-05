@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipe.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:31:43 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/03 14:22:37 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/05 17:52:28 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	pipef(t_execc *exe, t_command **prompt, char **envp)
 {
-	if (fork() == 0)
+	exe->pid[exe->g] = fork();
+	if (exe->pid[exe->g] == 0)
 	{
 		if (exe->tmp->id == 1)
 			dup2(exe->fd[exe->i][1], STDOUT_FILENO);
@@ -28,6 +29,7 @@ void	pipef(t_execc *exe, t_command **prompt, char **envp)
 		exec_simple(exe->tmp, envp);
 		exit(0);
 	}
+	exe->g++;
 	exe->tmp = exe->tmp->next;
 	exe->i++;
 }
@@ -36,7 +38,8 @@ void	last_cmd(t_execc *exe, t_command **prompt, char **envp)
 {
 	if (!ft_strncmp(get_last_meta((*prompt), exe->tmp), "|", 1))
 	{
-		if (fork() == 0)
+		exe->pid[exe->g] = fork();
+		if (exe->pid[exe->g] == 0)
 		{
 			dup2(exe->fd[exe->i - 1][0], STDIN_FILENO);
 			close_pipes(prompt, exe->fd);
@@ -45,5 +48,6 @@ void	last_cmd(t_execc *exe, t_command **prompt, char **envp)
 			exit (0);
 		}
 	}
+	exe->g++;
 	exe->tmp = exe->tmp->next;
 }

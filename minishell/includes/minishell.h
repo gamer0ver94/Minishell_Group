@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 13:25:13 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/04 12:19:38 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/05 14:48:35 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,9 @@ void		get_commands(char **split, t_command **prompt, char **envp);
 void		identify_dolar(t_command **prompt, char **args);
 void		get_dolar_char(t_command **prompt, char **arg, int i);
 char		*get_dolar_var(char *tmp2, t_command **prompt);
-void		parse_meta_chars(char *buffer, char **meta_chars, char **exe);
+void		parse_meta_chars(char *buffer,t_helper2 *buf_s);
 int			find_meta_char(char *buffer);
-void		get_meta_chars(t_command **prompt, char **meta_chars);
+void		get_meta_chars(t_command **prompt, t_helper2 *buf_s);
 int			parse_quotes(char **args, char *buffer);
 /*********** Exec_Complex_Utils **********/
 int			count_pipes(t_command **prompt);

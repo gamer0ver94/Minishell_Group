@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 11:48:05 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/04 10:09:13 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/05 18:12:17 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,6 @@ char	*get_last_meta(t_command *prompt, t_command *tmp)
 	return (NULL);
 }
 
-void	wait_childs(t_execc *exe)
-{
-	while (exe->j > 0)
-	{
-		waitpid(-1, NULL, 0);
-		exe->j--;
-	}
-}
-
 int	count_files(t_command **prompt)
 {
 	t_command	*tmp;
@@ -51,6 +42,21 @@ int	count_files(t_command **prompt)
 		tmp = tmp->next;
 	}
 	return (i);
+}
+
+void	wait_childs(t_command **prompt)
+{
+	int	i;
+
+	i = 0;
+	while (i < (count_pipes(prompt) + count_files(prompt)))
+	{
+		
+		i++;
+	}
+	wait(NULL);
+	write(2, "waiting\n", 8);
+	// wait(NULL);
 }
 
 void	open_files(t_command **prompt, int **file)
@@ -113,10 +119,9 @@ void	free_files(t_execc *exe, t_command **prompt)
 void	exec_complex(t_command **prompt, char **envp)
 {
 	t_execc		*exe;
-
+int i = 0;
 	exe = malloc(sizeof(t_execc));
 	init_execc_struct(exe, prompt);
-	(void)envp;
 	while (exe->tmp)
 	{
 		if (exe->tmp->meta_char && !ft_strncmp(exe->tmp->meta_char, "|", 1))
@@ -134,9 +139,15 @@ void	exec_complex(t_command **prompt, char **envp)
 			last_cmd(exe, prompt, envp);
 		}
 	}
-	close_files(prompt, exe->files);
+
+	// wait_childs(prompt);
 	close_pipes(prompt, exe->fd);
-	wait_childs(exe);
+	close_files(prompt, exe->files);
+	write(2, "lets go\n", 8);
+	while (waitpid(exe->pid[i], NULL, 0) == 0);
 	free_fd(exe, prompt);
 	free_files(exe, prompt);
+	free(exe->pid);
+	free(exe);
+	return ;
 }

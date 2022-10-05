@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 10:27:32 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/05 00:25:34 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/05 15:22:14 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,14 @@ void	free_prompt(t_command **prompt)
 	while (tmp)
 	{
 		i = 0;
-		if (tmp->cmd)
-			free(tmp->cmd);
-		if (tmp->meta_char)
-			free(tmp->meta_char);
+		free(tmp->cmd);
+		free(tmp->meta_char);
 		while (tmp->argv && tmp->argv[i])
 		{
 			free(tmp->argv[i]);
 			i++;
 		}
+		i = 0;
 		while (tmp->envp_val[i])
 			free(tmp->envp_val[i++]);
 		free(tmp->envp_val);
@@ -62,6 +61,7 @@ void	free_prompt(t_command **prompt)
 		tmp = tmp->next;
 		free(aux);
 	}
+	// printf("%s\n",(*prompt)->envp[0]);
 }	
 
 void	struct_init_complex(t_command **prompt, char **envp)

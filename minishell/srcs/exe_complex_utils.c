@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_complex_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 11:10:00 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/03 13:40:31 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/05 17:45:25 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	free_fd(t_execc *exe, t_command **prompt)
 
 	i = 0;
 	(void)prompt;
-	while (i < exe->j && exe->fd[i])
+	while (i < count_pipes(prompt))
 	{
 		free(exe->fd[i]);
 		i++;
@@ -50,7 +50,7 @@ void	alloc_fd(t_execc *exe, t_command **prompt)
 	i = 0;
 	(void)prompt;
 	exe->fd = malloc(sizeof(int *) * count_pipes(prompt));
-	while (i < exe->j)
+	while (i < count_pipes(prompt))
 	{
 		exe->fd[i] = malloc(sizeof(int) * 2);
 		if (!exe->fd[i])
@@ -68,6 +68,8 @@ void	open_pipes(t_command **prompt, int **fd)
 	{
 		if (pipe(fd[i]) == -1)
 			write(2, "error opening pipe\n", 19);
+		else
+			write(2, "pipe opened\n", 12);
 		i++;
 	}
 }
@@ -82,8 +84,12 @@ void	close_pipes(t_command **prompt, int **fd)
 	{
 		if (close(fd[i][0]) == -1)
 			write(2, "error opening pipe\n", 19);
+		else
+			write(2, "pape[0] closed\n", 15);
 		if (close(fd[i][1]) == -1)
 			write(2, "error opening pipe\n", 19);
+		else
+			write(2, "pape[1] closed\n", 15);
 		i++;
 	}
 }
@@ -95,6 +101,8 @@ void	init_execc_struct(t_execc *exe, t_command **prompt)
 	exe->i = 0;
 	exe->h = 0;
 	exe->j = count_pipes(prompt);
+	exe->g = 0;
+	exe->pid = malloc(sizeof(pid_t) * 20);
 	alloc_fd(exe, prompt);
 	alloc_files(exe, prompt);
 	open_pipes(prompt, exe->fd);

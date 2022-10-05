@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 15:18:48 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/04 11:30:30 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/05 18:18:18 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int	exec_simple(t_command *prompt, char **envp)
 	char	**env_path;
 	int		i;
 	int		status;
+	pid_t	pid;
 
 	i = 0;
 	env_path = ft_split(getenv("PATH"), ':');
@@ -108,7 +109,8 @@ int	exec_simple(t_command *prompt, char **envp)
 		free_args(env_path);
 		return (1);
 	}
-	if (fork() == 0)
+	pid = fork();
+	if (pid == 0)
 	{
 		if (access(prompt->argv[0], F_OK) == 0)
 			execve(prompt->argv[0], prompt->argv, envp);
@@ -128,7 +130,7 @@ int	exec_simple(t_command *prompt, char **envp)
 			exit(127);
 		}
 	}
-	if (waitpid(-1, &status, 0) > 0)
+	if (waitpid(pid, &status, 0))
 	{
 		if (WIFEXITED(status) && !WEXITSTATUS(status))
 		{
