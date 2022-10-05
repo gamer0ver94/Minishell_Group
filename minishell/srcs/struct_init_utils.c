@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_init_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 12:43:46 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/19 18:06:03 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/04 19:52:54 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

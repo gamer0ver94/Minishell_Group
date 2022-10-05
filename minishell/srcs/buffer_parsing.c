@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 13:34:36 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/03 14:23:02 by memam            ###   ########.fr       */
+/*   Updated: 2022/10/04 19:34:34 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ int	buffer_parsing(char *buffer, t_command **prompt, char **envp)
 		get_commands(buf_s.args, prompt, envp);
 		get_id(prompt);
 		free_args(buf_s.args);
+		free(buf_s.exe); 			//leak
+		free(buf_s.meta_chars);		//leak
 	}
 	return (0);
 }

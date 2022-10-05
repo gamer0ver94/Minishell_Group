@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 12:07:26 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/30 19:05:14 by memam            ###   ########.fr       */
+/*   Updated: 2022/10/05 19:57:28 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	main(int argc, char **argv, char **envp)
 
 	// signal(SIGSEGV, &sighangler);
 	//signal(SIGQUIT, &sighangler);
-	ft_signal();
+	ft_signals();
 	if (argc > 2)
 	{
 		printf("no need argv\n");
