@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 09:42:11 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/03 14:22:55 by memam            ###   ########.fr       */
+/*   Updated: 2022/10/06 13:49:00 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	shell_prompt(char **argv, char **envp)
 		ptr = parse_prompt();
 		struct_init_simple(&prompt, envp);
 		buffer = readline("MINISHELL $ ");
+		ft_signals();
 		add_history(buffer);
 		if (ft_strlen(buffer))
 		{
