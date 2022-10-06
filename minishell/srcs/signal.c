@@ -6,11 +6,23 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:22:20 by memam             #+#    #+#             */
-/*   Updated: 2022/10/06 13:49:55 by memam            ###   ########.fr       */
+/*   Updated: 2022/10/06 16:32:57 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void sighangler(int signal)
+{
+	if (signal == SIGSEGV)
+	{
+		printf("\nThank you for using MINISHELL\n");
+		exit (0);
+	}
+	if (signal == SIGQUIT)
+		(void)signal;
+}
+
 
 void	sigint_handler(int sig)
 {
@@ -24,5 +36,6 @@ void	sigint_handler(int sig)
 void	ft_signals(void)
 {
 	signal(SIGINT, sigint_handler);
+	signal(SIGSEGV, sighangler);
 	signal(SIGQUIT, SIG_IGN);
 }
