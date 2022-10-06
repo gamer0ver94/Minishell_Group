@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_redir_out.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:31:03 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/03 14:35:38 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/06 14:33:45 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,14 @@ void	redirect_out(t_execc *exe, t_command **prompt, char **envp)
 {
 	t_command *tmp2;
 	int file;
+
+	file = 0;
 	tmp2 = exe->tmp;
 	if (fork() == 0)
 	{	
 		while (tmp2->meta_char && !ft_strncmp(tmp2->meta_char, ">", 1))
 		{
-			if (file)
+			if (file != 0)
 				close(file);
 			if (access(tmp2->next->argv[0], F_OK) == 0 \
 				&& !ft_strncmp(tmp2->meta_char, ">>", 2))
@@ -30,10 +32,7 @@ void	redirect_out(t_execc *exe, t_command **prompt, char **envp)
 				&& !ft_strncmp(tmp2->meta_char, ">", 1))
 				file = open(tmp2->next->argv[0], O_RDWR | O_TRUNC);
 			else
-			{
 				file = open(tmp2->next->argv[0], O_RDWR | O_CREAT, 0777);
-			}
-					
 			exe->h++;
 			tmp2 = tmp2->next;
 			write(2, & exe->h,4);
@@ -46,6 +45,7 @@ void	redirect_out(t_execc *exe, t_command **prompt, char **envp)
 		close_files(prompt, exe->files);
 		close_pipes(prompt, exe->fd);
 		exec_simple(exe->tmp, envp);
+		free_prompt(prompt);
 		exit(0);
 	}
 	exe->i++;

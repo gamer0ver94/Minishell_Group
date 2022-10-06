@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 10:27:32 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/05 15:22:14 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/06 14:05:29 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	free_prompt(t_command **prompt)
 
 	tmp = (*prompt);
 	i = 0;
-	while (tmp)
+	while (tmp != NULL)
 	{
 		i = 0;
 		free(tmp->cmd);
@@ -61,7 +61,6 @@ void	free_prompt(t_command **prompt)
 		tmp = tmp->next;
 		free(aux);
 	}
-	// printf("%s\n",(*prompt)->envp[0]);
 }	
 
 void	struct_init_complex(t_command **prompt, char **envp)
@@ -85,17 +84,18 @@ void	struct_init_complex(t_command **prompt, char **envp)
 
 void	struct_init_simple(t_command **prompt, char **envp)
 {
-	t_helper	help;
+	t_helper	*help;
 
-	(void)envp;
-	init_helper(&help, prompt);
-	help.tmp->cmd = NULL;
-	help.tmp->argc = 0;
-	help.tmp->argv = NULL;
-	help.tmp->meta_char = NULL;
-	help.tmp->id = 0;
-	help.tmp->envp = malloc(sizeof(char *) * 500);
-	help.tmp->envp_val = malloc(sizeof(char *) * 1000);
-	help.tmp->next = NULL;
-	init_envp_simple(&help, envp);
+	help = malloc(sizeof(t_helper));
+	init_helper(help, prompt);
+	help->tmp->cmd = NULL;
+	help->tmp->argc = 0;
+	help->tmp->argv = NULL;
+	help->tmp->meta_char = NULL;
+	help->tmp->id = 0;
+	help->tmp->envp = malloc(sizeof(char *) * 500);
+	help->tmp->envp_val = malloc(sizeof(char *) * 1000);
+	help->tmp->next = NULL;
+	init_envp_simple(help, envp);
+	free(help);
 }

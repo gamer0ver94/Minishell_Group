@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 09:42:11 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/05 15:42:36 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/06 14:03:32 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	shell_prompt(char **argv, char **envp)
 	t_command	*prompt;
 	char		*buffer;
 	char		*ptr;
+
+	
 	g_status = 0;
 	while (1)
 	{
@@ -62,8 +64,8 @@ int	shell_prompt(char **argv, char **envp)
 			if (argv[1] && !ft_strncmp(argv[1], "debugg", 6))
 				print_struct(prompt);
 			free_prompt(&prompt);
+			free(buffer);
 		}
-		free(buffer);
 		free(ptr);
 	}
 	return (0);

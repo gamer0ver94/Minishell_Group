@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 13:34:36 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/05 14:37:55 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/06 10:17:07 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	get_commands(char **split, t_command **prompt, char **envp)
 	int			i;
 	int			j;
 
-	(void)envp;
 	tmp = (*prompt);
 	j = 0;
 	i = 0;

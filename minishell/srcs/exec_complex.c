@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 11:48:05 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/05 18:12:17 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/06 12:58:59 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void	free_files(t_execc *exe, t_command **prompt)
 void	exec_complex(t_command **prompt, char **envp)
 {
 	t_execc		*exe;
-int i = 0;
+// int i = 0;
 	exe = malloc(sizeof(t_execc));
 	init_execc_struct(exe, prompt);
 	while (exe->tmp)
@@ -144,7 +144,8 @@ int i = 0;
 	close_pipes(prompt, exe->fd);
 	close_files(prompt, exe->files);
 	write(2, "lets go\n", 8);
-	while (waitpid(exe->pid[i], NULL, 0) == 0);
+	// while (waitpid(exe->pid[i], NULL, 0) == 0);
+	waitpid(-1, NULL,0);
 	free_fd(exe, prompt);
 	free_files(exe, prompt);
 	free(exe->pid);

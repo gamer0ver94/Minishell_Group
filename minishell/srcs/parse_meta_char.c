@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 21:32:24 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/05 15:35:54 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/05 21:54:51 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	find_meta_char(char *buffer)
 
 void	meta_char_utils(t_tmp *tp, char *buffer, t_helper2 *buf_s)
 {
+	buf_s->meta_chars[tp->a] = ft_calloc(50, sizeof(char));
 	while (buffer [tp->i] == '<' || \
 		buffer [tp->i] == '>' || buffer [tp->i] == '|')
 	{
@@ -68,7 +69,7 @@ void	meta_char_utils(t_tmp *tp, char *buffer, t_helper2 *buf_s)
 	tp->h = 0;
 	tp->b = 0;
 	buf_s->exe[tp->j] = ft_calloc(100, sizeof(char));
-	buf_s->meta_chars[tp->a] = ft_calloc(100, sizeof(char));
+	// buf_s->meta_chars[tp->a] = malloc(sizeof(char) * 100);
 	//here
 	if (buffer[tp->i] == ' ')
 		tp->i++;
@@ -90,7 +91,7 @@ void	parse_meta_chars(char *buffer, t_helper2 *buf_s)
 
 	init_meta_struct(&tp);
 	buf_s->exe[tp.j] = ft_calloc(50, sizeof(char));
-	buf_s->meta_chars[tp.a] = ft_calloc(50, sizeof(char));
+	
 	while (buffer[tp.i])
 	{
 		if (buffer [tp.i] == '<' || buffer [tp.i] == '>' || buffer [tp.i] == '|'\
