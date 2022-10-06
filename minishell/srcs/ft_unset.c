@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 18:15:50 by memam             #+#    #+#             */
-/*   Updated: 2022/10/05 16:55:19 by memam            ###   ########.fr       */
+/*   Updated: 2022/10/06 17:21:38 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,23 @@ int	move_env(char **envp, int index)
 {
 	int		i;
 	int		count;
+	char	*tmp;
 
 	i = index;
 	count = index;
 	while (envp[i + 1])
 	{
-		envp[i] = ft_strdup(envp[i + 1]);
+		tmp = ft_strdup(envp[i + 1]);
+		envp[i] = tmp;
 		envp[i +1] = NULL;
+		free(envp[i + 1]);
 		i++;
 		count++;
 	}
 	envp = realloced_new_env(envp, count);
-	free(envp[i]); // a tester
+	tmp = NULL;
+	free(tmp); // a tester
+	
 	return (0);
 }
 
