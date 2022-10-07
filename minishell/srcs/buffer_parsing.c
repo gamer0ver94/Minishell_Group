@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 13:34:36 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/05 14:37:55 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/07 10:17:06 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	parse_quotes(char **args, char *buffer)
 int	buffer_parsing(char *buffer, t_command **prompt, char **envp)
 {
 	t_helper2	*buf_s;
-	
+
 	buf_s = malloc(sizeof(t_helper));
 	buf_s->exe = malloc(sizeof(char *) * 50);
 	buf_s->meta_chars = malloc(sizeof(char *) * 50);

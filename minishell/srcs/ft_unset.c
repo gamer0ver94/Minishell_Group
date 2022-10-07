@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 18:15:50 by memam             #+#    #+#             */
-/*   Updated: 2022/09/25 14:33:51 by memam            ###   ########.fr       */
+/*   Updated: 2022/10/06 17:21:38 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,37 +14,52 @@
 
 int	move_env(char **envp, int index)
 {
-	int	i;
-	int	count;
+	int		i;
+	int		count;
+	char	*tmp;
 
 	i = index;
 	count = index;
 	while (envp[i + 1])
 	{
-		envp[i] = ft_strdup(envp[i +1]);
-		envp[i + 1] = NULL;
+		tmp = ft_strdup(envp[i + 1]);
+		envp[i] = tmp;
+		envp[i +1] = NULL;
+		free(envp[i + 1]);
 		i++;
 		count++;
 	}
-	envp = realloced_new_env(envp, i);
+	envp = realloced_new_env(envp, count);
+	tmp = NULL;
+	free(tmp); // a tester
+	
 	return (0);
 }
 
 int	ft_unset(char **envp, char **args)
 {
 	int	index;
+	int	i;
 
-	index = get_env_var_index(envp, args[1]);
-	if (!args[1])
+	i = 1;
+	index = 0;
+	if (!args[i])
 		return (0);
-	if (ft_strchr(args[1], '=') != NULL)
+	while (args[i])
 	{
-		printf("unset: %s not a valid identifier\n", args[1]);
-		return (1);
+		if (ft_strchr(args[1], '=') != NULL)
+		{
+			printf("unset: %s not a valid identifier\n", args[1]);
+			return (1);
+		}
+		else
+		{
+			index = get_env_var_index(envp, args[i]);
+			if (index != -1 && \
+				ft_strncmp(args[i], envp[index], ft_strlen(args[i])) == 0)
+				move_env(envp, index);
+		}
+		i++;
 	}
-	else
-		if (index != -1 && \
-			ft_strncmp(args[1], envp[index], ft_strlen(args[1])) == 0)
-			move_env(envp, index);
 	return (0);
 }
