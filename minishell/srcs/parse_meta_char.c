@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 21:32:24 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/05 21:54:51 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/07 11:06:06 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ int	find_meta_char(char *buffer)
 		return (1);
 	else if (find_char(buffer, ">>"))
 		return (1);
-	else if (find_char(buffer, "&&"))
-		return (1);
-	else if (find_char(buffer, "||"))
-		return (1);
+	// else if (find_char(buffer, "&&"))
+	// 	return (1);
+	// else if (find_char(buffer, "||"))
+	// 	return (1);
 	else
 		return (0);
 }
@@ -91,11 +91,10 @@ void	parse_meta_chars(char *buffer, t_helper2 *buf_s)
 
 	init_meta_struct(&tp);
 	buf_s->exe[tp.j] = ft_calloc(50, sizeof(char));
-	
+
 	while (buffer[tp.i])
 	{
-		if (buffer [tp.i] == '<' || buffer [tp.i] == '>' || buffer [tp.i] == '|'\
-			|| buffer [tp.i] == '&')
+		if (buffer [tp.i] == '<' || buffer [tp.i] == '>' || buffer [tp.i] == '|')
 		{
 			meta_char_utils(&tp, buffer, buf_s);
 		}

@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 13:25:13 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/05 14:48:35 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/07 11:48:32 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 # include "get_next_line.h"
 # include "structs.h"
 # include <signal.h>
+# include <sys/types.h> //opendir, readdir, closedir
+# include <dirent.h> //opendir, readdir, closedir
 /*********** Colors **********/
 # define BLACK_CLR "\e[39m"
 # define RED_CLR "\e[41m"
@@ -47,13 +49,17 @@
 int		ft_echo(t_command *command);
 int		ft_pwd(void);
 int		ft_env(char	**envp);
-int		ft_exit(t_command *command);
+int		ft_exit(char **args);
 int		ft_export(char **envp, char **args);
 int		ft_unset(char **envp, char **args);
-int     ft_wildcards(char *args);
+void	ft_signals(void);
+int		builtin(t_command *prompt);
+int		builtin_env(t_command *prompt, char **envp);
+/*********** Bonus **********/
+int		ft_wildcards(char *args);
 
 /*********** Utils Functions**********/
-void	    parse_phase_one(t_helper2 *buf_s, t_command **prompt, char *buffer, char **envp);
+void		parse_phase_one(t_helper2 *buf_s, t_command **prompt, char *buffer, char **envp);
 void		init_helper(t_helper *helper, t_command **prompt);
 char		*get_last_meta(t_command *prompt, t_command *tmp);
 void		init_envp_simple(t_helper *help, char **envp);
