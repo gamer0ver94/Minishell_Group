@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 15:18:48 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/05 18:18:18 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/07 12:21:37 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,16 +74,16 @@ int    exec_builtin(t_command *prompt, char **envp)
 		&& !ft_strncmp(prompt->cmd, "unset", ft_strlen(prompt->cmd)))
 	{
 		// ft_unset(envp, prompt->argv);
-		my_unset(prompt,envp);
+		ft_unset(envp, prompt->argv);
 		return (0);
 	}
 	// pour tester int ft_wildcards(char *args)
-	if (!ft_strncmp(prompt->cmd, "ls", 2)
-		&& ft_strncmp(prompt->cmd, "ls", ft_strlen(prompt->cmd)))
-	{
-		ft_wildcards(prompt->argv[1]);
-		return (0);
-	}
+	// if (!ft_strncmp(prompt->cmd, "ls", 2)
+	// 	&& ft_strncmp(prompt->cmd, "ls", ft_strlen(prompt->cmd)))
+	// {
+	// 	ft_wildcards(prompt->argv[1]);
+	// 	return (0);
+	// }
 	return (1);
 }
 

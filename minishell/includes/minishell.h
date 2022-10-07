@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 13:25:13 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/07 11:48:32 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/07 12:25:37 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,17 @@
 # define RESET_ATT "\e[0m"
 
 /*********** Commands **********/
-int		ft_echo(t_command *command);
-int		ft_pwd(void);
-int		ft_env(char	**envp);
-int		ft_exit(char **args);
-int		ft_export(char **envp, char **args);
-int		ft_unset(char **envp, char **args);
-void	ft_signals(void);
-int		builtin(t_command *prompt);
-int		builtin_env(t_command *prompt, char **envp);
+int			ft_echo(t_command *command);
+int			ft_pwd(void);
+int			t_env(char	**envp);
+int			ft_exit(t_command *prompt);
+int			ft_export(char **envp, char **args);
+int			ft_unset(char **envp, char **args);
+void		t_signals(void);
+int			builtin(t_command *prompt);
+int			builtin_env(t_command *prompt, char **envp);
 /*********** Bonus **********/
-int		ft_wildcards(char *args);
+// int		    ft_wildcards(char *args);
 
 /*********** Utils Functions**********/
 void		parse_phase_one(t_helper2 *buf_s, t_command **prompt, char *buffer, char **envp);
@@ -101,19 +101,19 @@ void		free_fd(t_execc *exe, t_command **prompt);
 void		open_pipes(t_command **prompt, int **fd);
 void		init_execc_struct(t_execc *exe, t_command **prompt);
 /*********** Pipe Functions **********/
-void	redirect_out(t_execc *exe, t_command **prompt, char **envp);
-void	pipef(t_execc *exe, t_command **prompt, char **envp);
+void		redirect_out(t_execc *exe, t_command **prompt, char **envp);
+void		pipef(t_execc *exe, t_command **prompt, char **envp);
 void		redirect_in(t_execc *exe, t_command **prompt, char **envp);
 void		alloc_fd(t_execc *exe, t_command **prompt);
-void redirect_in_complex(t_execc *exe, t_command **prompt, char **envp);
-int	set_env_var(char **envp, char *args);
-char	**realloced_new_env(char **env, int index);
-int	get_env_var_index(char **env, char *var);
-void	free_tab(char **tab);
-void	my_unset(t_command *prompt, char **envp);
-void	last_cmd(t_execc *exe, t_command **prompt, char **envp);
-void	close_files(t_command **prompt, int **file);
-void	alloc_files(t_execc *exe, t_command **prompt);
-void	open_files(t_command **prompt, int **file);
-void	free_matrix(char **matrix);
+void		redirect_in_complex(t_execc *exe, t_command **prompt, char **envp);
+int			set_env_var(char **envp, char *args);
+char		**realloced_new_env(char **env, int index);
+int			get_env_var_index(char **env, char *var);
+void		free_tab(char **tab);
+void		last_cmd(t_execc *exe, t_command **prompt, char **envp);
+void		close_files(t_command **prompt, int **file);
+void		alloc_files(t_execc *exe, t_command **prompt);
+void		open_files(t_command **prompt, int **file);
+void		free_matrix(char **matrix);
+int			ft_env(char	**envp);
 #endif

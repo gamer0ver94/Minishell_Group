@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 13:34:36 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/07 11:46:58 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/07 12:20:05 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,25 @@ void	get_commands(char **split, t_command **prompt, char **envp)
 
 void	parse_quotes_util(t_parse *p, char **args, char *buffer)
 {
-	if ((buffer[p->l] == '\"') && (p->lock_2 != 1) && (p->lock++ != 2))
+	if ((buffer[p->l] == '\"') && (p->lock_2 != 1))
 	{
+		p->lock++;
 		if (p->lock == 2)
+		{
 			p->lock = 0;
+			p->i++;
+			p->j = 0;
+		}
 	}
-	else if ((buffer[p->l] == '\'') && (p->lock_2 != 2) && (p->lock != 1))
+	else if ((buffer[p->l] == '\'') && (p->lock != 1))
 	{
 		p->lock_2++;
 		if (p->lock_2 == 2)
+		{
 			p->lock_2 = 0;
+			p->i++;
+			p->j = 0;
+		}
 	}
 	else if ((buffer[p->l] == ' ') && (p->lock != 1 && p->lock_2 != 1))
 	{
