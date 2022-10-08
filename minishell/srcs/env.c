@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:22:35 by memam             #+#    #+#             */
-/*   Updated: 2022/10/08 22:34:50 by memam            ###   ########.fr       */
+/*   Updated: 2022/10/09 00:39:12 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int	get_env_var_index(char **env, char *var)
 	{
 		if (ft_strncmp(tmp[0], env[i], ft_strlen(tmp[0])) == 0)
 		{
-			free_tab(tmp);
 			return (i);
 		}
 		i++;
