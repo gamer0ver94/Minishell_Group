@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 09:42:11 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/07 10:33:14 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/09 22:19:45 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,20 @@ char	*parse_prompt(void)
 	char	current_dir[1024];
 	char	*tmp;
 
-	parser = ft_strdup(getenv("USER"));
-	tmp = ft_strjoin(parser, BOLD);
+	parser = ft_strdup(RED_CLR);
+	tmp = ft_strjoin(parser, getenv("USER"));
 	free(parser);
 	parser = ft_strjoin(tmp, GREEN_CLR);
 	free(tmp);
 	tmp = ft_strjoin(parser, "@MINISHELL:");
 	free(parser);
-	parser = ft_strjoin(tmp, MAGENTA_CLR);
+	parser = ft_strjoin(tmp, BLUE_CLR);
 	free(tmp);
 	tmp = ft_strjoin(parser, "~");
 	free(parser);
 	parser = ft_strjoin(tmp, getcwd(current_dir, 1024));
 	free(tmp);
-	tmp = ft_strjoin(parser, WHITE_CLR);
+	tmp = ft_strjoin(parser , WHITE_CLR);
 	free(parser);
 	parser = ft_strjoin(tmp, "$ ");
 	free(tmp);
@@ -51,7 +51,7 @@ int	shell_prompt(char **argv, char **envp)
 	while (1)
 	{
 		ptr = parse_prompt();
-		buffer = readline("MINISHELL $ ");
+		buffer = readline(ptr);
 		if (*buffer)
 		{
 			prompt = malloc(sizeof(t_command));

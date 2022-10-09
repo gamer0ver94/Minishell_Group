@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 12:07:26 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/04 10:22:28 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/09 18:50:54 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,28 @@
 
 int	g_status;
 
-void	sighangler(int signal)
+void	sighandler(int signal)
 {
 	if (signal == SIGSEGV)
 	{
 		printf("\nThank you for using MINISHELL\n");
-		exit (0);
+		exit(0);
 	}
-	if (signal == SIGQUIT)
-		(void)signal;
+	else if (signal == SIGINT)
+	{
+		ioctl(STDIN_FILENO, TIOCSTI, "\n");
+		rl_replace_line("", 0);
+		rl_on_new_line();
+	}
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	(void)envp;
 	(void)argv;
-
-	signal(SIGSEGV, &sighangler);
-	signal(SIGQUIT, &sighangler);
+	signal(SIGSEGV, &sighandler);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, &sighandler);
 	if (argc > 2)
 	{
 		printf("no need argv\n");

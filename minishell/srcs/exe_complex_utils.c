@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 11:10:00 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/05 17:45:25 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/08 18:46:50 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,6 @@ void	open_pipes(t_command **prompt, int **fd)
 	{
 		if (pipe(fd[i]) == -1)
 			write(2, "error opening pipe\n", 19);
-		else
-			write(2, "pipe opened\n", 12);
 		i++;
 	}
 }
@@ -84,12 +82,8 @@ void	close_pipes(t_command **prompt, int **fd)
 	{
 		if (close(fd[i][0]) == -1)
 			write(2, "error opening pipe\n", 19);
-		else
-			write(2, "pape[0] closed\n", 15);
 		if (close(fd[i][1]) == -1)
 			write(2, "error opening pipe\n", 19);
-		else
-			write(2, "pape[1] closed\n", 15);
 		i++;
 	}
 }

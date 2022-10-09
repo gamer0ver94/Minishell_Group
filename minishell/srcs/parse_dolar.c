@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 21:31:03 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/04 15:32:55 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/08 17:56:01 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,32 @@
 
 extern int	g_status;
 
-char	*get_dolar_var(char *tmp2, t_command **prompt)
+char *ft_realoc(char *str, int size)
 {
 	int	i;
+	char *tmp;
+	i = 0;
+
+	tmp = ft_calloc(size, sizeof(char));
+	while (str[i] != '\0')
+	{
+		tmp[i] = str[i];
+		i++;
+	}
+	free(str);
+	return (tmp);
+}
+
+char	*get_dolar_var(char *tmp2, t_command **prompt)
+{
+	int		i;
+	char	*tmp;
 
 	i = 0;
 	if (!ft_strncmp(tmp2, "?", 1))
 	{
-		tmp2 = ft_strdup(ft_itoa(g_status));
-		return(tmp2);
+		tmp = ft_itoa(g_status);
+		return (tmp);
 	}
 	else
 	{
@@ -33,15 +50,15 @@ char	*get_dolar_var(char *tmp2, t_command **prompt)
 			&& !ft_strncmp(tmp2, (*prompt)->envp[i], ft_strlen(tmp2)))
 			{
 				ft_bzero(tmp2, ft_strlen(tmp2));
-				tmp2 = ft_strdup((*prompt)->envp_val[i]);
-				return (tmp2);
+				tmp = ft_strdup((*prompt)->envp_val[i]);
+				tmp[ft_strlen(tmp)] = '\0';
+				return (tmp);
 			}
 			i++;
 		}
 	}
-	
-	ft_bzero(tmp2, ft_strlen(tmp2));
-	return (tmp2);
+	tmp = ft_calloc(1, sizeof(char));
+	return (tmp);
 }
 
 void	get_dolar_char(t_command **prompt, char **arg, int i)
@@ -49,41 +66,56 @@ void	get_dolar_char(t_command **prompt, char **arg, int i)
 	int		j;
 	char	*tmp;
 	char	*tmp2;
+	char	*var;
 	int		h;
+	int	size;
+	char	*p;
 
+	size = 0;
 	h = 0;
 	(void)prompt;
-	tmp = ft_calloc(100, sizeof(tmp));
+	tmp = ft_calloc(200, sizeof(char));
 	j = 0;
-	while (arg[i][j])
+	while (arg[i] && arg[i][j])
 	{
-		if (arg[i][j++] == '$')
+		if ((arg[i][j] == '&' ))
 		{
+			j++;
 			tmp2 = ft_calloc(100, sizeof(tmp));
-			while ((arg[i][j] && arg[i][j] != '$') \
-				&& (arg[i][j] && arg[i][j] != ' '))
+			while ((arg[i][j] && arg[i][j] != '&') && (arg[i][j] != '$') \
+				&& (arg[i][j]) && (arg[i][j] != ' '))
 				tmp2[h++] = arg[i][j++];
 			h = 0;
-			tmp = ft_strjoin(tmp, get_dolar_var(tmp2, prompt));
+			p = get_dolar_var(tmp2, prompt);
+			var = ft_strjoin(tmp, p);
+			free(p);
 			free(tmp2);
+			free(tmp);
+			tmp = ft_strdup(var);
+			free(var);
+			size = ft_strlen(tmp);
 		}
 		else
-			tmp[ft_strlen(tmp)] = arg[i][j];
-		if (arg[i][j] != '$')
+		{
+			tmp = ft_realoc(tmp, 200);
+			tmp[size] = arg[i][j];
+			size++;
 			j++;
+		}
 	}
+	free(arg[i]);
 	arg[i] = ft_strdup(tmp);
+	free(tmp);
 }
 
 void	identify_dolar(t_command **prompt, char **args)
 {
 	int	i;
 
-	(void)prompt;
 	i = 0;
-	while (args[i])
+	while (args && args[i])
 	{
-		if (find_char(args[i], "$"))
+		if (args[i][0] && find_char(args[i], "&"))
 			get_dolar_char(prompt, args, i);
 		i++;
 	}

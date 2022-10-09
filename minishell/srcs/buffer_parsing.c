@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 13:34:36 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/07 12:20:05 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/08 18:40:28 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,60 +44,71 @@ void	get_commands(char **split, t_command **prompt, char **envp)
 
 void	parse_quotes_util(t_parse *p, char **args, char *buffer)
 {
-	if ((buffer[p->l] == '\"') && (p->lock_2 != 1))
+	//if future error i know that args have empty mallocs
+	if ((buffer[p->l] == '\"') && (p->lock_2 != 1) && (p->lock++ != 2))
 	{
 		p->lock++;
 		if (p->lock == 2)
 		{
 			p->lock = 0;
+			args[p->i][p->j] = '\0';
 			p->i++;
 			p->j = 0;
+			while (buffer[p->l + 1] && buffer[p->l + 1] == ' ')
+				p->l++;
+			if (buffer[p->l + 1])
+				args[p->i] = ft_calloc(100, sizeof(char));
 		}
+		p->l++;
 	}
-	else if ((buffer[p->l] == '\'') && (p->lock != 1))
+	else if ((buffer[p->l] == '\'') && (p->lock_2 != 2) && (p->lock != 1))
 	{
 		p->lock_2++;
 		if (p->lock_2 == 2)
-		{
 			p->lock_2 = 0;
-			p->i++;
-			p->j = 0;
-		}
+		p->l++;
 	}
-	else if ((buffer[p->l] == ' ') && (p->lock != 1 && p->lock_2 != 1))
+	else if (buffer[p->l] == ' ' && p->lock != 1 && p->lock_2 != 1)
 	{
+		args[p->i][p->j] = '\0';
 		p->i++;
 		p->j = 0;
-		args[p->i] = ft_calloc(100, sizeof(char));
-		while (buffer[p->l] && buffer[p->l + 1] == ' ')
+		while (buffer[p->l] && buffer[p->l] == ' ')
 			p->l++;
+		if (buffer[p->l])
+			args[p->i] = ft_calloc(100, sizeof(char));
 	}
 	else
 	{
-		args[p->i][p->j++] = buffer[p->l];
-		if (buffer[p->l] == '$' && p->lock_2 == 0)
-			p->code++;
+		if (buffer[p->l] == '$' && p->lock_2 != 1)
+		{
+			args[p->i][p->j++] = '&';
+		}
+		else
+			args[p->i][p->j++] = buffer[p->l];
+		p->l++;
 	}
 }
 
 int	parse_quotes(char **args, char *buffer)
 {
-	t_parse	p;
+	t_parse	*p;
 
-	init_parse_struct(&p);
-	args[p.i] = ft_calloc(100, sizeof(char));
-	while (buffer[p.l])
+	p = malloc(sizeof(t_parse));
+	init_parse_struct(p);
+	args[p->i] = ft_calloc(100, sizeof(char));
+	while (buffer[p->l])
 	{
-		parse_quotes_util(&p, args, buffer);
-		p.l++;
+		parse_quotes_util(p, args, buffer);
 	}
-	return (p.code);
+	free(p);
+	return (0);
 }
 
 int	buffer_parsing(char *buffer, t_command **prompt, char **envp)
 {
 	t_helper2	*buf_s;
-	
+
 	buf_s = malloc(sizeof(t_helper));
 	buf_s->exe = malloc(sizeof(char *) * 50);
 	buf_s->meta_chars = malloc(sizeof(char *) * 50);
@@ -114,12 +125,9 @@ int	buffer_parsing(char *buffer, t_command **prompt, char **envp)
 	else
 	{
 		buf_s->args = ft_calloc(100, sizeof(char *));
-		buf_s->code = parse_quotes(buf_s->args, buffer);
+		parse_quotes(buf_s->args, buffer);
 		if (find_char(buffer, "$"))
-		{
-			if (buf_s->code > 0)
-				identify_dolar(prompt, buf_s->args);
-		}
+			identify_dolar(prompt, buf_s->args);
 		get_commands(buf_s->args, prompt, envp);
 		get_id(prompt);
 		free_args(buf_s->args);

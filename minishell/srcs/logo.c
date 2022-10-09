@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 12:07:34 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/08/31 16:22:56 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/09 22:17:17 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	logo(char *path)
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		return (1);
+	printf("%s", YELLOW_CLR);
 	while (read(fd, logo, 1))
 		printf("%s", logo);
 	close(fd);

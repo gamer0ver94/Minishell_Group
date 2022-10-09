@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:31:33 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/06 14:33:41 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/09 22:32:33 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	redirect_in(t_execc *exe, t_command **prompt, char **envp)
 		write (2, exe->tmp->next->argv[0], ft_strlen(exe->tmp->next->argv[0]));
 		write (2, " No such file or directory\n", 27);
 		g_status = 1;
+		exe->tmp = exe->tmp->next;
 	}
 	else
 	{
@@ -65,6 +66,7 @@ void redirect_in_complex(t_execc *exe, t_command **prompt, char **envp)
 			free(buffer);
 			break ;
 		}
+		write(file[1], "a\n", 2);
 		write(file[1], buffer, ft_strlen(buffer));
 		write(file[1], "\n", 1);
 		free(buffer);
@@ -73,8 +75,9 @@ void redirect_in_complex(t_execc *exe, t_command **prompt, char **envp)
 	{
 		dup2(file[0], STDIN_FILENO);
 		if (exe->tmp->next->meta_char)
-			dup2(exe->fd[exe->i][1], STDOUT_FILENO);
+			dup2(file[1], STDOUT_FILENO);
 		close_pipes(prompt, exe->fd);
+		close_files(prompt, exe->files);
 		close(file[0]);
 		close(file[1]);
 		exec_simple(exe->tmp, envp);

@@ -2,15 +2,16 @@
 create a struct with enviroment variable so i can acess them ✅
 use that struct to replace the $sign with the correct variable.✅
 handle $dolar when it is between quotes and still have a space with other caracters.✅
-handle signals
-handle $?
+handle signals✅
+handle $?✅ // lamost there is still buigs
 edit function cd when there is no argument than shold display the HOME variable as current pwd ✅
 implement redirections✅
 inplemente pipe✅
 builtins✅
-LEAKS
+LEAKS✅ //ps cd have some leaks
 
 ---------------BUGS---------------
-bugged with "$USER""$USER"'$USER' and not hadle not closed quotes
-when using cat < file this command do what is supose to do except that dont return the prompt
+bugged with "$USER""$USER"'$USER' and not hadle not closed quotes✅ // ps it creates 2 empty arrays that may cause problems
+when using cat < file this command do what is supose to do except that dont return the prompt✅
 prompt text get bugged when it is 2 big
+problem when using cat << end > a

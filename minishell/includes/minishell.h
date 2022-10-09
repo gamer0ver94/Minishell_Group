@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 13:25:13 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/07 12:25:37 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/09 18:40:20 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,21 @@
 # include <fcntl.h>
 # include "get_next_line.h"
 # include "structs.h"
+# include <sys/ioctl.h>
 # include <signal.h>
 # include <sys/types.h> //opendir, readdir, closedir
 # include <dirent.h> //opendir, readdir, closedir
 /*********** Colors **********/
 # define BLACK_CLR "\e[39m"
-# define RED_CLR "\e[41m"
-# define GREEN_CLR "\e[32m"
-# define YELLOW_CLR "\e[33m"
-# define BLUE_CLR "\e[34m"
-# define MAGENTA_CLR "\e[35m"
+# define RED_CLR "\001\033[1;91m\002"
+# define GREEN_CLR "\001\033[1;92m\002"
+# define YELLOW_CLR "\001\033[1;93m\002"
+# define BLUE_CLR "\001\033[1;94m\002"
+# define MAGENTA_CLR "\001\033[1;95m\002"
 # define CYAN_CLR "\e[36m"
 # define LIGHT_GRAY_CLR "\e[37m"
-# define WHITE_CLR "\e[97m"
-# define NORMAL_CLR "\e[21m"
+# define WHITE_CLR "\001\033[0;97m\002"
+# define NORMAL_CLR "\001\033[0;39m\002"
 # define BOLD "\e[1m"
 # define RESET_ATT "\e[0m"
 
