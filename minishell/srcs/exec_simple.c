@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_simple.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 15:18:48 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/10 15:10:17 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/10 17:34:28 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,8 @@ int	exec_simple(t_command *prompt, char **envp)
 		free_args(env_path);
 		return (1);
 	}
-	if (!ft_strncmp(prompt->cmd, "exit", 5))
-		free_args(env_path);
+	// if (!ft_strncmp(prompt->cmd, "exit", 5))
+	// 	free_args(env_path);
 	if (exec_builtin(prompt, envp) == 0)
 	{
 		free_args(env_path);
@@ -122,14 +122,12 @@ int	exec_simple(t_command *prompt, char **envp)
 				path = get_single_path(prompt->cmd, env_path[i]);
 				if (execve(path, prompt->argv, envp) == -1)
 				{
-					free_args(env_path);
 					free(path);
 					i++;
 				}
 			}
 			write(2, prompt->cmd, ft_strlen(prompt->cmd));
 			write(2, ": command not found\n", 20);
-			free_args(env_path);
 			exit(127);
 		}
 	}
