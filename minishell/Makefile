@@ -1,7 +1,8 @@
 CC = gcc
 CCFLAGS = -Wall -Wextra -Werror -g
-LDFLAGS = -lreadline
-LIBFT	=	-lft -L libft
+LDFLAGS =  -lreadline -L/Users/dpaulino/.brew/opt/readline/lib -I/Users/dpaulino/.brew/opt/readline/include
+LIBFT	=	-lft -I./includes -I./libft/includes -I/Users/dpaulino/.brew/opt/readline/include -L libft
+LIBLINKS = -I./includes -I./libft/includes -I/Users/dpaulino/.brew/opt/readline/include
 APPNAME = minishell
 EXT = .c
 SRCDIR = srcs

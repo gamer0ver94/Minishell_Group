@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_dolar.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 21:31:03 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/08 17:56:01 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/10 12:53:01 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	get_dolar_char(t_command **prompt, char **arg, int i)
 	j = 0;
 	while (arg[i] && arg[i][j])
 	{
-		if ((arg[i][j] == '&' ))
+		if (arg[i][j] == '&' )
 		{
 			j++;
 			tmp2 = ft_calloc(100, sizeof(tmp));
