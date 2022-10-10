@@ -6,11 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 11:48:05 by dpaulino          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/09/22 15:12:31 by dpaulino         ###   ########.fr       */
-=======
-/*   Updated: 2022/09/26 12:10:25 by dpaulino         ###   ########.fr       */
->>>>>>> main
+/*   Updated: 2022/10/10 15:17:28 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +22,6 @@ void	wait_childs(t_execc *exe)
 
 void	exec_complex(t_command **prompt, char **envp)
 {
-<<<<<<< HEAD
 	t_execc		exe;
 
 	init_execc_struct(&exe, prompt);
@@ -49,34 +44,6 @@ void	exec_complex(t_command **prompt, char **envp)
 	close_pipes(prompt, exe.fd);
 	wait_childs(&exe);
 	free_fd(prompt, exe.fd);
-=======
-	t_execc		*exe;
-
-	exe = malloc(sizeof(t_execc));
-	init_execc_struct(exe, prompt);
-	(void)envp;
-	while (exe->tmp)
-	{
-		write(2, "as\n", 3);
-		if (exe->tmp->id == 1)
-			first_cmd(exe, prompt, envp);
-		else if (exe->tmp->meta_char && !ft_strncmp(exe->tmp->meta_char, "|", 1))
-			pipef(exe, prompt, envp);
-		else if (exe->tmp->meta_char && !ft_strncmp(exe->tmp->meta_char, ">>", 2))
-			redirect_out(exe, prompt, envp);
-		else if (exe->tmp->meta_char && !ft_strncmp(exe->tmp->meta_char, ">", 1))
-			redirect_out(exe, prompt, envp);
-		// else if (exe->tmp->meta_char && !ft_strncmp(exe->tmp->meta_char, "<", 1))
-		// 	redirect_in(exe, prompt, envp);
-		// else if (exe->tmp->meta_char && !ft_strncmp(exe->tmp->meta_char, "<<", 2))
-		// 	redirect_in(&exe, prompt, envp);	
-		else
-			last_cmd(exe, prompt, envp);
-	}
-	close_pipes(prompt, exe->fd);
-	wait_childs(exe);
-	free_fd(exe, prompt);
->>>>>>> main
 }
 
 
