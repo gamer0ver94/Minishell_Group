@@ -3,39 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 11:03:50 by memam             #+#    #+#             */
-/*   Updated: 2022/10/05 18:25:38 by memam            ###   ########.fr       */
+/*   Updated: 2022/09/26 14:13:55 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	ft_echo_op(t_command *command)
-{
-	int	i;
-
-	i = 2;
-	while (command->argv[i])
-	{
-		if (ft_strncmp(command->argv[i], "-n", 2) != 0)
-		{
-			while (command->argv[i])
-			{
-				printf("%s", command->argv[i]);
-				if (command->argv[++i])
-					printf(" ");
-			}
-		}		
-		i++;
-	}
-}
-
 int	ft_echo(t_command *command)
 {
 	int		i;
 
+	i = 2;
 	if (command->argv[1] == NULL)
 	{
 		printf("\n");
@@ -43,7 +24,12 @@ int	ft_echo(t_command *command)
 	}	
 	else if (ft_strncmp(command->argv[1], "-n", 2) == 0)
 	{
-		ft_echo_op(command);
+		while (command->argv[i])
+		{
+			if (ft_strncmp(command->argv[i], "-n", 2) != 0)
+				printf("%s", command->argv[i]);
+			i++;
+		}
 		return (0);
 	}
 	else
@@ -51,12 +37,11 @@ int	ft_echo(t_command *command)
 		i = 1;
 		while (command->argv[i])
 		{
-			printf("%s", command->argv[i]);
-			if (command->argv[i])
-				printf(" ");
+			printf("%s ", command->argv[i]);
 			i++;
 		}
 		printf("\n");
 	}
 	return (0);
 }
+//this function needs to handle -n

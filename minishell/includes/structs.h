@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/27 17:51:34 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/05 17:44:07 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/26 14:13:23 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ typedef struct s_command
 	struct s_command	*next;
 }	t_command;
 //parsing helper to reduce code
-
 typedef struct s_parse
 {
 	int	i;
@@ -74,12 +73,8 @@ typedef struct s_execc
 {
 	t_command	*tmp;
 	int			**fd;
-	int			**files;
-	int			h;
 	int			i;
 	int			j;
 	int			lock;
-	pid_t		*pid;
-	int			g;
 }	t_execc;
 #endif

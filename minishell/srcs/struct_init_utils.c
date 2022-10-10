@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 12:43:46 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/07 09:18:21 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/19 18:06:03 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	init_envp_simple(t_helper *help, char **envp)
 		help->j++;
 		while (envp[help->i][help->j])
 		{
-			help->tmp->envp_val[help->i][help->h] = envp[help->i][help->j];
+		help->tmp->envp_val[help->i][help->h] = envp[help->i][help->j];
 			help->j++;
 			help->h++;
 		}

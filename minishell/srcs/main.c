@@ -3,18 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 12:07:26 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/07 09:18:08 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/26 14:15:21 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	g_status;
-
-void	sighangler(int signal)
+void sighangler(int signal)
 {
 	if (signal == SIGSEGV)
 	{
@@ -31,8 +29,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 
 	// signal(SIGSEGV, &sighangler);
-	//signal(SIGQUIT, &sighangler);
-	
+	signal(SIGQUIT, &sighangler);
 	if (argc > 2)
 	{
 		printf("no need argv\n");

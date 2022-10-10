@@ -6,13 +6,13 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 21:32:24 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/05 15:35:54 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/20 00:02:39 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	get_meta_chars(t_command **prompt, t_helper2 *buf_s)
+void	get_meta_chars(t_command **prompt, char **meta_chars)
 {
 	t_command	*tmp;
 	int			i;
@@ -21,12 +21,8 @@ void	get_meta_chars(t_command **prompt, t_helper2 *buf_s)
 	tmp = (*prompt);
 	while (tmp)
 	{
-		if (buf_s->meta_chars[i])
-		{
-			if (tmp->meta_char)
-				free(tmp->meta_char);
-			tmp->meta_char = ft_strdup(buf_s->meta_chars[i]);
-		}
+		if (meta_chars[i])
+			tmp->meta_char = ft_strdup(meta_chars[i]);
 		else
 			tmp->meta_char = NULL;
 		i++;
@@ -54,12 +50,13 @@ int	find_meta_char(char *buffer)
 		return (0);
 }
 
-void	meta_char_utils(t_tmp *tp, char *buffer, t_helper2 *buf_s)
+void	meta_char_utils(t_tmp *tp, char *buffer, char **meta_chars, char **exe)
 {
 	while (buffer [tp->i] == '<' || \
-		buffer [tp->i] == '>' || buffer [tp->i] == '|')
+		buffer [tp->i] == '>' || buffer [tp->i] == '|' \
+		|| buffer [tp->i] == '&')
 	{
-		buf_s->meta_chars[tp->a][tp->b] = buffer[tp->i];
+		meta_chars[tp->a][tp->b] = buffer[tp->i];
 		tp->b++;
 		tp->i++;
 	}
@@ -67,9 +64,8 @@ void	meta_char_utils(t_tmp *tp, char *buffer, t_helper2 *buf_s)
 	tp->j++;
 	tp->h = 0;
 	tp->b = 0;
-	buf_s->exe[tp->j] = ft_calloc(100, sizeof(char));
-	buf_s->meta_chars[tp->a] = ft_calloc(100, sizeof(char));
-	//here
+	exe[tp->j] = ft_calloc(100, sizeof(char));
+	meta_chars[tp->a] = ft_calloc(100, sizeof(char));
 	if (buffer[tp->i] == ' ')
 		tp->i++;
 }
@@ -84,23 +80,23 @@ void	init_meta_struct(t_tmp *help)
 	help->b = 0;
 }
 
-void	parse_meta_chars(char *buffer, t_helper2 *buf_s)
+void	parse_meta_chars(char *buffer, char **meta_chars, char **exe)
 {
 	t_tmp	tp;
 
 	init_meta_struct(&tp);
-	buf_s->exe[tp.j] = ft_calloc(50, sizeof(char));
-	buf_s->meta_chars[tp.a] = ft_calloc(50, sizeof(char));
+	exe[tp.j] = ft_calloc(50, sizeof(char));
+	meta_chars[tp.a] = ft_calloc(50, sizeof(char));
 	while (buffer[tp.i])
 	{
 		if (buffer [tp.i] == '<' || buffer [tp.i] == '>' || buffer [tp.i] == '|'\
 			|| buffer [tp.i] == '&')
 		{
-			meta_char_utils(&tp, buffer, buf_s);
+			meta_char_utils(&tp, buffer, meta_chars, exe);
 		}
 		else
-			buf_s->exe[tp.j][tp.h++] = buffer[tp.i++];
+			exe[tp.j][tp.h++] = buffer[tp.i++];
 	}
-	buf_s->exe[tp.j + 1] = NULL;
-	buf_s->meta_chars[tp.a] = NULL;
+	exe[tp.j + 1] = NULL;
+	meta_chars[tp.a] = NULL;
 }

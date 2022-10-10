@@ -3,25 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   shell_prompt.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 09:42:11 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/07 09:18:12 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/10 13:30:17 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-extern int	g_status;
-
 char	*parse_prompt(void)
 {
 	char	*parser;
-	//char	current_dir[1024];
+	char	current_dir[1024];
 	char	*tmp;
 
-	parser = NULL;
-	//parser = ft_strdup(getenv("USER"));
+	parser = ft_strdup(getenv("USER"));
 	tmp = ft_strjoin(parser, BOLD);
 	free(parser);
 	parser = ft_strjoin(tmp, GREEN_CLR);
@@ -32,7 +29,7 @@ char	*parse_prompt(void)
 	free(tmp);
 	tmp = ft_strjoin(parser, "~");
 	free(parser);
-	//parser = ft_strjoin(tmp, getcwd(current_dir, 1024));
+	parser = ft_strjoin(tmp, getcwd(current_dir, 1024));
 	free(tmp);
 	tmp = ft_strjoin(parser, WHITE_CLR);
 	free(parser);
@@ -46,27 +43,26 @@ int	shell_prompt(char **argv, char **envp)
 	t_command	*prompt;
 	char		*buffer;
 	char		*ptr;
-	g_status = 0;
 	while (1)
 	{
-		
 		prompt = malloc(sizeof(t_command));
 		ptr = parse_prompt();
+		struct_init_simple(&prompt, envp);
 		buffer = readline("MINISHELL $ ");
-		if (*buffer)
+		if (ft_strlen(buffer))
 		{
-			struct_init_simple(&prompt, envp);
 			if (!buffer_parsing(buffer, &prompt, envp))
 				exec_simple(prompt, envp);
 			else
 				exec_complex(&prompt, envp);
 			add_history(buffer);
-			if (argv[1] && !ft_strncmp(argv[1], "debugg", 6))
-				print_struct(prompt);
-			free_prompt(&prompt);
 		}
+		if (argv[1] && !ft_strncmp(argv[1], "debugg", 6))
+			print_struct(prompt);
 		free(buffer);
 		free(ptr);
+		if (prompt->argc)
+			free_prompt(&prompt);
 	}
 	return (0);
 }

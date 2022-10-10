@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 21:26:50 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/05 14:47:13 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/19 21:54:22 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	get_id(t_command **prompt)
 
 void	parse_phase_one(t_helper2 *buf_s, t_command **prompt, char *buffer, char **envp)
 {
-	parse_meta_chars(buffer, buf_s);
+	parse_meta_chars(buffer, buf_s->meta_chars, buf_s->exe);
 	while (buf_s->exe[buf_s->i])
 	{
 		if (buf_s->exe[buf_s->i][0] == ' ')
@@ -42,9 +42,10 @@ void	parse_phase_one(t_helper2 *buf_s, t_command **prompt, char *buffer, char **
 				identify_dolar(prompt, buf_s->args);
 		}
 		get_commands(buf_s->args, prompt, envp);
-		get_meta_chars(prompt, buf_s);
+		get_meta_chars(prompt, buf_s->meta_chars);
 		free_args(buf_s->args);
 		buf_s->i++;
 	}
 	get_id(prompt);
+	free(buf_s->exe);
 }

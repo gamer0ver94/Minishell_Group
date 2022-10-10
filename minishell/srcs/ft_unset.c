@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 18:15:50 by memam             #+#    #+#             */
-/*   Updated: 2022/10/06 17:21:38 by memam            ###   ########.fr       */
+/*   Updated: 2022/10/10 13:43:50 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int	move_env(char **envp, int index)
 	envp = realloced_new_env(envp, count);
 	tmp = NULL;
 	free(tmp); // a tester
-	
 	return (0);
 }
 

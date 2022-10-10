@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 10:27:32 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/05 15:22:14 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/09/26 14:16:04 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,12 @@ t_command	*get_last(t_command *prompt)
 
 void	free_prompt_util(t_command *tmp, int i)
 {
-	while (tmp->envp[i])
-		free(tmp->envp[i++]);
-	free(tmp->envp);
+	if (tmp->envp)
+	{
+		while (tmp->envp[i])
+			free(tmp->envp[i++]);
+		free(tmp->envp);
+	}
 }
 
 void	free_prompt(t_command **prompt)
@@ -36,32 +39,25 @@ void	free_prompt(t_command **prompt)
 	int			i;
 
 	tmp = (*prompt);
-	i = 0;
 	while (tmp)
 	{
 		i = 0;
-		free(tmp->cmd);
-		free(tmp->meta_char);
-		while (tmp->argv && tmp->argv[i])
-		{
-			free(tmp->argv[i]);
-			i++;
-		}
-		i = 0;
-		while (tmp->envp_val[i])
-			free(tmp->envp_val[i++]);
-		free(tmp->envp_val);
-		i = 0;
-		while (tmp->envp[i])
-			free(tmp->envp[i++]);
-		free(tmp->envp);
+		if (tmp->cmd)
+			free(tmp->cmd);
+		while (tmp && tmp->argv[i++])
+			if (tmp->argv[i])
+				free(tmp->argv[i]);
 		free(tmp->argv);
 		i = 0;
+		free_prompt_util(tmp, i);
+		if (tmp->envp_val)
+			while (tmp->envp_val[i])
+				free(tmp->envp_val[i++]);
+		free(tmp->envp_val);
 		aux = tmp;
 		tmp = tmp->next;
 		free(aux);
 	}
-	// printf("%s\n",(*prompt)->envp[0]);
 }	
 
 void	struct_init_complex(t_command **prompt, char **envp)
@@ -94,8 +90,8 @@ void	struct_init_simple(t_command **prompt, char **envp)
 	help.tmp->argv = NULL;
 	help.tmp->meta_char = NULL;
 	help.tmp->id = 0;
-	help.tmp->envp = malloc(sizeof(char *) * 500);
-	help.tmp->envp_val = malloc(sizeof(char *) * 1000);
+	help.tmp->envp = ft_calloc(500, sizeof(char *));
+	help.tmp->envp_val = ft_calloc(1000, sizeof(char *));
 	help.tmp->next = NULL;
 	init_envp_simple(&help, envp);
 }
