@@ -6,7 +6,11 @@
 /*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 12:07:26 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/09/26 14:15:21 by dpaulino         ###   ########.fr       */
+<<<<<<< HEAD
+/*   Updated: 2022/09/22 13:12:09 by dpaulino         ###   ########.fr       */
+=======
+/*   Updated: 2022/09/24 23:06:46 by dpaulino         ###   ########.fr       */
+>>>>>>> main
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +32,11 @@ int	main(int argc, char **argv, char **envp)
 	(void)envp;
 	(void)argv;
 
+<<<<<<< HEAD
+	signal(SIGSEGV, &sighangler);
+=======
 	// signal(SIGSEGV, &sighangler);
+>>>>>>> main
 	signal(SIGQUIT, &sighangler);
 	if (argc > 2)
 	{
