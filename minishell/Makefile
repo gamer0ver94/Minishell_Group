@@ -1,6 +1,7 @@
 CC = gcc
 CCFLAGS = -Wall -Wextra -Werror
-LDFLAGS = -lreadline -g
+LINKS = -lreadline -L${HOME}/goinfre/.brew/opt/readline/lib
+LIBLINKS = -I./includes -I./libft/includes -I ${HOME}/goinfre/.brew/opt/readline/include
 LIBFT	=	-lft -L libft
 APPNAME = minishell
 EXT = .c
@@ -16,11 +17,11 @@ all: $(APPNAME)
 
 $(APPNAME): $(OBJ)
 	make -C libft
-	$(CC) $(CCFLAGS) -o $@ $^ $(LDFLAGS) $(LIBFT)
+	$(CC) $(CCFLAGS) -o $@ $^ $(LINKS) $(LIBFT)
 
 
 $(OBJDIR)/%.o: $(SRCDIR)/%$(EXT)
-	$(CC) $(CCFLAGS) -o $@ -c $<
+	$(CC) $(CCFLAGS) $(LIBLINKS) -o $@ -c $<
 
 clean:
 	$(RM) $(DELOBJ) $(DEP) $(APPNAME)
