@@ -15,3 +15,7 @@ bugged with "$USER""$USER"'$USER' and not hadle not closed quotes✅ // ps it cr
 when using cat < file this command do what is supose to do except that dont return the prompt✅
 prompt text get bugged when it is 2 big
 problem when using cat << end > a
+
+
+
+valgrind --leak-check=full --suppressions=readline.supp --show-leak-kinds=all --track-origins=yes ./minishell

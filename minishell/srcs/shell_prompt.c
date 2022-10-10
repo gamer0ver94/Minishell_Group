@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 09:42:11 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/10 10:02:26 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/10 14:17:42 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	shell_prompt(char **argv, char **envp)
 	{
 		ptr = parse_prompt();
 		buffer = readline(ptr);
+		free(ptr);
 		if (*buffer)
 		{
 			prompt = malloc(sizeof(t_command));
@@ -66,7 +67,7 @@ int	shell_prompt(char **argv, char **envp)
 			free_prompt(&prompt);
 		}
 		free(buffer);
-		free(ptr);
 	}
+	free(prompt);
 	return (0);
 }
