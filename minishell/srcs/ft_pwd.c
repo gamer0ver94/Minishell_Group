@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 12:16:26 by memam             #+#    #+#             */
-/*   Updated: 2022/09/26 14:15:04 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/05 19:16:13 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,5 @@ int	ft_pwd(void)
 
 	if (getcwd(command, sizeof(command)) != NULL)
 		printf("%s\n", command);
-	printf("\n");
 	return (0);
 }

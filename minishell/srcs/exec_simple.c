@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 15:18:48 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/10 17:34:28 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/10 19:33:35 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,11 +103,12 @@ int	exec_simple(t_command *prompt, char **envp)
 		free_args(env_path);
 		return (1);
 	}
-	// if (!ft_strncmp(prompt->cmd, "exit", 5))
-	// 	free_args(env_path);
-	if (exec_builtin(prompt, envp) == 0)
-	{
+	//here is the exec_builtin
+	if (!ft_strncmp(prompt->cmd, "exit", 5))
 		free_args(env_path);
+	if (builtin_env(prompt, envp) == 0 ||builtin(prompt) == 0)
+	{
+		free_args(env_path); 
 		return (1);
 	}
 	pid = fork();

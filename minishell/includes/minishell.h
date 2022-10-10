@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 13:25:13 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/09 18:40:20 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/10 18:43:05 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@
 int			ft_echo(t_command *command);
 int			ft_pwd(void);
 int			t_env(char	**envp);
-int			ft_exit(t_command *prompt);
+int			ft_exit(t_command *command);
 int			ft_export(char **envp, char **args);
 int			ft_unset(char **envp, char **args);
 void		t_signals(void);

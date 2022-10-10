@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:22:35 by memam             #+#    #+#             */
-/*   Updated: 2022/09/24 15:52:29 by memam            ###   ########.fr       */
+/*   Updated: 2022/10/06 18:26:12 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,21 @@ int	env_var_count(char **envp)
 		i++;
 	return (i);
 }
+
+/* nico_free_tab(&tab); */
+// void	nico_free_tab(char ***tab)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while ((*tab)[i])
+// 	{
+// 		free((*tab)[i++]);
+// 		(*tab)[i] = NULL;
+// 	}
+// 	free(*tab);
+// 	*tab = NULL;
+// }
 
 void	free_tab(char **tab)
 {
@@ -45,12 +60,14 @@ int	get_env_var_index(char **env, char *var)
 	{
 		if (ft_strncmp(tmp[0], env[i], ft_strlen(tmp[0])) == 0)
 		{
-			free_tab(tmp);
+			free(tmp);
+			tmp = NULL;
 			return (i);
 		}
 		i++;
 	}
-	free_tab(tmp);
+	free(tmp);
+	tmp = NULL;
 	return (-1);
 }
 
@@ -73,7 +90,7 @@ char	**realloced_new_env(char **env, int index)
 		env[i] = tmp[i];
 		i++;
 	}
-	free_tab(tmp);
+	free_args(tmp);
 	return (env);
 }
 
@@ -85,16 +102,20 @@ int	set_env_var(char **envp, char *args)
 	index = get_env_var_index(envp, args);
 	if (index != -1 && envp[index])
 	{
-		envp[index] = ft_strdup(args);
+		tmp = ft_strdup(args);
+		envp[index] = tmp;
+		tmp = NULL;
 	}
 	else
 	{
 		index = env_var_count(envp);
 		realloced_new_env(envp, index + 1);
-		tmp = envp[index -1];
-		envp[index - 1] = ft_strdup(args);
-		envp[index] = ft_strdup(tmp);
+		envp[index] = envp[index -1];
+		tmp = ft_strdup(args);
+		envp[index - 1] = tmp;
 		envp[index + 1] = NULL;
+		tmp = NULL;
 	}
+	free(tmp);
 	return (0);
 }

@@ -21,7 +21,7 @@ $(APPNAME): $(OBJ)
 
 
 $(OBJDIR)/%.o: $(SRCDIR)/%$(EXT)
-	$(CC) $(CCFLAGS) -o $@ -c $<
+	$(CC) -g3 $(CCFLAGS) -o $@ -c $<
 
 clean:
 	$(RM) $(DELOBJ) $(DEP) $(APPNAME)
