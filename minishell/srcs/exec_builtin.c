@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 16:04:54 by memam             #+#    #+#             */
-/*   Updated: 2022/10/10 18:44:04 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/11 12:38:50 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	builtin_env(t_command *prompt, char **envp)
 	return (1);
 }
 
-int	builtin(t_command *prompt)
+int	builtin(t_command *prompt, char **envp)
 {
 	if (!ft_strncmp(prompt->cmd, "echo", 4) && \
 		!ft_strncmp(prompt->cmd, "echo", ft_strlen(prompt->cmd)))
@@ -52,7 +52,7 @@ int	builtin(t_command *prompt)
 	if (!ft_strncmp(prompt->cmd, "exit", 5) \
 		&& !ft_strncmp(prompt->cmd, "exit", ft_strlen(prompt->cmd)))
 	{
-		ft_exit(prompt);
+		ft_exit(prompt, envp);
 		return (0);
 	}
 	return (1);

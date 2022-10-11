@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 12:07:26 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/10 18:40:06 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/11 15:31:35 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	sighandler(int signal)
 {
 	if (signal == SIGSEGV)
 	{
-		printf("\nThank you for using MINISHELL\n");
+		// printf("\nThank you for using MINISHELL\n");
 		exit(0);
 	}
 	else if (signal == SIGINT)
@@ -31,17 +31,25 @@ void	sighandler(int signal)
 
 int	main(int argc, char **argv, char **envp)
 {
-	(void)envp;
-	(void)argv;
-	signal(SIGSEGV, &sighandler);
+	char **new_envp;
+
+	// if (fork())
+	// {
+	// 	execv("/usr/bin/clear",NULL);
+	// 	exit(0);
+	// }
+	new_envp = ft_calloc(1000, sizeof(char *));
+	// if(signal(SIGSEGV, &sighandler))
+	// 	printf("dadsadsa\n");
 	signal(SIGQUIT, SIG_IGN);
 	// signal(SIGINT, &sighandler);
+	create_env(new_envp, envp);
 	if (argc > 2)
 	{
 		printf("no need argv\n");
 		return (1);
 	}
 	logo("assets/logo.txt");
-	shell_prompt(argv, envp);
+	shell_prompt(argv, new_envp);
 	return (0);
 }

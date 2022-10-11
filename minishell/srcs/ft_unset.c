@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 18:15:50 by memam             #+#    #+#             */
-/*   Updated: 2022/10/06 17:21:38 by memam            ###   ########.fr       */
+/*   Updated: 2022/10/11 14:40:57 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,21 @@ int	move_env(char **envp, int index)
 	int		count;
 	char	*tmp;
 
+	tmp = ft_calloc(1,sizeof(char));
 	i = index;
 	count = index;
 	while (envp[i + 1])
 	{
+		free(envp[i]);
+		free(tmp);
 		tmp = ft_strdup(envp[i + 1]);
-		envp[i] = tmp;
-		envp[i +1] = NULL;
-		free(envp[i + 1]);
+		envp[i] = ft_strdup(tmp);
 		i++;
 		count++;
-	}
-	envp = realloced_new_env(envp, count);
-	tmp = NULL;
-	free(tmp); // a tester
-	
+	};
+	free(envp[i]);
+	envp[i] = ft_strdup("lalalla");
+	free(tmp);
 	return (0);
 }
 

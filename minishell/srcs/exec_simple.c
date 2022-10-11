@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_simple.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 15:18:48 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/10 19:33:35 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/11 15:09:57 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int    exec_builtin(t_command *prompt, char **envp)
 	if (!ft_strncmp(prompt->cmd, "exit", 5) \
 		&& !ft_strncmp(prompt->cmd, "exit", ft_strlen(prompt->cmd)))
 	{
-		ft_exit(prompt);
+		ft_exit(prompt, envp);
 		return (0);
 	}
 	if (!ft_strncmp(prompt->cmd, "unset", 5)
@@ -106,7 +106,7 @@ int	exec_simple(t_command *prompt, char **envp)
 	//here is the exec_builtin
 	if (!ft_strncmp(prompt->cmd, "exit", 5))
 		free_args(env_path);
-	if (builtin_env(prompt, envp) == 0 ||builtin(prompt) == 0)
+	if (builtin_env(prompt, envp) == 0 ||builtin(prompt, envp) == 0)
 	{
 		free_args(env_path); 
 		return (1);
@@ -129,7 +129,7 @@ int	exec_simple(t_command *prompt, char **envp)
 			}
 			write(2, prompt->cmd, ft_strlen(prompt->cmd));
 			write(2, ": command not found\n", 20);
-			exit(127);
+			exit(0);
 		}
 	}
 	if (waitpid(pid, &status, 0))
