@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 12:02:06 by memam             #+#    #+#             */
-/*   Updated: 2022/10/05 13:51:10 by memam            ###   ########.fr       */
+/*   Updated: 2022/10/11 18:53:45 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,25 +29,13 @@ int	is_valid_env_var(char *var)
 	return (1);
 }
 
-int	is_valid_env_var2(char *var)
-{
-	int	i;
-
-	i = 1;
-	while (var[i] && var[i] != '\0')
-	{
-		if (var[i] == '=')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
 int	ft_export(char **envp, char **args)
 {
 	int		i;
+	int		ret;
 
 	i = 1;
+	ret = 0;
 	if (!args[i])
 		return (ft_env(envp));
 	while (args[i])
@@ -55,11 +43,7 @@ int	ft_export(char **envp, char **args)
 		if (!is_valid_env_var(args[i]))
 		{
 			printf("export: %s not a valid identifier\n", args[i]);
-			return (1);
-		}
-		if (!is_valid_env_var2(args[i]))
-		{
-			return (0);
+			ret = 1;
 		}
 		else if (args[i] != NULL)
 		{
@@ -67,5 +51,5 @@ int	ft_export(char **envp, char **args)
 		}
 		i++;
 	}
-	return (0);
+	return (ret);
 }
