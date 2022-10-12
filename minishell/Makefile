@@ -1,8 +1,9 @@
 CC = gcc
-CCFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
-LDFLAGS =  -lreadline -L/Users/dpaulino/.brew/opt/readline/lib -I/Users/dpaulino/.brew/opt/readline/include
-LIBFT	=	-lft -I./includes -I./libft/includes -I/Users/dpaulino/.brew/opt/readline/include -L libft
-LIBLINKS = -I./includes -I./libft/includes -I/Users/dpaulino/.brew/opt/readline/include
+CCFLAGS = -Wall -Wextra -Werror -g 
+#-fsanitize=address
+LDFLAGS =  -lreadline -L/Users/memam/.brew/opt/readline/lib -I/Users/memam/.brew/opt/readline/include
+LIBFT	=	-lft  -L libft
+LIBLINKS = -I./includes -I./libft/includes -I/Users/memam/.brew/opt/readline/include
 APPNAME = minishell
 EXT = .c
 SRCDIR = srcs
@@ -21,7 +22,7 @@ $(APPNAME): $(OBJ)
 
 
 $(OBJDIR)/%.o: $(SRCDIR)/%$(EXT)
-	$(CC) -g3 $(CCFLAGS) -o $@ -c $<
+	$(CC) -g3 $(CCFLAGS) $(LIBLINKS) -o $@ -c $<
 
 clean:
 	$(RM) $(DELOBJ) $(DEP) $(APPNAME)
