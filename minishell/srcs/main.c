@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 12:07:26 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/11 15:31:35 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/12 22:24:15 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ int	g_status;
 
 void	sighandler(int signal)
 {
-	if (signal == SIGSEGV)
+	if (signal == SIGQUIT)
 	{
-		// printf("\nThank you for using MINISHELL\n");
+		printf("\nThank you for using MINISHELL\n");
 		exit(0);
 	}
 	else if (signal == SIGINT)
@@ -31,18 +31,11 @@ void	sighandler(int signal)
 
 int	main(int argc, char **argv, char **envp)
 {
-	char **new_envp;
+	char	**new_envp;
 
-	// if (fork())
-	// {
-	// 	execv("/usr/bin/clear",NULL);
-	// 	exit(0);
-	// }
 	new_envp = ft_calloc(1000, sizeof(char *));
-	// if(signal(SIGSEGV, &sighandler))
-	// 	printf("dadsadsa\n");
 	signal(SIGQUIT, SIG_IGN);
-	// signal(SIGINT, &sighandler);
+	signal(SIGINT, &sighandler);
 	create_env(new_envp, envp);
 	if (argc > 2)
 	{

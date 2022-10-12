@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_prompt.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 09:42:11 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/11 11:44:26 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/12 16:59:55 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	shell_prompt(char **argv, char **envp)
 		ptr = parse_prompt();
 		buffer = readline(ptr);
 		free(ptr);
-		if (*buffer)
+		if (buffer && *buffer)
 		{
 			prompt = malloc(sizeof(t_command));
 			struct_init_simple(&prompt, envp);
@@ -65,6 +65,12 @@ int	shell_prompt(char **argv, char **envp)
 			if (argv[1] && !ft_strncmp(argv[1], "debugg", 6))
 				print_struct(prompt);
 			free_prompt(&prompt);
+		}
+		if (!buffer)
+		{
+			free_envp(envp);
+			printf("EXIT\n");
+			exit(0);
 		}
 		free(buffer);
 	}
