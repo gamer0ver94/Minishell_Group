@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 12:07:26 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/12 17:12:47 by memam            ###   ########.fr       */
+/*   Updated: 2022/10/13 17:12:47 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,13 @@ void	sighandler(int signal)
 
 int	main(int argc, char **argv, char **envp)
 {
-	(void)envp;
-	(void)argv;
+	// char	**new_envp;
+
+	// new_envp = ft_calloc(1000, sizeof(char *));
 	signal(SIGSEGV, &sighandler);
 	signal(SIGQUIT, SIG_IGN);
-	// signal(SIGINT, &sighandler);
+	signal(SIGINT, &sighandler);
+	//create_env(new_envp, envp);
 	if (argc > 2)
 	{
 		printf("no need argv\n");

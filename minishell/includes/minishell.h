@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 13:25:13 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/10 18:43:05 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/13 14:36:49 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,13 @@
 int			ft_echo(t_command *command);
 int			ft_pwd(void);
 int			t_env(char	**envp);
-int			ft_exit(t_command *command);
+int			ft_exit(t_command *command, char **envp);
 int			ft_export(char **envp, char **args);
 int			ft_unset(char **envp, char **args);
 void		t_signals(void);
-int			builtin(t_command *prompt);
+int			builtin(t_command *prompt, char **envp);
 int			builtin_env(t_command *prompt, char **envp);
+int			is_valid_env_var(char *var);
 /*********** Bonus **********/
 // int		    ft_wildcards(char *args);
 
@@ -117,4 +118,7 @@ void		alloc_files(t_execc *exe, t_command **prompt);
 void		open_files(t_command **prompt, int **file);
 void		free_matrix(char **matrix);
 int			ft_env(char	**envp);
+/*********** Envp Generator **********/
+void	free_envp(char **envp);
+void	create_env(char **new_envp, char **envp);
 #endif
