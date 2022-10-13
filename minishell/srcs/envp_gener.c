@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 12:52:40 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/13 13:50:05 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/13 15:50:42 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@ void	create_env(char **new_envp, char **envp)
 	{
 		new_envp[i] = ft_strdup(envp[i]);
 		i++;
+	}
+	while(new_envp[i])
+	{
+		new_envp[i] = NULL;
 	}
 }
 
