@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 23:44:25 by memam             #+#    #+#             */
-/*   Updated: 2022/10/12 15:13:45 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/13 14:36:40 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 int	ft_exit(t_command *command, char **envp)
 {
-    free_prompt(&command);
+	free_prompt(&command);
 	free_envp(envp);
-	(void)envp;
-    (void)command;
-    exit(EXIT_SUCCESS);
+	exit(EXIT_SUCCESS);
 }

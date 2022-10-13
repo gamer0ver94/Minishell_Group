@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 16:04:54 by memam             #+#    #+#             */
-/*   Updated: 2022/10/11 12:38:50 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/13 13:59:39 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,17 +57,3 @@ int	builtin(t_command *prompt, char **envp)
 	}
 	return (1);
 }
-
-// int	exec_builtin(t_command *prompt, char **envp)
-// {
-// 	builtin(prompt);
-// 	builtin_env(prompt, envp);
-// 	// pour tester int ft_wildcards(char *args)
-// 	if (!ft_strncmp(prompt->cmd, "mah", 4)
-// 		&& !ft_strncmp(prompt->cmd, "mah", ft_strlen(prompt->cmd)))
-// 	{
-// 		ft_wildcards(prompt->argv[1]);
-// 		return (0);
-// 	}
-// 	return (1);
-// }

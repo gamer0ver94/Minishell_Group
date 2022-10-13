@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_simple.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 15:18:48 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/12 22:28:19 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/13 14:35:12 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-extern int g_status;
+extern int	g_status;
 
 char	*buildin_path(char *cmd)
 {
@@ -37,80 +37,12 @@ char	*get_single_path(char *cmd, char *env_path)
 	free(str);
 	return (tmp);
 }
-// here is the exec (echo),(pwd),(env), 
-int    exec_builtin(t_command *prompt, char **envp)
-{
-	if (!ft_strncmp(prompt->cmd, "echo", 4) && \
-		!ft_strncmp(prompt->cmd, "echo", ft_strlen(prompt->cmd)))
-	{
-		ft_echo(prompt);
-		return (0);
-	}
-	if (!ft_strncmp(prompt->cmd, "pwd", 3) && \
-		!ft_strncmp(prompt->cmd, "echo", ft_strlen(prompt->cmd)))
-	{
-		ft_pwd();
-		return (0);
-	}
-	if (!ft_strncmp(prompt->cmd, "env", 3) && \
-		!ft_strncmp(prompt->cmd, "echo", ft_strlen(prompt->cmd)))
-	{
-		ft_env(envp);
-		return (0);
-	}
-	if (!ft_strncmp(prompt->cmd, "export", 6) \
-		&& !ft_strncmp(prompt->cmd, "export", ft_strlen(prompt->cmd)))
-	{
-		ft_export(envp, prompt->argv);
-		return (0);
-	}
-	if (!ft_strncmp(prompt->cmd, "exit", 5) \
-		&& !ft_strncmp(prompt->cmd, "exit", ft_strlen(prompt->cmd)))
-	{
-		ft_exit(prompt, envp);
-		return (0);
-	}
-	if (!ft_strncmp(prompt->cmd, "unset", 5)
-		&& !ft_strncmp(prompt->cmd, "unset", ft_strlen(prompt->cmd)))
-	{
-		// ft_unset(envp, prompt->argv);
-		ft_unset(envp, prompt->argv);
-		return (0);
-	}
-	// pour tester int ft_wildcards(char *args)
-	// if (!ft_strncmp(prompt->cmd, "ls", 2)
-	// 	&& ft_strncmp(prompt->cmd, "ls", ft_strlen(prompt->cmd)))
-	// {
-	// 	ft_wildcards(prompt->argv[1]);
-	// 	return (0);
-	// }
-	return (1);
-}
 
-int	exec_simple(t_command *prompt, char **envp)
+pid_t	exec_fork(t_command *prompt, char **envp, char **env_path, int *i)
 {
-	char	*path;
-	char	**env_path;
-	int		i;
-	int		status;
 	pid_t	pid;
+	char	*path;
 
-	i = 0;
-	env_path = ft_split(getenv("PATH"), ':');
-	if (!ft_strncmp(prompt->cmd, "cd", 2))
-	{
-		cd_cmd(prompt, envp);
-		free_args(env_path);
-		return (1);
-	}
-	//here is the exec_builtin
-	if (!ft_strncmp(prompt->cmd, "exit", 5))
-		free_args(env_path);
-	if (builtin_env(prompt, envp) == 0 ||builtin(prompt, envp) == 0)
-	{
-		free_args(env_path); 
-		return (1);
-	}
 	pid = fork();
 	if (pid == 0)
 	{
@@ -118,13 +50,13 @@ int	exec_simple(t_command *prompt, char **envp)
 			execve(prompt->argv[0], prompt->argv, envp);
 		else
 		{
-			while (env_path[i])
+			while (env_path[(*i)])
 			{
-				path = get_single_path(prompt->cmd, env_path[i]);
+				path = get_single_path(prompt->cmd, env_path[(*i)]);
 				if (execve(path, prompt->argv, envp) == -1)
 				{
 					free(path);
-					i++;
+					(*i)++;
 				}
 			}
 			write(2, prompt->cmd, ft_strlen(prompt->cmd));
@@ -132,7 +64,14 @@ int	exec_simple(t_command *prompt, char **envp)
 			exit(0);
 		}
 	}
-	if (waitpid(pid, &status, 0))
+	return (pid);
+}
+
+void	wait_fork(pid_t *pid)
+{
+	int		status;
+
+	if (waitpid((*pid), &status, 0))
 	{
 		if (WIFEXITED(status) && !WEXITSTATUS(status))
 		{
@@ -148,6 +87,31 @@ int	exec_simple(t_command *prompt, char **envp)
 		else
 			g_status = 1;
 	}
+}
+
+int	exec_simple(t_command *prompt, char **envp)
+{
+	char	**env_path;
+	int		i;
+	pid_t	pid;
+
+	i = 0;
+	env_path = ft_split(getenv("PATH"), ':');
+	if (!ft_strncmp(prompt->cmd, "cd", 2))
+	{
+		cd_cmd(prompt, envp);
+		free_args(env_path);
+		return (1);
+	}
+	if (!ft_strncmp(prompt->cmd, "exit", 5))
+		free_args(env_path);
+	if (builtin_env(prompt, envp) == 0 || builtin(prompt, envp) == 0)
+	{
+		free_args(env_path);
+		return (1);
+	}
+	pid = exec_fork(prompt, envp, env_path, &i);
+	wait_fork(&pid);
 	free_args(env_path);
 	return (0);
 }

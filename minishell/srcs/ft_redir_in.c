@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_redir_in.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:31:33 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/09 22:32:33 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/13 14:37:50 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ extern int	g_status;
 
 void	redirect_in(t_execc *exe, t_command **prompt, char **envp)
 {
-	int file;
+	int	file;
+
 	if (access(exe->tmp->next->argv[0], F_OK) != 0)
 	{
 		write(2, "bash : ", 7);

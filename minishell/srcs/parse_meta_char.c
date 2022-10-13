@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_meta_char.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 21:32:24 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/07 11:06:06 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/13 14:39:12 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,6 @@ int	find_meta_char(char *buffer)
 		return (1);
 	else if (find_char(buffer, ">>"))
 		return (1);
-	// else if (find_char(buffer, "&&"))
-	// 	return (1);
-	// else if (find_char(buffer, "||"))
-	// 	return (1);
 	else
 		return (0);
 }
@@ -69,12 +65,9 @@ void	meta_char_utils(t_tmp *tp, char *buffer, t_helper2 *buf_s)
 	tp->h = 0;
 	tp->b = 0;
 	buf_s->exe[tp->j] = ft_calloc(100, sizeof(char));
-	// buf_s->meta_chars[tp->a] = malloc(sizeof(char) * 100);
-	//here
 	if (buffer[tp->i] == ' ')
 		tp->i++;
 }
-
 
 void	init_meta_struct(t_tmp *help)
 {
@@ -91,10 +84,10 @@ void	parse_meta_chars(char *buffer, t_helper2 *buf_s)
 
 	init_meta_struct(&tp);
 	buf_s->exe[tp.j] = ft_calloc(50, sizeof(char));
-
 	while (buffer[tp.i])
 	{
-		if (buffer [tp.i] == '<' || buffer [tp.i] == '>' || buffer [tp.i] == '|')
+		if (buffer [tp.i] == '<' || buffer [tp.i] == '>' || \
+		buffer [tp.i] == '|')
 		{
 			meta_char_utils(&tp, buffer, buf_s);
 		}

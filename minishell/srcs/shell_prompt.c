@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_prompt.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 09:42:11 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/12 16:59:55 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/13 14:46:57 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,26 @@ char	*parse_prompt(void)
 	free(parser);
 	parser = ft_strjoin(tmp, getcwd(current_dir, 1024));
 	free(tmp);
-	tmp = ft_strjoin(parser , WHITE_CLR);
+	tmp = ft_strjoin(parser, WHITE_CLR);
 	free(parser);
 	parser = ft_strjoin(tmp, "$ ");
 	free(tmp);
 	return (parser);
 }
 
-int	shell_prompt(char **argv, char **envp)
+void	exit_prompt(char**envp)
+{
+	free_envp(envp);
+	printf("EXIT\n");
+	exit(0);
+}
+
+void	shell_prompt(char **argv, char **envp)
 {
 	t_command	*prompt;
 	char		*buffer;
 	char		*ptr;
-
-
+	(void)argv;
 	g_status = 0;
 	while (1)
 	{
@@ -62,18 +68,10 @@ int	shell_prompt(char **argv, char **envp)
 			else
 				exec_complex(&prompt, envp);
 			add_history(buffer);
-			if (argv[1] && !ft_strncmp(argv[1], "debugg", 6))
-				print_struct(prompt);
 			free_prompt(&prompt);
 		}
 		if (!buffer)
-		{
-			free_envp(envp);
-			printf("EXIT\n");
-			exit(0);
-		}
+			exit_prompt(envp);
 		free(buffer);
 	}
-	free(prompt);
-	return (0);
 }

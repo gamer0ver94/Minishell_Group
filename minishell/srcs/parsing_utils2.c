@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 21:26:50 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/08 00:43:41 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/13 14:39:30 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void	get_id(t_command **prompt)
 	}
 }
 
-void	parse_phase_one(t_helper2 *buf_s, t_command **prompt, char *buffer, char **envp)
+void	parse_phase_one(t_helper2 *buf_s, t_command **prompt, \
+char *buffer, char **envp)
 {
 	parse_meta_chars(buffer, buf_s);
 	while (buf_s->exe && buf_s->exe[buf_s->i])
