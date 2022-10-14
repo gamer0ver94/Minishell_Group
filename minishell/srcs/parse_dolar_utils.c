@@ -1,52 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   envp_gener.c                                       :+:      :+:    :+:   */
+/*   parse_dolar_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/11 12:52:40 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/14 09:29:30 by dpaulino         ###   ########.fr       */
+/*   Created: 2022/10/13 18:27:00 by dpaulino          #+#    #+#             */
+/*   Updated: 2022/10/13 18:29:51 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	create_env(char **new_envp, char **envp)
+void	identify_dolar(t_command **prompt, char **args)
 {
 	int	i;
 
 	i = 0;
-	while (envp && envp[i])
+	while (args && args[i])
 	{
-		new_envp[i] = ft_strdup(envp[i]);
+		if (args[i][0] && find_char(args[i], "&"))
+			get_dolar_char(prompt, args, i);
 		i++;
 	}
-	while (new_envp[i])
-	{
-		new_envp[i] = NULL;
-	}
-}
-
-void	free_envp(char **envp)
-{
-	int	i;
-
-	i = 0;
-	while (envp && envp[i] != NULL)
-	{
-		free(envp[i]);
-		i++;
-	}
-	free(envp);
-}
-
-int	replace_var(char *arg, char **envp)
-{
-	int	i;
-
-	i = var_exist(arg, envp);
-	free(envp[i]);
-	envp[i] = ft_strdup(arg);
-	return (0);
 }

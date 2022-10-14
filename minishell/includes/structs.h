@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/27 17:51:34 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/05 17:44:07 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/13 17:42:33 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,16 @@ typedef struct s_execc
 	pid_t		*pid;
 	int			g;
 }	t_execc;
+
+typedef struct s_helper3
+{
+	int		i;
+	int		j;
+	char	*tmp;
+	char	*tmp2;
+	char	*var;
+	int		h;
+	int		size;
+	char	*p;
+}	t_helper3;
 #endif
