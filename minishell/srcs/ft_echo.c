@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 11:03:50 by memam             #+#    #+#             */
-/*   Updated: 2022/10/05 18:25:38 by memam            ###   ########.fr       */
+/*   Updated: 2022/10/14 12:49:53 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+extern int	g_status;
 
 void	ft_echo_op(t_command *command)
 {
@@ -36,6 +38,7 @@ int	ft_echo(t_command *command)
 {
 	int		i;
 
+	g_status = 0;
 	if (command->argv[1] == NULL)
 	{
 		printf("\n");

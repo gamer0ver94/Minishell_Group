@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_redir_in.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:31:33 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/13 14:37:50 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/14 12:43:47 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-extern int	g_status;
 
 void	redirect_in(t_execc *exe, t_command **prompt, char **envp)
 {
@@ -23,7 +21,6 @@ void	redirect_in(t_execc *exe, t_command **prompt, char **envp)
 		write(2, "bash : ", 7);
 		write (2, exe->tmp->next->argv[0], ft_strlen(exe->tmp->next->argv[0]));
 		write (2, " No such file or directory\n", 27);
-		g_status = 1;
 		exe->tmp = exe->tmp->next;
 	}
 	else

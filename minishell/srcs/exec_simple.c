@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_simple.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 15:18:48 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/13 15:00:27 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/14 12:45:33 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ pid_t	exec_fork(t_command *prompt, char **envp, char **env_path, int *i)
 			}
 			write(2, prompt->cmd, ft_strlen(prompt->cmd));
 			write(2, ": command not found\n", 20);
-			exit(0);
+			exit(127);
 		}
 	}
 	return (pid);
