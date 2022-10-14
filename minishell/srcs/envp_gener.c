@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 12:52:40 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/14 09:29:30 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/14 11:48:44 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,18 @@ void	free_envp(char **envp)
 	free(envp);
 }
 
+void	free_tmp(char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (envp && envp[i] != NULL)
+	{
+		free(envp[i]);
+		i++;
+	}
+}
+
 int	replace_var(char *arg, char **envp)
 {
 	int	i;
@@ -48,5 +60,16 @@ int	replace_var(char *arg, char **envp)
 	i = var_exist(arg, envp);
 	free(envp[i]);
 	envp[i] = ft_strdup(arg);
+	return (0);
+}
+
+int	delete_var(char **envp, int j)
+{
+	free(envp[j]);
+	while (envp[j])
+	{
+		envp[j] = envp[j + 1];
+		j++;
+	}
 	return (0);
 }

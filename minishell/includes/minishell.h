@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 13:25:13 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/14 09:28:54 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/14 11:30:34 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,4 +131,6 @@ void		free_files(t_execc *exe, t_command **prompt);
 int	the_export(char **argv, char **envp);
 int	var_exist(char *arg, char **envp);
 int	replace_var(char *arg, char **envp);
+int	the_unset(char **argv, char **envp);
+int delete_var(char **envp, int j);
 #endif
