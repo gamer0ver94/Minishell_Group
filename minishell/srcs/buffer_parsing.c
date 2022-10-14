@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 13:34:36 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/13 12:44:23 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/14 17:20:11 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	get_commands(char **split, t_command **prompt, char **envp)
 
 void	parse_quotes_util(t_parse *p, char **args, char *buffer)
 {
-	if ((buffer[p->l] == '\"') && (p->lock_2 != 1) && (p->lock++ != 2))
+	if ((buffer[p->l] == '\"') && (p->lock_2 != 1) && (p->lock != 2))
 		double_quotes(p, args, buffer);
 	else if ((buffer[p->l] == '\'') && (p->lock_2 != 2) && (p->lock != 1))
 	{
@@ -78,6 +78,8 @@ int	parse_quotes(char **args, char *buffer)
 	{
 		parse_quotes_util(p, args, buffer);
 	}
+	if (p->lock == 1 || p->lock_2 == 1)
+		printf("not close");
 	free(p);
 	return (0);
 }
