@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   the_export.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 08:55:37 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/14 10:54:12 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/14 15:25:22 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,12 @@ int	var_exist(char *arg, char **envp)
 	{
 		if (!ft_strncmp(arg, envp[i], ft_strlen(arg)))
 		{
+			printf("%d\n", i);
 			return (i);
 		}
 		i++;
 	}
-	return (0);
+	return (-1);
 }
 
 char	*parse_var(char *var)
@@ -47,7 +48,7 @@ char	*parse_var(char *var)
 		tmp[i] = var[i];
 		i++;
 	}
-	if (!var[i] || var[i] != '=' || !var[i + 1])
+	if (!var[i] || var[i] != '=')
 	{
 		free(tmp);
 		return (NULL);
@@ -60,9 +61,9 @@ void	define_existence(char *arg, char *parse, char **envp)
 	int	j;
 
 	j = 0;
-	if (var_exist(parse, envp))
+	if (var_exist(parse, envp) >= 0)
 	{
-		replace_var(arg, envp);
+		replace_var(parse, arg, envp);
 		g_status = 0;
 	}
 	else

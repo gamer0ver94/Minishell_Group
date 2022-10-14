@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp_gener.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 12:52:40 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/14 11:48:44 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/14 15:24:08 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,12 @@ void	free_tmp(char **envp)
 	}
 }
 
-int	replace_var(char *arg, char **envp)
+int	replace_var(char *parse, char *arg, char **envp)
 {
 	int	i;
 
-	i = var_exist(arg, envp);
+	i = var_exist(parse, envp);
+	printf("%d\n", i);
 	free(envp[i]);
 	envp[i] = ft_strdup(arg);
 	return (0);
