@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 13:25:13 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/14 15:24:28 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/14 17:32:16 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,14 +123,14 @@ void		create_env(char **new_envp, char **envp);
 /*********** Norminette helper functions **********/
 void		double_quotes(t_parse *p, char **args, char *buffer);
 void		jump_spaces(t_parse *p, char **args, char *buffer);
-void		parse_without_meta(t_helper2 *b, char *buf, t_command **pt, \
+int		parse_without_meta(t_helper2 *b, char *buf, t_command **pt, \
 char **env);
 int			count_files(t_command **prompt);
 void		free_files(t_execc *exe, t_command **prompt);
 /*********** New export **********/
-int	the_export(char **argv, char **envp);
-int	var_exist(char *arg, char **envp);
-int	replace_var(char *parse, char *arg, char **envp);
-int	the_unset(char **argv, char **envp);
-int delete_var(char **envp, int j);
+int			the_export(char **argv, char **envp);
+int			var_exist(char *arg, char **envp);
+int			replace_var(char *parse, char *arg, char **envp);
+int			the_unset(char **argv, char **envp);
+int			delete_var(char **envp, int j);
 #endif

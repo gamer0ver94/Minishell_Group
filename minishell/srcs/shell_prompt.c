@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_prompt.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 09:42:11 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/14 12:27:42 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/14 17:29:18 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	shell_prompt(char **argv, char **envp)
 	t_command	*prompt;
 	char		*buffer;
 	char		*ptr;
-
+	int			res;
 	(void)argv;
 	while (1)
 	{
@@ -61,7 +61,12 @@ void	shell_prompt(char **argv, char **envp)
 		{
 			prompt = malloc(sizeof(t_command));
 			struct_init_simple(&prompt, envp);
-			if (!buffer_parsing(buffer, &prompt, envp))
+			res = buffer_parsing(buffer, &prompt, envp);
+			if (res == -2)
+			{
+				printf("QUOTES NOT CLOSED\n");
+			}
+			else if (res == 0)
 				exec_simple(prompt, envp);
 			else
 				exec_complex(&prompt, envp);

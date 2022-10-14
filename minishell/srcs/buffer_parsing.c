@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 13:34:36 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/14 17:20:11 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/14 17:30:37 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,10 @@ int	parse_quotes(char **args, char *buffer)
 		parse_quotes_util(p, args, buffer);
 	}
 	if (p->lock == 1 || p->lock_2 == 1)
-		printf("not close");
+	{
+		free(p);
+		return (-2);
+	}
 	free(p);
 	return (0);
 }
@@ -103,7 +106,8 @@ int	buffer_parsing(char *buffer, t_command **prompt, char **envp)
 	}
 	else
 	{
-		parse_without_meta(buf_s, buffer, prompt, envp);
+		if (parse_without_meta(buf_s, buffer, prompt, envp) == -2)
+			return (-2);
 	}
 	return (0);
 }

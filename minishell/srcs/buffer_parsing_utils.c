@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 12:29:56 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/13 12:43:22 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/14 17:25:14 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,17 @@ void	jump_spaces(t_parse *p, char **args, char *buffer)
 		args[p->i] = ft_calloc(100, sizeof(char));
 }
 
-void	parse_without_meta(t_helper2 *b, char *buf, t_command **pt, char **env)
+int	parse_without_meta(t_helper2 *b, char *buf, t_command **pt, char **env)
 {
 	b->args = ft_calloc(100, sizeof(char *));
-	parse_quotes(b->args, buf);
+	if (parse_quotes(b->args, buf) == -2)
+	{
+		free_args(b->args);
+		free(b->exe);
+		free(b->meta_chars);
+		free(b);
+		return (-2);
+	}
 	if (find_char(buf, "$"))
 		identify_dolar(pt, b->args);
 	get_commands(b->args, pt, env);
@@ -52,4 +59,5 @@ void	parse_without_meta(t_helper2 *b, char *buf, t_command **pt, char **env)
 	free(b->exe);
 	free(b->meta_chars);
 	free(b);
+	return (0);
 }
