@@ -6,65 +6,91 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 12:02:06 by memam             #+#    #+#             */
-/*   Updated: 2022/10/05 13:51:10 by memam            ###   ########.fr       */
+/*   Updated: 2022/10/14 18:07:41 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	is_valid_env_var(char *var)
+extern int	g_status;
+
+int	var_exist(char *arg, char **envp)
 {
 	int	i;
 
 	i = 0;
-	if (ft_isalpha(var[i]) == 0 && var[i] != '_')
-		return (0);
-	i++;
-	while (var[i] && var[i] != '=')
+	while (envp[i])
 	{
-		if (ft_isalnum(var[i]) == 0 && var[i] != '_')
-			return (0);
+		if (!ft_strncmp(arg, envp[i], ft_strlen(arg)))
+		{
+			return (i);
+		}
 		i++;
 	}
-	return (1);
+	return (-1);
 }
 
-int	is_valid_env_var2(char *var)
-{
-	int	i;
-
-	i = 1;
-	while (var[i] && var[i] != '\0')
-	{
-		if (var[i] == '=')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-int	ft_export(char **envp, char **args)
+char	*parse_var(char *var)
 {
 	int		i;
+	char	*tmp;
 
-	i = 1;
-	if (!args[i])
-		return (ft_env(envp));
-	while (args[i])
+	i = 0;
+	tmp = ft_calloc(100, sizeof(char));
+	while (var[i] && var[i] != '=')
 	{
-		if (!is_valid_env_var(args[i]))
+		if (var[i] == ' ')
 		{
-			printf("export: %s not a valid identifier\n", args[i]);
-			return (1);
+			free(tmp);
+			return (NULL);
 		}
-		if (!is_valid_env_var2(args[i]))
+		tmp[i] = var[i];
+		i++;
+	}
+	if (!var[i] || var[i] != '=')
+	{
+		free(tmp);
+		return (NULL);
+	}
+	return (tmp);
+}
+
+void	define_existence(char *arg, char *parse, char **envp)
+{
+	int	j;
+
+	j = 0;
+	if (var_exist(parse, envp) >= 0)
+	{
+		replace_var(parse, arg, envp);
+		g_status = 0;
+	}
+	else
+	{
+		while (envp[j])
 		{
-			return (0);
+			j++;
 		}
-		else if (args[i] != NULL)
-		{
-			set_env_var(envp, args[i]);
-		}
+		free(envp[j]);
+		envp[j] = ft_strdup(arg);
+	}
+	free(parse);
+}
+
+int	ft_export(char **argv, char **envp)
+{
+	int		i;
+	char	*parse;
+
+	parse = NULL;
+	i = 1;
+	while (argv[i])
+	{
+		parse = parse_var(argv[i]);
+		if (!parse)
+			printf("bash: export: `%s`: not a valid identifier \n", argv[i]);
+		else
+			define_existence(argv[i], parse, envp);
 		i++;
 	}
 	return (0);
