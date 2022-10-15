@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 17:08:03 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/15 17:51:27 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/15 23:37:29 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,11 @@ void	fork_redir_in_simple(t_execc *exe, t_command **prompt, char **envp)
 		if (exe->tmp->next->meta_char && \
 		!ft_strncmp(exe->tmp->next->meta_char, ">", 1))
 		{
-			if (access(exe->tmp->next->next->argv[0], F_OK) == 0)
+			if (access(exe->tmp->next->next->argv[0], F_OK) == 0 \
+			&& !ft_strncmp(exe->tmp->next->meta_char, ">>", 2))
+				file2 = open(exe->tmp->next->next->argv[0], O_RDWR | O_APPEND);
+			else if (access(exe->tmp->next->next->argv[0], F_OK) == 0 \
+			&& !ft_strncmp(exe->tmp->next->next->meta_char, ">", 1))
 				file2 = open(exe->tmp->next->next->argv[0], O_RDWR | O_TRUNC);
 			else
 				file2 = open(exe->tmp->next->next->argv[0], O_RDWR \
@@ -36,7 +40,6 @@ void	fork_redir_in_simple(t_execc *exe, t_command **prompt, char **envp)
 		close(file);
 		close_pipes(prompt, exe->fd);
 		exec_simple(exe->tmp, envp);
-		free_prompt(prompt);
 		exit(0);
 	}
 }
@@ -52,7 +55,11 @@ char **envp, int	*file)
 		if (exe->tmp->next->meta_char && \
 		!ft_strncmp(exe->tmp->next->meta_char, ">", 1))
 		{
-			if (access(exe->tmp->next->next->argv[0], F_OK) == 0)
+			if (access(exe->tmp->next->next->argv[0], F_OK) == 0 \
+			&& !ft_strncmp(exe->tmp->next->meta_char, ">>", 2))
+				file2 = open(exe->tmp->next->next->argv[0], O_RDWR | O_APPEND);
+			else if (access(exe->tmp->next->next->argv[0], F_OK) == 0 \
+			&& !ft_strncmp(exe->tmp->next->next->meta_char, ">", 1))
 				file2 = open(exe->tmp->next->next->argv[0], O_RDWR | O_TRUNC);
 			else
 				file2 = open(exe->tmp->next->next->argv[0], O_RDWR \

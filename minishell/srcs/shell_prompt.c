@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_prompt.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 09:42:11 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/14 17:29:18 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/16 00:03:10 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,27 +45,24 @@ void	exit_prompt(char**envp)
 	exit(0);
 }
 
-void	shell_prompt(char **argv, char **envp)
+void	shell_prompt(char **envp)
 {
 	t_command	*prompt;
 	char		*buffer;
 	char		*ptr;
 	int			res;
-	(void)argv;
+
 	while (1)
 	{
 		ptr = parse_prompt();
 		buffer = readline(ptr);
-		free(ptr);
 		if (buffer && *buffer)
 		{
 			prompt = malloc(sizeof(t_command));
 			struct_init_simple(&prompt, envp);
 			res = buffer_parsing(buffer, &prompt, envp);
 			if (res == -2)
-			{
-				printf("QUOTES NOT CLOSED\n");
-			}
+				printf("MiNiShEeL : error <QUOTES NOT CLOSED>\n");
 			else if (res == 0)
 				exec_simple(prompt, envp);
 			else
@@ -73,8 +70,6 @@ void	shell_prompt(char **argv, char **envp)
 			add_history(buffer);
 			free_prompt(&prompt);
 		}
-		if (!buffer)
-			exit_prompt(envp);
-		free(buffer);
+		exit_ctl_d(ptr, buffer, envp);
 	}
 }

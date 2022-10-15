@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:31:33 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/15 17:53:24 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/15 23:42:54 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	redirect_in(t_execc *exe, t_command **prompt, char **envp)
 	}
 }
 
-void redirect_in_complex(t_execc *exe, t_command **prompt, char **envp)
+void	redirect_in_complex(t_execc *exe, t_command **prompt, char **envp)
 {
 	int		*file;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buffer_parsing.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 13:34:36 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/14 17:30:37 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/15 23:40:02 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,14 +111,3 @@ int	buffer_parsing(char *buffer, t_command **prompt, char **envp)
 	}
 	return (0);
 }
-
-	// if(p.lock == 1) //if quotes are open in the end of the parsing
-	// {
-	// 	args[p.i] = NULL;
-	// 	free(args[p.i]);
-	// 	printf("double quotes not closed\n");
-	// 	//open a new prompt
-	// 	while (1)
-	// 		readline("> ");
-	// }
-	// args[p.j] = NULL;

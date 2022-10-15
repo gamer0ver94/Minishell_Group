@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 11:03:50 by memam             #+#    #+#             */
-/*   Updated: 2022/10/14 12:49:53 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/15 23:41:31 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,9 @@ int	ft_echo(t_command *command)
 
 	g_status = 0;
 	if (command->argv[1] == NULL)
-	{
 		printf("\n");
-		return (0);
-	}	
 	else if (ft_strncmp(command->argv[1], "-n", 2) == 0)
-	{
 		ft_echo_op(command);
-		return (0);
-	}
 	else
 	{
 		i = 1;

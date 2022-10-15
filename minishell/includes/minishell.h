@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 13:25:13 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/15 17:45:54 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/16 00:21:12 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ int			builtin_env(t_command *prompt, char **envp);
 // int		    ft_wildcards(char *args);
 
 /*********** Utils Functions**********/
-void		parse_phase_one(t_helper2 *buf_s, t_command **prompt, char *buffer, char **envp);
+void		parse_phase_one(t_helper2 *buf_s, t_command **prompt, \
+char *buffer, char **envp);
 void		init_helper(t_helper *helper, t_command **prompt);
 char		*get_last_meta(t_command *prompt, t_command *tmp);
 void		init_envp_simple(t_helper *help, char **envp);
@@ -77,10 +78,9 @@ char		*get_single_path(char *cmd, char *env_path);
 char		*buildin_path(char *cmd);
 t_command	*get_last(t_command *prompt);
 void		get_id(t_command **prompt);
-void		f_and(t_command **prompt, t_command *tmp, char **envp, int **fd, int i);
 void		close_pipes(t_command **prompt, int **fd);
 /*********** Main Functions **********/
-void		shell_prompt(char **argv, char **envp);
+void		shell_prompt(char **envp);
 int			logo(char *path);
 int			buffer_parsing(char *buffer, t_command **prompt, char **envp);
 void		print_struct(t_command *prompt);
@@ -134,6 +134,9 @@ int			replace_var(char *parse, char *arg, char **envp);
 int			the_unset(char **argv, char **envp);
 int			delete_var(char **envp, int j);
 void		fork_redir_in_simple(t_execc *exe, t_command **prompt, char **envp);
-void	fork_redir_in_complex(t_execc *exe, t_command **prompt, char **envp, int	*file);
-int	redir_prompt(t_execc *exe, int *file);
+void		fork_redir_in_complex(t_execc *exe, t_command **prompt, \
+char **envp, int	*file);
+int			redir_prompt(t_execc *exe, int *file);
+void		exit_ctl_d(char *ptr, char *buffer, char **envp);
+void		exit_prompt(char**envp);
 #endif
