@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 13:25:13 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/14 17:32:16 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/15 17:45:54 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void		create_env(char **new_envp, char **envp);
 /*********** Norminette helper functions **********/
 void		double_quotes(t_parse *p, char **args, char *buffer);
 void		jump_spaces(t_parse *p, char **args, char *buffer);
-int		parse_without_meta(t_helper2 *b, char *buf, t_command **pt, \
+int			parse_without_meta(t_helper2 *b, char *buf, t_command **pt, \
 char **env);
 int			count_files(t_command **prompt);
 void		free_files(t_execc *exe, t_command **prompt);
@@ -133,4 +133,7 @@ int			var_exist(char *arg, char **envp);
 int			replace_var(char *parse, char *arg, char **envp);
 int			the_unset(char **argv, char **envp);
 int			delete_var(char **envp, int j);
+void		fork_redir_in_simple(t_execc *exe, t_command **prompt, char **envp);
+void	fork_redir_in_complex(t_execc *exe, t_command **prompt, char **envp, int	*file);
+int	redir_prompt(t_execc *exe, int *file);
 #endif

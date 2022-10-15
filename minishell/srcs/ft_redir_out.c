@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:31:03 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/14 12:43:51 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/15 17:12:06 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	finish_job(t_command **prompt, t_execc *exe, int *file, char **envp)
 	close_files(prompt, exe->files);
 	close_pipes(prompt, exe->fd);
 	exec_simple(exe->tmp, envp);
-	free_prompt(prompt);
 	exit(0);
 }
 
