@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 09:42:11 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/16 00:03:10 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/16 15:41:38 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,14 @@ void	shell_prompt(char **envp)
 	{
 		ptr = parse_prompt();
 		buffer = readline(ptr);
+		free(ptr);
 		if (buffer && *buffer)
 		{
 			prompt = malloc(sizeof(t_command));
 			struct_init_simple(&prompt, envp);
 			res = buffer_parsing(buffer, &prompt, envp);
 			if (res == -2)
-				printf("MiNiShEeL : error <QUOTES NOT CLOSED>\n");
+				write (2, "MiNiShEeL : error <QUOTES NOT CLOSED>\n", 38);
 			else if (res == 0)
 				exec_simple(prompt, envp);
 			else
@@ -70,6 +71,6 @@ void	shell_prompt(char **envp)
 			add_history(buffer);
 			free_prompt(&prompt);
 		}
-		exit_ctl_d(ptr, buffer, envp);
+		exit_ctl_d(buffer, envp);
 	}
 }

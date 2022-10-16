@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 12:02:06 by memam             #+#    #+#             */
-/*   Updated: 2022/10/14 18:07:41 by memam            ###   ########.fr       */
+/*   Updated: 2022/10/16 14:45:21 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,12 @@ int	ft_export(char **argv, char **envp)
 	{
 		parse = parse_var(argv[i]);
 		if (!parse)
-			printf("bash: export: `%s`: not a valid identifier \n", argv[i]);
+		{
+			write(2,"bash: export: \n",15);
+			write(2, argv[i], ft_strlen(argv[i]));
+			write(2,"\n : not a valid identifier\n", 27);
+			g_status = 1;
+		}
 		else
 			define_existence(argv[i], parse, envp);
 		i++;

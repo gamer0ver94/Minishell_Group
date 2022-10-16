@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 13:25:13 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/16 00:21:12 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/16 15:38:16 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ void		fork_redir_in_simple(t_execc *exe, t_command **prompt, char **envp);
 void		fork_redir_in_complex(t_execc *exe, t_command **prompt, \
 char **envp, int	*file);
 int			redir_prompt(t_execc *exe, int *file);
-void		exit_ctl_d(char *ptr, char *buffer, char **envp);
+void		exit_ctl_d(char *buffer, char **envp);
 void		exit_prompt(char**envp);
+int			check_path(char **envp);
 #endif
