@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 11:03:50 by memam             #+#    #+#             */
-/*   Updated: 2022/10/14 12:49:53 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/17 09:53:08 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,27 @@ extern int	g_status;
 
 void	ft_echo_op(t_command *command)
 {
-	int	i;
+	int		i;
+	char	*tem;
 
-	i = 2;
+	i = 1;
 	while (command->argv[i])
 	{
-		if (ft_strncmp(command->argv[i], "-n", 2) != 0)
+		if (command->argv[i][0] == '-')
 		{
-			while (command->argv[i])
+			tem = ft_strtrim(command->argv[i], "n");
+			if (ft_strncmp(tem, "-", ft_strlen(tem)) != 0)
 			{
-				printf("%s", command->argv[i]);
-				if (command->argv[++i])
-					printf(" ");
+				while (command->argv[i])
+				{
+					printf("%s", command->argv[i]);
+					if (command->argv[i + 1])
+						printf(" ");
+					i++;
+				}
 			}
-		}		
+			free(tem);
+		}	
 		i++;
 	}
 }
@@ -38,16 +45,15 @@ int	ft_echo(t_command *command)
 {
 	int		i;
 
-	g_status = 0;
 	if (command->argv[1] == NULL)
 	{
 		printf("\n");
-		return (0);
+		g_status = 0;
 	}	
 	else if (ft_strncmp(command->argv[1], "-n", 2) == 0)
 	{
 		ft_echo_op(command);
-		return (0);
+		g_status = 0;
 	}
 	else
 	{
@@ -61,5 +67,5 @@ int	ft_echo(t_command *command)
 		}
 		printf("\n");
 	}
-	return (0);
+	return (g_status);
 }

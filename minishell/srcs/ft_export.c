@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 12:02:06 by memam             #+#    #+#             */
-/*   Updated: 2022/10/14 18:07:41 by memam            ###   ########.fr       */
+/*   Updated: 2022/10/15 15:10:17 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,23 @@ char	*parse_var(char *var)
 	return (tmp);
 }
 
+int	is_valid_env_var(char *var)
+{
+	int	i;
+
+	i = 0;
+	if (ft_isalpha(var[i]) == 0 && var[i] != '_')
+		return (0);
+	i++;
+	while (var[i] && var[i] != '=')
+	{
+		if (ft_isalnum(var[i]) == 0 && var[i] != '_')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 void	define_existence(char *arg, char *parse, char **envp)
 {
 	int	j;
@@ -72,7 +89,8 @@ void	define_existence(char *arg, char *parse, char **envp)
 			j++;
 		}
 		free(envp[j]);
-		envp[j] = ft_strdup(arg);
+		envp[j] = envp[j - 1];
+		envp[j - 1] = ft_strdup(arg);
 	}
 	free(parse);
 }
@@ -86,12 +104,18 @@ int	ft_export(char **argv, char **envp)
 	i = 1;
 	while (argv[i])
 	{
-		parse = parse_var(argv[i]);
-		if (!parse)
+		if (!is_valid_env_var(argv[i]))
+		{
 			printf("bash: export: `%s`: not a valid identifier \n", argv[i]);
-		else
+			g_status = 1;
+		}
+		else if (ft_strchr(argv[i], '=') && argv[i] != NULL)
+		{
+			parse = parse_var(argv[i]);
 			define_existence(argv[i], parse, envp);
+			g_status = 0;
+		}
 		i++;
 	}
-	return (0);
+	return (g_status);
 }

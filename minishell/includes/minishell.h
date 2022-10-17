@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 13:25:13 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/14 17:32:16 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/15 15:13:34 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,9 +128,8 @@ char **env);
 int			count_files(t_command **prompt);
 void		free_files(t_execc *exe, t_command **prompt);
 /*********** New export **********/
-int			the_export(char **argv, char **envp);
 int			var_exist(char *arg, char **envp);
 int			replace_var(char *parse, char *arg, char **envp);
-int			the_unset(char **argv, char **envp);
 int			delete_var(char **envp, int j);
+int			is_valid_env_var(char *var);
 #endif

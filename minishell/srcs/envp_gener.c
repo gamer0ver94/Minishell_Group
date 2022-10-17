@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp_gener.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 12:52:40 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/14 15:24:08 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/14 19:37:08 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ int	replace_var(char *parse, char *arg, char **envp)
 	int	i;
 
 	i = var_exist(parse, envp);
-	printf("%d\n", i);
 	free(envp[i]);
 	envp[i] = ft_strdup(arg);
 	return (0);
