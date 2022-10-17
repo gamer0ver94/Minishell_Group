@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*   parse_dolar_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/16 23:44:25 by memam             #+#    #+#             */
-/*   Updated: 2022/10/13 14:36:40 by dpaulino         ###   ########.fr       */
+/*   Created: 2022/10/13 18:27:00 by dpaulino          #+#    #+#             */
+/*   Updated: 2022/10/13 18:29:51 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	ft_exit(t_command *command, char **envp)
+void	identify_dolar(t_command **prompt, char **args)
 {
-	free_prompt(&command);
-	free_envp(envp);
-	exit(EXIT_SUCCESS);
+	int	i;
+
+	i = 0;
+	while (args && args[i])
+	{
+		if (args[i][0] && find_char(args[i], "&"))
+			get_dolar_char(prompt, args, i);
+		i++;
+	}
 }

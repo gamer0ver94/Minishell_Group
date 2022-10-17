@@ -1,20 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*   ft_redir_in_utils2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/16 23:44:25 by memam             #+#    #+#             */
-/*   Updated: 2022/10/13 14:36:40 by dpaulino         ###   ########.fr       */
+/*   Created: 2022/10/17 17:12:46 by dpaulino          #+#    #+#             */
+/*   Updated: 2022/10/17 17:22:19 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	ft_exit(t_command *command, char **envp)
+void	ft_close_exit(int *file, t_command **prompt, char **envp, t_execc *exe)
 {
-	free_prompt(&command);
-	free_envp(envp);
-	exit(EXIT_SUCCESS);
+	close((*file));
+	close_pipes(prompt, exe->fd);
+	exec_simple(exe->tmp, envp);
+	exit(0);
+}
+
+void	ft_close_exit_complex(t_command **prompt, t_execc *exe, int *file, \
+char **envp)
+{
+	close_files(prompt, exe->files);
+	close_pipes(prompt, exe->fd);
+	close(file[0]);
+	close(file[1]);
+	exec_simple(exe->tmp, envp);
+	exit(0);
 }

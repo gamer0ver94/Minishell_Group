@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_complex_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 11:10:00 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/08 18:46:50 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/13 14:21:14 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,19 +86,4 @@ void	close_pipes(t_command **prompt, int **fd)
 			write(2, "error opening pipe\n", 19);
 		i++;
 	}
-}
-
-void	init_execc_struct(t_execc *exe, t_command **prompt)
-{
-	exe->tmp = (*prompt);
-	exe->lock = 0;
-	exe->i = 0;
-	exe->h = 0;
-	exe->j = count_pipes(prompt);
-	exe->g = 0;
-	exe->pid = malloc(sizeof(pid_t) * 20);
-	alloc_fd(exe, prompt);
-	alloc_files(exe, prompt);
-	open_pipes(prompt, exe->fd);
-	open_files(prompt, exe->files);
 }

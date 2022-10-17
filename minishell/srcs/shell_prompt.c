@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   shell_prompt.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 09:42:11 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/10 19:35:42 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/17 16:59:42 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-extern int	g_status;
 
 char	*parse_prompt(void)
 {
@@ -33,41 +31,51 @@ char	*parse_prompt(void)
 	free(parser);
 	parser = ft_strjoin(tmp, getcwd(current_dir, 1024));
 	free(tmp);
-	tmp = ft_strjoin(parser , WHITE_CLR);
+	tmp = ft_strjoin(parser, WHITE_CLR);
 	free(parser);
 	parser = ft_strjoin(tmp, "$ ");
 	free(tmp);
 	return (parser);
 }
 
-int	shell_prompt(char **argv, char **envp)
+void	exit_prompt(char**envp)
+{
+	free_envp(envp);
+	printf("EXIT\n");
+	exit(0);
+}
+
+void	add_hist_free_prompt(t_command *prompt, char *buffer)
+{
+	add_history(buffer);
+	free_prompt(&prompt);
+}
+
+void	shell_prompt(char **envp)
 {
 	t_command	*prompt;
 	char		*buffer;
 	char		*ptr;
+	int			res;
 
-
-	g_status = 0;
 	while (1)
 	{
 		ptr = parse_prompt();
 		buffer = readline(ptr);
 		free(ptr);
-		if (*buffer)
+		if (buffer && *buffer)
 		{
 			prompt = malloc(sizeof(t_command));
 			struct_init_simple(&prompt, envp);
-			if (!buffer_parsing(buffer, &prompt, envp))
+			res = buffer_parsing(buffer, &prompt, envp);
+			if (res == -2)
+				write (2, "MiNiShEeL : error <QUOTES NOT CLOSED>\n", 38);
+			else if (res == 0)
 				exec_simple(prompt, envp);
 			else
 				exec_complex(&prompt, envp);
-			add_history(buffer);
-			if (argv[1] && !ft_strncmp(argv[1], "debugg", 6))
-				print_struct(prompt);
-			free_prompt(&prompt);
+			add_hist_free_prompt(prompt, buffer);
 		}
-		free(buffer);
+		exit_ctl_d(buffer, envp);
 	}
-	free(prompt);
-	return (0);
 }

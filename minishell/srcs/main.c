@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 12:07:26 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/10 18:40:06 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/17 16:15:57 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	g_status;
 
 void	sighandler(int signal)
 {
-	if (signal == SIGSEGV)
+	if (signal == SIGQUIT)
 	{
 		printf("\nThank you for using MINISHELL\n");
 		exit(0);
@@ -24,24 +24,27 @@ void	sighandler(int signal)
 	else if (signal == SIGINT)
 	{
 		ioctl(STDIN_FILENO, TIOCSTI, "\n");
-		// rl_replace_line("", 0);
+		rl_replace_line("", 0);
 		rl_on_new_line();
 	}
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	(void)envp;
+	char	**new_envp;
+
 	(void)argv;
-	signal(SIGSEGV, &sighandler);
-	signal(SIGQUIT, SIG_IGN);
-	// signal(SIGINT, &sighandler);
-	if (argc > 2)
+	if (argc > 1)
 	{
-		printf("no need argv\n");
+		printf("No <ARGUMENTS> are needed\n");
 		return (1);
 	}
+	g_status = 0;
+	new_envp = ft_calloc(1000, sizeof(char *));
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, &sighandler);
+	create_env(new_envp, envp);
 	logo("assets/logo.txt");
-	shell_prompt(argv, envp);
+	shell_prompt(new_envp);
 	return (0);
 }

@@ -3,31 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 11:03:50 by memam             #+#    #+#             */
-/*   Updated: 2022/10/05 18:25:38 by memam            ###   ########.fr       */
+/*   Updated: 2022/10/17 16:33:13 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+extern int	g_status;
+
 void	ft_echo_op(t_command *command)
 {
-	int	i;
+	int		i;
+	char	*tem;
 
-	i = 2;
+	i = 1;
 	while (command->argv[i])
 	{
-		if (ft_strncmp(command->argv[i], "-n", 2) != 0)
+		if (command->argv[i][0] == '-')
 		{
-			while (command->argv[i])
+			tem = ft_strtrim(command->argv[i], "n");
+			if (ft_strncmp(tem, "-", ft_strlen(tem)) != 0)
 			{
-				printf("%s", command->argv[i]);
-				if (command->argv[++i])
-					printf(" ");
+				while (command->argv[i])
+				{
+					printf("%s", command->argv[i]);
+					if (command->argv[i + 1])
+						printf(" ");
+					i++;
+				}
 			}
-		}		
+			free(tem);
+		}	
 		i++;
 	}
 }
@@ -37,14 +46,10 @@ int	ft_echo(t_command *command)
 	int		i;
 
 	if (command->argv[1] == NULL)
-	{
 		printf("\n");
-		return (0);
-	}	
 	else if (ft_strncmp(command->argv[1], "-n", 2) == 0)
 	{
 		ft_echo_op(command);
-		return (0);
 	}
 	else
 	{
@@ -58,5 +63,6 @@ int	ft_echo(t_command *command)
 		}
 		printf("\n");
 	}
+	g_status = 0;
 	return (0);
 }

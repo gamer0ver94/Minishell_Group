@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:31:43 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/06 14:33:36 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/15 14:51:51 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	pipef(t_execc *exe, t_command **prompt, char **envp)
 		close_pipes(prompt, exe->fd);
 		close_files(prompt, exe->files);
 		exec_simple(exe->tmp, envp);
+		free_envp(envp);
 		free_prompt(prompt);
 		exit(0);
 	}
@@ -46,6 +47,7 @@ void	last_cmd(t_execc *exe, t_command **prompt, char **envp)
 			close_pipes(prompt, exe->fd);
 			close_files(prompt, exe->files);
 			exec_simple(exe->tmp, envp);
+			free_envp(envp);
 			free_prompt(prompt);
 			exit (0);
 		}

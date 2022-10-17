@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 12:07:34 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/09 22:17:17 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/12 16:57:39 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	logo(char *path)
 	int		fd;
 	char	*logo;
 
-	logo = (char *)ft_calloc(700, sizeof(char *));
+	logo = ft_calloc(700, sizeof(char *));
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		return (1);
@@ -25,6 +25,6 @@ int	logo(char *path)
 	while (read(fd, logo, 1))
 		printf("%s", logo);
 	close(fd);
-	free((char *)logo);
+	free(logo);
 	return (0);
 }

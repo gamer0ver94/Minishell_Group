@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 11:48:05 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/09 22:28:05 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/13 17:16:06 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,96 +54,44 @@ void	wait_childs(t_execc *exe)
 		waitpid(-1, NULL, 0);
 		i++;
 	}
-	write(2, "waiting\n", 8);
 }
 
-void	open_files(t_command **prompt, int **file)
+void	complete_redir(t_command **prompt, t_execc *exe)
 {
-	int	i;
-
-	i = 0;
-	while (i < count_files(prompt))
-	{
-		if (pipe(file[i]) == -1)
-			write(2, "error opening pipe\n", 19);
-		i++;
-	}
-}
-
-void	close_files(t_command **prompt, int **file)
-{
-	int	i;
-
-	i = 0;
-	while (i < count_files(prompt))
-	{
-		if (close(file[i][0]) == -1)
-			write(2, "error opening pipe\n", 19);
-		if (close(file[i][1]) == -1)
-			write(2, "error opening pipe\n", 19);
-		i++;
-	}
-}
-
-void	alloc_files(t_execc *exe, t_command **prompt)
-{
-	int	i;
-
-	i = 0;
-	exe->files = malloc(sizeof(int *) * count_files(prompt));
-	while (count_files(prompt) > i)
-	{
-		exe->files[i] = malloc(sizeof(int) * 2);
-		pipe(exe->files[i]);
-		i++;
-	}
-}
-
-void	free_files(t_execc *exe, t_command **prompt)
-{
-	int	i;
-
-	i = 0;
-	(void)prompt;
-	while (i < count_files(prompt) && exe->files[i])
-	{
-		free(exe->files[i]);
-		i++;
-	}
-	if (exe->files)
-		free(exe->files);
+	close_pipes(prompt, exe->fd);
+	close_files(prompt, exe->files);
+	wait_childs(exe);
+	free_fd(exe, prompt);
+	free_files(exe, prompt);
+	free(exe->pid);
+	free(exe);
 }
 
 void	exec_complex(t_command **prompt, char **envp)
 {
 	t_execc		*exe;
-	
+
 	exe = malloc(sizeof(t_execc));
 	init_execc_struct(exe, prompt);
 	while (exe->tmp)
 	{
 		if (exe->tmp->meta_char && !ft_strncmp(exe->tmp->meta_char, "|", 1))
 			pipef(exe, prompt, envp);
-		else if (exe->tmp->meta_char && !ft_strncmp(exe->tmp->meta_char, ">>", 2))
+		else if (exe->tmp->meta_char && \
+		!ft_strncmp(exe->tmp->meta_char, ">>", 2))
 			redirect_out(exe, prompt, envp);
-		else if (exe->tmp->meta_char && !ft_strncmp(exe->tmp->meta_char, ">", 1))
+		else if (exe->tmp->meta_char && \
+		!ft_strncmp(exe->tmp->meta_char, ">", 1))
 			redirect_out(exe, prompt, envp);
-		else if (exe->tmp->meta_char && !ft_strncmp(exe->tmp->meta_char, "<<", 2))
+		else if (exe->tmp->meta_char && \
+		!ft_strncmp(exe->tmp->meta_char, "<<", 2))
 			redirect_in_complex(exe, prompt, envp);
-		else if (exe->tmp->meta_char && !ft_strncmp(exe->tmp->meta_char, "<", 1))
-			redirect_in(exe, prompt, envp);	
+		else if (exe->tmp->meta_char && \
+		!ft_strncmp(exe->tmp->meta_char, "<", 1))
+			redirect_in(exe, prompt, envp);
 		else
-		{
 			last_cmd(exe, prompt, envp);
-		}
 	}
-	close_pipes(prompt, exe->fd);
-	close_files(prompt, exe->files);
-	wait_childs(exe);
-	// waitpid(-1, NULL, 0);
-	free_fd(exe, prompt);
-	free_files(exe, prompt);
-	free(exe->pid);
-	free(exe);
+	complete_redir(prompt, exe);
 	return ;
 }

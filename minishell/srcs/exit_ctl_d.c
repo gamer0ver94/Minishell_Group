@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*   exit_ctl_d.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/16 23:44:25 by memam             #+#    #+#             */
-/*   Updated: 2022/10/13 14:36:40 by dpaulino         ###   ########.fr       */
+/*   Created: 2022/10/15 23:47:26 by dpaulino          #+#    #+#             */
+/*   Updated: 2022/10/16 15:39:48 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	ft_exit(t_command *command, char **envp)
+void	exit_ctl_d(char *buffer, char **envp)
 {
-	free_prompt(&command);
-	free_envp(envp);
-	exit(EXIT_SUCCESS);
+	if (!buffer)
+		exit_prompt(envp);
+	free(buffer);
 }

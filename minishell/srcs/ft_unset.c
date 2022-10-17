@@ -3,63 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 18:15:50 by memam             #+#    #+#             */
-/*   Updated: 2022/10/06 17:21:38 by memam            ###   ########.fr       */
+/*   Updated: 2022/10/17 17:10:15 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	move_env(char **envp, int index)
+int	ft_unset(char **argv, char **envp)
 {
-	int		i;
-	int		count;
-	char	*tmp;
-
-	i = index;
-	count = index;
-	while (envp[i + 1])
-	{
-		tmp = ft_strdup(envp[i + 1]);
-		envp[i] = tmp;
-		envp[i +1] = NULL;
-		free(envp[i + 1]);
-		i++;
-		count++;
-	}
-	envp = realloced_new_env(envp, count);
-	tmp = NULL;
-	free(tmp); // a tester
-	
-	return (0);
-}
-
-int	ft_unset(char **envp, char **args)
-{
-	int	index;
 	int	i;
+	int	j;
 
+	j = -1;
 	i = 1;
-	index = 0;
-	if (!args[i])
-		return (0);
-	while (args[i])
+	while (argv[i])
 	{
-		if (ft_strchr(args[1], '=') != NULL)
+		if (!is_valid_env_var(argv[i]) || argv[i][ft_strlen(argv[i])] == '=')
 		{
-			printf("unset: %s not a valid identifier\n", args[1]);
-			return (1);
+			printf("bash: unset: `%s`: not a valid identifier \n", argv[i]);
+			g_status = 1;
 		}
-		else
+		while (envp[++j])
 		{
-			index = get_env_var_index(envp, args[i]);
-			if (index != -1 && \
-				ft_strncmp(args[i], envp[index], ft_strlen(args[i])) == 0)
-				move_env(envp, index);
+			if (!ft_strncmp(argv[i], envp[j], ft_strlen(argv[i])) \
+			&& envp[j][ft_strlen(argv[i])] == '=')
+			{
+				delete_var(envp, j);
+				g_status = 0;
+			}
 		}
 		i++;
+		j = 0;
 	}
-	return (0);
+	return (g_status);
 }

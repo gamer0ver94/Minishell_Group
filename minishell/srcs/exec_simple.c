@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_simple.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 15:18:48 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/10 19:33:35 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/17 16:36:28 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-extern int g_status;
 
 char	*buildin_path(char *cmd)
 {
@@ -37,62 +35,60 @@ char	*get_single_path(char *cmd, char *env_path)
 	free(str);
 	return (tmp);
 }
-// here is the exec (echo),(pwd),(env), 
-int    exec_builtin(t_command *prompt, char **envp)
+
+pid_t	exec_fork(t_command *prompt, char **envp, char **env_path, int *i)
 {
-	if (!ft_strncmp(prompt->cmd, "echo", 4) && \
-		!ft_strncmp(prompt->cmd, "echo", ft_strlen(prompt->cmd)))
+	pid_t	pid;
+	char	*path;
+
+	pid = fork();
+	if (pid == 0)
 	{
-		ft_echo(prompt);
-		return (0);
+		execve(prompt->cmd, prompt->argv, envp);
+		while (env_path[(*i)])
+		{
+			if (check_path(envp) == -1)
+				break ;
+			path = get_single_path(prompt->cmd, env_path[(*i)]);
+			if (execve(path, prompt->argv, envp) == -1)
+			{
+				free(path);
+				(*i)++;
+			}
+		}
+		verify_access(prompt);
 	}
-	if (!ft_strncmp(prompt->cmd, "pwd", 3) && \
-		!ft_strncmp(prompt->cmd, "echo", ft_strlen(prompt->cmd)))
+	return (pid);
+}
+
+void	wait_fork(pid_t *pid)
+{
+	int		status;
+
+	if (waitpid((*pid), &status, 0))
 	{
-		ft_pwd();
-		return (0);
+		if (WIFEXITED(status) && !WEXITSTATUS(status))
+		{
+			g_status = 0;
+		}
+		else if (WIFEXITED(status) && WEXITSTATUS(status))
+		{
+			if (WEXITSTATUS(status) == 127)
+				g_status = 127;
+			else if (WEXITSTATUS(status) == 126)
+				g_status = 126;
+			else
+				g_status = 1;
+		}
+		else
+			g_status = 2;
 	}
-	if (!ft_strncmp(prompt->cmd, "env", 3) && \
-		!ft_strncmp(prompt->cmd, "echo", ft_strlen(prompt->cmd)))
-	{
-		ft_env(envp);
-		return (0);
-	}
-	if (!ft_strncmp(prompt->cmd, "export", 6) \
-		&& !ft_strncmp(prompt->cmd, "export", ft_strlen(prompt->cmd)))
-	{
-		ft_export(envp, prompt->argv);
-		return (0);
-	}
-	if (!ft_strncmp(prompt->cmd, "exit", 5) \
-		&& !ft_strncmp(prompt->cmd, "exit", ft_strlen(prompt->cmd)))
-	{
-		ft_exit(prompt);
-		return (0);
-	}
-	if (!ft_strncmp(prompt->cmd, "unset", 5)
-		&& !ft_strncmp(prompt->cmd, "unset", ft_strlen(prompt->cmd)))
-	{
-		// ft_unset(envp, prompt->argv);
-		ft_unset(envp, prompt->argv);
-		return (0);
-	}
-	// pour tester int ft_wildcards(char *args)
-	// if (!ft_strncmp(prompt->cmd, "ls", 2)
-	// 	&& ft_strncmp(prompt->cmd, "ls", ft_strlen(prompt->cmd)))
-	// {
-	// 	ft_wildcards(prompt->argv[1]);
-	// 	return (0);
-	// }
-	return (1);
 }
 
 int	exec_simple(t_command *prompt, char **envp)
 {
-	char	*path;
 	char	**env_path;
 	int		i;
-	int		status;
 	pid_t	pid;
 
 	i = 0;
@@ -103,51 +99,15 @@ int	exec_simple(t_command *prompt, char **envp)
 		free_args(env_path);
 		return (1);
 	}
-	//here is the exec_builtin
 	if (!ft_strncmp(prompt->cmd, "exit", 5))
 		free_args(env_path);
-	if (builtin_env(prompt, envp) == 0 ||builtin(prompt) == 0)
+	if (builtin_env(prompt, envp) == 0 || builtin(prompt, envp) == 0)
 	{
-		free_args(env_path); 
+		free_args(env_path);
 		return (1);
 	}
-	pid = fork();
-	if (pid == 0)
-	{
-		if (access(prompt->argv[0], F_OK) == 0)
-			execve(prompt->argv[0], prompt->argv, envp);
-		else
-		{
-			while (env_path[i])
-			{
-				path = get_single_path(prompt->cmd, env_path[i]);
-				if (execve(path, prompt->argv, envp) == -1)
-				{
-					free(path);
-					i++;
-				}
-			}
-			write(2, prompt->cmd, ft_strlen(prompt->cmd));
-			write(2, ": command not found\n", 20);
-			exit(127);
-		}
-	}
-	if (waitpid(pid, &status, 0))
-	{
-		if (WIFEXITED(status) && !WEXITSTATUS(status))
-		{
-			g_status = 0;
-		}
-		else if (WIFEXITED(status) && WEXITSTATUS(status))
-		{
-			if (WEXITSTATUS(status) == 127)
-				g_status = 127;
-			else
-				g_status = 2;
-		}
-		else
-			g_status = 1;
-	}
+	pid = exec_fork(prompt, envp, env_path, &i);
+	wait_fork(&pid);
 	free_args(env_path);
 	return (0);
 }

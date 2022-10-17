@@ -1,20 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*   exec_simple_verify.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/16 23:44:25 by memam             #+#    #+#             */
-/*   Updated: 2022/10/13 14:36:40 by dpaulino         ###   ########.fr       */
+/*   Created: 2022/10/17 16:36:48 by dpaulino          #+#    #+#             */
+/*   Updated: 2022/10/17 16:37:04 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	ft_exit(t_command *command, char **envp)
+void	verify_access(t_command *prompt)
 {
-	free_prompt(&command);
-	free_envp(envp);
-	exit(EXIT_SUCCESS);
+	if (access(prompt->cmd, F_OK) == 0)
+	{
+		write(2, prompt->cmd, ft_strlen(prompt->cmd));
+		write(2, ": is a directory\n", 17);
+		exit(126);
+	}
+	else
+	{
+		write(2, prompt->cmd, ft_strlen(prompt->cmd));
+		write(2, ": command not found\n", 20);
+		exit(127);
+	}
 }
