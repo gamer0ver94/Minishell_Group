@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 13:25:13 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/17 17:23:27 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/17 18:08:06 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,5 +146,6 @@ void		ft_close_exit(int *file, t_command **prompt, char **envp, \
 t_execc *exe);
 void		ft_close_exit_complex(t_command **prompt, t_execc *exe, int *file, \
 char **envp);
+void		export_list(char **envp);
 
 #endif

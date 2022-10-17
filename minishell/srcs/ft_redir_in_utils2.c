@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:12:46 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/17 17:22:19 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/17 18:08:14 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,16 @@ char **envp)
 	close(file[1]);
 	exec_simple(exe->tmp, envp);
 	exit(0);
+}
+
+void	export_list(char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		printf("declare -x %s\n", envp[i]);
+		i++;
+	}
 }
