@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_simple.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 15:18:48 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/14 17:12:52 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/16 16:34:18 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,11 @@ pid_t	exec_fork(t_command *prompt, char **envp, char **env_path, int *i)
 	pid = fork();
 	if (pid == 0)
 	{
+		execve(prompt->cmd, prompt->argv, envp);
 		while (env_path[(*i)])
 		{
+			if (check_path(envp) == -1)
+				break ;
 			path = get_single_path(prompt->cmd, env_path[(*i)]);
 			if (execve(path, prompt->argv, envp) == -1)
 			{
@@ -55,9 +58,18 @@ pid_t	exec_fork(t_command *prompt, char **envp, char **env_path, int *i)
 				(*i)++;
 			}
 		}
-		write(2, prompt->cmd, ft_strlen(prompt->cmd));
-		write(2, ": command not found\n", 20);
-		exit(127);
+		if (access(prompt->cmd, F_OK) == 0)
+		{
+			write(2, prompt->cmd, ft_strlen(prompt->cmd));
+			write(2, ": is a directory\n", 17);
+			exit(126);
+		}
+		else
+		{
+			write(2, prompt->cmd, ft_strlen(prompt->cmd));
+			write(2, ": command not found\n", 20);
+			exit(127);
+		}
 	}
 	return (pid);
 }
@@ -76,6 +88,8 @@ void	wait_fork(pid_t *pid)
 		{
 			if (WEXITSTATUS(status) == 127)
 				g_status = 127;
+			else if (WEXITSTATUS(status) == 126)
+				g_status = 126;
 			else
 				g_status = 2;
 		}
