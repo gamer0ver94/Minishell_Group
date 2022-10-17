@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_prompt.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 09:42:11 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/16 15:41:38 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/17 16:59:42 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,12 @@ void	exit_prompt(char**envp)
 	exit(0);
 }
 
+void	add_hist_free_prompt(t_command *prompt, char *buffer)
+{
+	add_history(buffer);
+	free_prompt(&prompt);
+}
+
 void	shell_prompt(char **envp)
 {
 	t_command	*prompt;
@@ -68,8 +74,7 @@ void	shell_prompt(char **envp)
 				exec_simple(prompt, envp);
 			else
 				exec_complex(&prompt, envp);
-			add_history(buffer);
-			free_prompt(&prompt);
+			add_hist_free_prompt(prompt, buffer);
 		}
 		exit_ctl_d(buffer, envp);
 	}

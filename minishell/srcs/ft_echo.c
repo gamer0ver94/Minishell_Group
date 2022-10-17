@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 11:03:50 by memam             #+#    #+#             */
-/*   Updated: 2022/10/17 09:53:08 by memam            ###   ########.fr       */
+/*   Updated: 2022/10/17 16:33:13 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,10 @@ int	ft_echo(t_command *command)
 	int		i;
 
 	if (command->argv[1] == NULL)
-	{
 		printf("\n");
-		g_status = 0;
-	}	
 	else if (ft_strncmp(command->argv[1], "-n", 2) == 0)
 	{
 		ft_echo_op(command);
-		g_status = 0;
 	}
 	else
 	{
@@ -67,5 +63,6 @@ int	ft_echo(t_command *command)
 		}
 		printf("\n");
 	}
-	return (g_status);
+	g_status = 0;
+	return (0);
 }

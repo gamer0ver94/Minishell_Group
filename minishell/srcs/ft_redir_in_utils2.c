@@ -1,42 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_error.c                                        :+:      :+:    :+:   */
+/*   ft_redir_in_utils2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/16 15:00:45 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/17 17:07:16 by dpaulino         ###   ########.fr       */
+/*   Created: 2022/10/17 17:12:46 by dpaulino          #+#    #+#             */
+/*   Updated: 2022/10/17 17:22:19 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	check_path(char **envp)
+void	ft_close_exit(int *file, t_command **prompt, char **envp, t_execc *exe)
 {
-	int		i;
-	char	*tmp;
+	close((*file));
+	close_pipes(prompt, exe->fd);
+	exec_simple(exe->tmp, envp);
+	exit(0);
+}
 
-	tmp = NULL;
-	i = -1;
-	while (envp[++i])
-	{
-		if (!ft_strncmp(envp[i], "PATH", 4))
-		{
-			tmp = ft_strdup(envp[i]);
-			tmp += 5;
-			if (!ft_strncmp(tmp, getenv("PATH"), ft_strlen(tmp)))
-			{
-				tmp -= 5;
-				free(tmp);
-				return (0);
-			}
-			else
-			{
-				tmp -= 5;
-				free(tmp);
-			}
-		}
-	}
-	return (-1);
+void	ft_close_exit_complex(t_command **prompt, t_execc *exe, int *file, \
+char **envp)
+{
+	close_files(prompt, exe->files);
+	close_pipes(prompt, exe->fd);
+	close(file[0]);
+	close(file[1]);
+	exec_simple(exe->tmp, envp);
+	exit(0);
 }

@@ -1,42 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_error.c                                        :+:      :+:    :+:   */
+/*   struct_init_free.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/16 15:00:45 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/17 17:07:16 by dpaulino         ###   ########.fr       */
+/*   Created: 2022/10/17 16:56:03 by dpaulino          #+#    #+#             */
+/*   Updated: 2022/10/17 16:57:26 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	check_path(char **envp)
+void	free_helper(t_command *tmp, t_command *aux, int i)
 {
-	int		i;
-	char	*tmp;
-
-	tmp = NULL;
-	i = -1;
-	while (envp[++i])
+	while (tmp != NULL)
 	{
-		if (!ft_strncmp(envp[i], "PATH", 4))
+		i = 0;
+		free(tmp->cmd);
+		free(tmp->meta_char);
+		while (tmp->argv && tmp->argv[i])
 		{
-			tmp = ft_strdup(envp[i]);
-			tmp += 5;
-			if (!ft_strncmp(tmp, getenv("PATH"), ft_strlen(tmp)))
-			{
-				tmp -= 5;
-				free(tmp);
-				return (0);
-			}
-			else
-			{
-				tmp -= 5;
-				free(tmp);
-			}
+			free(tmp->argv[i]);
+			i++;
 		}
+		i = 0;
+		while (tmp->envp_val[i])
+			free(tmp->envp_val[i++]);
+		free(tmp->envp_val);
+		i = 0;
+		while (tmp->envp[i])
+			free(tmp->envp[i++]);
+		free(tmp->envp);
+		free(tmp->argv);
+		i = 0;
+		aux = tmp;
+		tmp = tmp->next;
+		free(aux);
 	}
-	return (-1);
 }

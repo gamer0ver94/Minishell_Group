@@ -3,23 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 18:15:50 by memam             #+#    #+#             */
-/*   Updated: 2022/10/15 15:22:20 by memam            ###   ########.fr       */
+/*   Updated: 2022/10/17 17:10:15 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-extern int	g_status;
 
 int	ft_unset(char **argv, char **envp)
 {
 	int	i;
 	int	j;
 
-	j = 0;
+	j = -1;
 	i = 1;
 	while (argv[i])
 	{
@@ -28,7 +26,7 @@ int	ft_unset(char **argv, char **envp)
 			printf("bash: unset: `%s`: not a valid identifier \n", argv[i]);
 			g_status = 1;
 		}
-		while (envp[j])
+		while (envp[++j])
 		{
 			if (!ft_strncmp(argv[i], envp[j], ft_strlen(argv[i])) \
 			&& envp[j][ft_strlen(argv[i])] == '=')
@@ -36,7 +34,6 @@ int	ft_unset(char **argv, char **envp)
 				delete_var(envp, j);
 				g_status = 0;
 			}
-			j++;
 		}
 		i++;
 		j = 0;

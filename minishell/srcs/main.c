@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 12:07:26 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/15 23:59:03 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/17 16:15:57 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	main(int argc, char **argv, char **envp)
 		printf("No <ARGUMENTS> are needed\n");
 		return (1);
 	}
-	g_status = 2;
+	g_status = 0;
 	new_envp = ft_calloc(1000, sizeof(char *));
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, &sighandler);

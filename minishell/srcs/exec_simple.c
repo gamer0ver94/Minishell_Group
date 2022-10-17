@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_simple.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 15:18:48 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/16 16:34:18 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/17 16:36:28 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-extern int	g_status;
 
 char	*buildin_path(char *cmd)
 {
@@ -58,18 +56,7 @@ pid_t	exec_fork(t_command *prompt, char **envp, char **env_path, int *i)
 				(*i)++;
 			}
 		}
-		if (access(prompt->cmd, F_OK) == 0)
-		{
-			write(2, prompt->cmd, ft_strlen(prompt->cmd));
-			write(2, ": is a directory\n", 17);
-			exit(126);
-		}
-		else
-		{
-			write(2, prompt->cmd, ft_strlen(prompt->cmd));
-			write(2, ": command not found\n", 20);
-			exit(127);
-		}
+		verify_access(prompt);
 	}
 	return (pid);
 }
@@ -91,10 +78,10 @@ void	wait_fork(pid_t *pid)
 			else if (WEXITSTATUS(status) == 126)
 				g_status = 126;
 			else
-				g_status = 2;
+				g_status = 1;
 		}
 		else
-			g_status = 1;
+			g_status = 2;
 	}
 }
 

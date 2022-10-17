@@ -1,8 +1,8 @@
 CC = gcc
 CCFLAGS = -Wall -Wextra -Werror -g
-LDFLAGS =  -lreadline -L/Users/memam/.brew/opt/readline/lib -I/Users/memam/.brew/opt/readline/include
+LDFLAGS =  -lreadline -L/Users/${USER}/.brew/opt/readline/lib -I/Users/${USER}/.brew/opt/readline/include
 LIBFT	=	-lft -L libft
-LIBLINKS = -I./includes -I./libft/includes -I/Users/memam/.brew/opt/readline/include
+LIBLINKS = -I./includes -I./libft/includes -I/Users/${USER}/.brew/opt/readline/include
 APPNAME = minishell
 EXT = .c
 SRCDIR = srcs

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_redir_in_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 17:08:03 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/15 23:37:29 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/17 17:26:00 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,7 @@ void	fork_redir_in_simple(t_execc *exe, t_command **prompt, char **envp)
 		}
 		else if (exe->tmp->next->meta_char)
 			dup2(exe->fd[exe->i][1], STDOUT_FILENO);
-		close(file);
-		close_pipes(prompt, exe->fd);
-		exec_simple(exe->tmp, envp);
-		exit(0);
+		ft_close_exit(&file, prompt, envp, exe);
 	}
 }
 
@@ -69,12 +66,7 @@ char **envp, int	*file)
 		}
 		else if (exe->tmp->next->meta_char)
 			dup2(exe->fd[exe->i][1], STDOUT_FILENO);
-		close_pipes(prompt, exe->fd);
-		close_files(prompt, exe->files);
-		close(file[0]);
-		close(file[1]);
-		exec_simple(exe->tmp, envp);
-		exit(0);
+		ft_close_exit_complex(prompt, exe, file, envp);
 	}
 }
 
@@ -112,4 +104,3 @@ int	redir_prompt(t_execc *exe, int *file)
 	free_redir(a, res);
 	return (0);
 }
-
