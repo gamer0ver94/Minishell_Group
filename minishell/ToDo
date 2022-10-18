@@ -2,7 +2,7 @@
 
 //Makefile must have all srcs files 🥵
 //Spaces before the command must be ignored 🥵
-//Echo -n must be handle 🥵
+//Echo -n must be handle 😀 it fixed 
 //Exit must handle diference arguments 🥵
 //Handle $? + $? 🥵
 //Handle cat ctl+c should not display 2 prompts 🥵
