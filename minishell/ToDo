@@ -1,19 +1,20 @@
----------------ToDos---------------
-create a struct with enviroment variable so i can acess them ✅
-use that struct to replace the $sign with the correct variable.✅
-handle $dolar when it is between quotes and still have a space with other caracters.✅
-handle signals✅
-handle $?✅ // lamost there is still buigs
-edit function cd when there is no argument than shold display the HOME variable as current pwd ✅
-implement redirections✅
-inplemente pipe✅
-builtins✅
-LEAKS✅ //ps cd have some leaks
+//😀 good ---- 🥵 badd//
 
----------------BUGS---------------
-bugged with "$USER""$USER"'$USER' and not hadle not closed quotes✅ // ps it creates 2 empty arrays that may cause problems
-when using cat < file this command do what is supose to do except that dont return the prompt✅
-prompt text get bugged when it is 2 big
-problem when using cat << end > a
-
-valgrind --leak-check=full --suppressions=readline.supp --show-leak-kinds=all --track-origins=yes ./minishell
+//Makefile must have all srcs files 🥵
+//Spaces before the command must be ignored 🥵
+//Echo -n must be handle 🥵
+//Exit must handle diference arguments 🥵
+//Handle $? + $? 🥵
+//Handle cat ctl+c should not display 2 prompts 🥵
+//When using cat with no arguments Ctl + \ should quit the blocking command 🥵
+//echo "cat lol.c | cat > lol.c" problem with parsing  🥵
+//echo $ problem with parsing  
+//cd $HOME/Documents problem with parsing  🥵
+//when executing first try to search in PATH before executing  🥵 
+//< ToDo cat problem segfault
+//<< parse problem  🥵
+//hereDoc must parse $  🥵
+//termios ctl c should not display ^C 🥵
+//buffer[size] should be bigger; 🥵
+//Echo $variable should not display a space betwern variables
+//valgrind --leak-check=full --suppressions=readline.supp --show-leak-kinds=all --track-origins=yes ./minishell

@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 09:42:11 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/17 16:59:42 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/18 13:54:07 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	shell_prompt(char **envp)
 				exec_simple(prompt, envp);
 			else
 				exec_complex(&prompt, envp);
+			print_struct(prompt);
 			add_hist_free_prompt(prompt, buffer);
 		}
 		exit_ctl_d(buffer, envp);

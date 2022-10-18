@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 12:07:26 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/17 16:15:57 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/18 13:52:26 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	main(int argc, char **argv, char **envp)
 	char	**new_envp;
 
 	(void)argv;
-	if (argc > 1)
+	if (argc > 2)
 	{
 		printf("No <ARGUMENTS> are needed\n");
 		return (1);
