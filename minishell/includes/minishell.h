@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 13:25:13 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/18 13:52:30 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/19 21:08:03 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # include "structs.h"
 # include <sys/ioctl.h>
 # include <signal.h>
+# include <termios.h>
 # include <sys/types.h> //opendir, readdir, closedir
 # include <dirent.h> //opendir, readdir, closedir
 /*********** Colors **********/
@@ -147,5 +148,6 @@ t_execc *exe);
 void		ft_close_exit_complex(t_command **prompt, t_execc *exe, int *file, \
 char **envp);
 void		export_list(char **envp);
+void		sighandler(int signal);
 
 #endif

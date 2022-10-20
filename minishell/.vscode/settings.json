@@ -23,6 +23,7 @@
 		"ostream": "c",
 		"functional": "c",
 		"typeinfo": "c",
-		"*.tcc": "c"
+		"*.tcc": "c",
+		"dirent.h": "c"
 	}
 }

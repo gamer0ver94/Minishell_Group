@@ -1,7 +1,7 @@
 //😀 good ---- 🥵 badd//
 
 //Makefile must have all srcs files 🥵
-//Spaces before the command must be ignored 🥵
+//Spaces before the command must be ignored 😀
 //Echo -n must be handle 🥵
 //Exit must handle diference arguments 🥵
 //Handle $? + $? 🥵
@@ -11,7 +11,7 @@
 //echo $ problem with parsing  
 //cd $HOME/Documents problem with parsing  🥵
 //when executing first try to search in PATH before executing  🥵 
-//< ToDo cat problem segfault
+//< ToDo cat problem segfault 😀
 //<< parse problem  🥵
 //hereDoc must parse $  🥵
 //termios ctl c should not display ^C 🥵

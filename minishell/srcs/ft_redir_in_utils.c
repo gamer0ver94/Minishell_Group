@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_redir_in_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 17:08:03 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/17 17:26:00 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/19 17:11:39 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	redir_prompt(t_execc *exe, int *file)
 
 	res = ft_calloc(100, sizeof(res));
 	a = ft_strdup(exe->tmp->next->argv[0]);
-	while (1)
+	while (g_status != 130)
 	{
 		buffer = readline("> ");
 		if (!buffer)

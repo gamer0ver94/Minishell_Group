@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_prompt.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 09:42:11 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/18 13:54:07 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/20 08:57:18 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	exit_prompt(char**envp)
 {
 	free_envp(envp);
 	printf("EXIT\n");
-	exit(0);
+	exit(g_status);
 }
 
 void	add_hist_free_prompt(t_command *prompt, char *buffer)
@@ -72,9 +72,10 @@ void	shell_prompt(char **envp)
 				write (2, "MiNiShEeL : error <QUOTES NOT CLOSED>\n", 38);
 			else if (res == 0)
 				exec_simple(prompt, envp);
-			else
+			else if (res == 1)
 				exec_complex(&prompt, envp);
-			print_struct(prompt);
+			if (res != 2)
+				print_struct(prompt);
 			add_hist_free_prompt(prompt, buffer);
 		}
 		exit_ctl_d(buffer, envp);

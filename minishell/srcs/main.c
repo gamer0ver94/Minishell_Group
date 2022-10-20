@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 12:07:26 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/18 13:52:26 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/19 21:47:50 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	sighandler(int signal)
 	}
 	else if (signal == SIGINT)
 	{
+		g_status = 130;
 		ioctl(STDIN_FILENO, TIOCSTI, "\n");
 		rl_replace_line("", 0);
 		rl_on_new_line();
@@ -31,8 +32,12 @@ void	sighandler(int signal)
 
 int	main(int argc, char **argv, char **envp)
 {
-	char	**new_envp;
+	char			**new_envp;
+	// struct termios	termi;
 
+	// tcgetattr(0, &termi);
+	// termi.c_lflag = ECHOCTL;
+	// tcsetattr(0, 0, &termi);
 	(void)argv;
 	if (argc > 2)
 	{

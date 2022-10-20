@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 13:34:36 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/15 23:40:02 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/20 09:21:18 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	get_commands(char **split, t_command **prompt, char **envp)
 	}
 	while (tmp->next != NULL)
 		tmp = tmp->next;
-	tmp->cmd = ft_strdup(split[0]);
 	tmp->argv = ft_calloc(500, sizeof(char *));
 	while (split && split[i])
 	{
@@ -38,6 +37,7 @@ void	get_commands(char **split, t_command **prompt, char **envp)
 	}
 	tmp->argc = j;
 	tmp->argv[j] = NULL;
+	tmp->cmd = ft_strdup(tmp->argv[0]);
 }
 
 void	parse_quotes_util(t_parse *p, char **args, char *buffer)
@@ -87,15 +87,53 @@ int	parse_quotes(char **args, char *buffer)
 	return (0);
 }
 
+int	is_empty_buffer(char *buffer)
+{
+	int	i;
+
+	i = 0;
+	while (buffer[i])
+	{
+		if (buffer[i] != ' ')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int	exception(char *buffer)
+{
+	int	i;
+
+	i = 0;
+	while (buffer[i])
+	{
+		if (buffer[i] == ' ')
+			i++;
+		else if (buffer[i] != '<' && buffer[i] != '>' && buffer[i] != '|')
+			return (0);
+		else
+			return (1);
+	}
+	return (1);
+}
+
 int	buffer_parsing(char *buffer, t_command **prompt, char **envp)
 {
 	t_helper2	*buf_s;
 
-	buf_s = malloc(sizeof(t_helper));
-	buf_s->exe = malloc(sizeof(char *) * 50);
-	buf_s->meta_chars = malloc(sizeof(char *) * 50);
-	buf_s->i = 0;
-	buf_s->code = 0;
+	if (is_empty_buffer(buffer))
+		return (2);
+	if (exception(buffer))
+		return (2);
+	else
+	{
+		buf_s = malloc(sizeof(t_helper));
+		buf_s->exe = malloc(sizeof(char *) * 50);
+		buf_s->meta_chars = malloc(sizeof(char *) * 50);
+		buf_s->i = 0;
+		buf_s->code = 0;
+	}
 	if (find_meta_char(buffer))
 	{
 		parse_phase_one(buf_s, prompt, buffer, envp);
