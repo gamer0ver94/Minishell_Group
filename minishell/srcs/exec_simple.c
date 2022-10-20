@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 15:18:48 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/20 11:16:28 by memam            ###   ########.fr       */
+/*   Updated: 2022/10/20 23:35:29 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ pid_t	exec_fork(t_command *prompt, char **envp, char **env_path, int *i)
 	char	*path;
 
 	pid = fork();
+	get_signals(2);
 	if (pid == 0)
 	{
 		execve(prompt->cmd, prompt->argv, envp);

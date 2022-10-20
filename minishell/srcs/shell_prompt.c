@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 09:42:11 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/20 15:29:41 by memam            ###   ########.fr       */
+/*   Updated: 2022/10/20 23:37:02 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ char	*parse_prompt(void)
 	free(parser);
 	parser = ft_strjoin(tmp, "$ ");
 	free(tmp);
+	get_signals(1);
 	return (parser);
 }
 
