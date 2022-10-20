@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_prompt.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 09:42:11 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/18 13:54:07 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/20 15:29:41 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	shell_prompt(char **envp)
 				exec_simple(prompt, envp);
 			else
 				exec_complex(&prompt, envp);
-			print_struct(prompt);
+			//print_struct(prompt);
 			add_hist_free_prompt(prompt, buffer);
 		}
 		exit_ctl_d(buffer, envp);

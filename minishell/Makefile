@@ -7,8 +7,45 @@ APPNAME = minishell
 EXT = .c
 SRCDIR = srcs
 OBJDIR = objs
+SRC =  srcs/main.c \
+				srcs/buffer_parsing.c \
+				srcs/buffer_parsing_utils.c \
+				srcs/cd_cmd.c \
+				srcs/cmd_error.c \
+				srcs/envp_gener.c \
+				srcs/exe_complex_utils.c \
+				srcs/exe_complex_utils2.c \
+				srcs/exec_builtin.c \
+				srcs/exec_complex.c \
+				srcs/exec_simple.c \
+				srcs/exec_simple_verify.c \
+				srcs/exit_ctl_d.c \
+				srcs/free_matrix.c \
+				srcs/ft_echo.c \
+				srcs/ft_env.c \
+				srcs/ft_exit.c \
+				srcs/ft_export.c \
+				srcs/ft_pipe.c \
+				srcs/ft_pwd.c \
+				srcs/ft_redir_in.c \
+				srcs/ft_redir_in_utils.c\
+				srcs/ft_redir_in_utils2.c \
+				srcs/ft_redir_out.c \
+				srcs/ft_unset.c \
+				srcs/get_next_line.c \
+				srcs/get_next_line_utils.c \
+				srcs/logo.c \
+				srcs/parse_dolar.c \
+				srcs/parse_dolar_utils.c \
+				srcs/parse_meta_char.c \
+				srcs/parsing_utils.c \
+				srcs/parsing_utils2.c \
+				srcs/print_struct.c \
+				srcs/shell_prompt.c \
+				srcs/struct_init.c \
+				srcs/struct_init_free.c \
+				srcs/struct_init_utils.c \
 
-SRC = $(wildcard $(SRCDIR)/*$(EXT))
 OBJ = $(SRC:$(SRCDIR)/%$(EXT)=$(OBJDIR)/%.o)
 RM = rm -rf
 DELOBJ = $(OBJ)
@@ -25,8 +62,9 @@ $(OBJDIR)/%.o: $(SRCDIR)/%$(EXT)
 
 clean:
 	$(RM) $(DELOBJ) $(DEP) $(APPNAME)
-	make fclean -C libft
+	make clean -C libft
 
 fclean	:	clean
-
+		@$(RM) $(NAME)
+		@make fclean -C $(LIBFT)
 re		:	clean all

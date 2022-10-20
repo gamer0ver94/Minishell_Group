@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_simple.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 15:18:48 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/17 16:36:28 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/20 11:16:28 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	exec_simple(t_command *prompt, char **envp)
 		free_args(env_path);
 	if (builtin_env(prompt, envp) == 0 || builtin(prompt, envp) == 0)
 	{
-		free_args(env_path);
+		//free_args(env_path);
 		return (1);
 	}
 	pid = exec_fork(prompt, envp, env_path, &i);
