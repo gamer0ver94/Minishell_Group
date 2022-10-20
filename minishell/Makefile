@@ -45,6 +45,7 @@ SRC =  srcs/main.c \
 				srcs/struct_init.c \
 				srcs/struct_init_free.c \
 				srcs/struct_init_utils.c \
+				srcs/ft_signal.c \
 
 OBJ = $(SRC:$(SRCDIR)/%$(EXT)=$(OBJDIR)/%.o)
 RM = rm -rf
@@ -61,10 +62,10 @@ $(OBJDIR)/%.o: $(SRCDIR)/%$(EXT)
 	$(CC) -g3 $(CCFLAGS) ${LIBLINKS} -o $@ -c $<
 
 clean:
-	$(RM) $(DELOBJ) $(DEP) $(APPNAME)
+	$(RM) $(DELOBJ) 
 	make clean -C libft
 
 fclean	:	clean
-		@$(RM) $(NAME)
+		@$(RM) $(APPNAME)
 		@make fclean -C $(LIBFT)
 re		:	clean all
