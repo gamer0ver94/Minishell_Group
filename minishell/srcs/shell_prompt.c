@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_prompt.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 09:42:11 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/20 08:57:18 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/20 14:54:56 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ void	shell_prompt(char **envp)
 	while (1)
 	{
 		ptr = parse_prompt();
-		buffer = readline(ptr);
+		if (isatty(STDOUT_FILENO))
+			buffer = readline(ptr);
 		free(ptr);
 		if (buffer && *buffer)
 		{
@@ -70,7 +71,7 @@ void	shell_prompt(char **envp)
 			res = buffer_parsing(buffer, &prompt, envp);
 			if (res == -2)
 				write (2, "MiNiShEeL : error <QUOTES NOT CLOSED>\n", 38);
-			else if (res == 0)
+			if (res == 0)
 				exec_simple(prompt, envp);
 			else if (res == 1)
 				exec_complex(&prompt, envp);

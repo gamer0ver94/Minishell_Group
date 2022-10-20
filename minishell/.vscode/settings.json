@@ -24,6 +24,7 @@
 		"functional": "c",
 		"typeinfo": "c",
 		"*.tcc": "c",
-		"dirent.h": "c"
+		"dirent.h": "c",
+		"history.h": "c"
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 13:25:13 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/19 21:08:03 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/20 14:46:58 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,5 +149,6 @@ void		ft_close_exit_complex(t_command **prompt, t_execc *exe, int *file, \
 char **envp);
 void		export_list(char **envp);
 void		sighandler(int signal);
+int	termios_config(struct termios *t_config, struct termios *old_term);
 
 #endif

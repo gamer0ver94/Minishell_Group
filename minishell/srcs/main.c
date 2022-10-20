@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 12:07:26 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/19 21:47:50 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/20 14:48:28 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,24 @@ void	sighandler(int signal)
 	}
 	else if (signal == SIGINT)
 	{
-		g_status = 130;
 		ioctl(STDIN_FILENO, TIOCSTI, "\n");
 		rl_replace_line("", 0);
 		rl_on_new_line();
+		g_status = 130;
 	}
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	char			**new_envp;
-	// struct termios	termi;
-
-	// tcgetattr(0, &termi);
-	// termi.c_lflag = ECHOCTL;
-	// tcsetattr(0, 0, &termi);
+	//term
+	// char *term_name;
+	struct termios			t_config;
+	struct termios			old_term;
+	// term_name = getenv("TERM");
+	// tgetent(NULL, term_name);
+	termios_config(&t_config, &old_term);
+	//endterm
 	(void)argv;
 	if (argc > 2)
 	{
