@@ -66,6 +66,7 @@ clean:
 	make clean -C libft
 
 fclean	:	clean
-		@$(RM) $(APPNAME)
-		@make fclean -C $(LIBFT)
+		$(RM) $(APPNAME)
+		make fclean -C libft
+
 re		:	clean all
