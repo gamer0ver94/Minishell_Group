@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 09:42:11 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/20 23:37:02 by memam            ###   ########.fr       */
+/*   Updated: 2022/10/21 11:31:40 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ char	*parse_prompt(void)
 	char	current_dir[1024];
 	char	*tmp;
 
+	get_signals(1);
 	parser = ft_strdup(RED_CLR);
 	tmp = ft_strjoin(parser, getenv("USER"));
 	free(parser);
@@ -35,7 +36,6 @@ char	*parse_prompt(void)
 	free(parser);
 	parser = ft_strjoin(tmp, "$ ");
 	free(tmp);
-	get_signals(1);
 	return (parser);
 }
 
