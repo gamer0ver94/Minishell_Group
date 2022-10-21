@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 15:18:48 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/20 23:35:29 by memam            ###   ########.fr       */
+/*   Updated: 2022/10/21 13:44:29 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ pid_t	exec_fork(t_command *prompt, char **envp, char **env_path, int *i)
 	char	*path;
 
 	pid = fork();
-	get_signals(2);
 	if (pid == 0)
 	{
 		execve(prompt->cmd, prompt->argv, envp);
@@ -104,9 +103,10 @@ int	exec_simple(t_command *prompt, char **envp)
 		free_args(env_path);
 	if (builtin_env(prompt, envp) == 0 || builtin(prompt, envp) == 0)
 	{
-		//free_args(env_path);
+		//free_args(env_path); valgrind leake exit
 		return (1);
 	}
+	get_signals(2);
 	pid = exec_fork(prompt, envp, env_path, &i);
 	wait_fork(&pid);
 	free_args(env_path);
