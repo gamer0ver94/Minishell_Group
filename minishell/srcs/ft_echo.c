@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 11:03:50 by memam             #+#    #+#             */
-/*   Updated: 2022/10/18 22:47:12 by memam            ###   ########.fr       */
+/*   Updated: 2022/10/21 15:23:23 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,18 @@ extern int	g_status;
 int	ft_echo_flag(char *args)
 {
 	int	i;
-	int flag;
+	int	flag;
 
 	i = 0;
 	flag = 0;
 	if (args[i] != '-')
-		return(flag);
+		return (flag);
 	i++;
 	while (args[i] && args[i] == 'n')
 		i++;
 	if (args[i] == '\0')
 		flag = 1;
-	return (flag);	
+	return (flag);
 }
 
 void	ft_echo_print(t_command *command, int flag, int i)
@@ -48,8 +48,6 @@ void	ft_echo_print(t_command *command, int flag, int i)
 			ft_putchar_fd('\n', STDOUT_FILENO);
 		i++;
 	}
-	
-
 }
 
 int	ft_echo(t_command *command)

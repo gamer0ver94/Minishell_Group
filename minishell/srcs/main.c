@@ -6,29 +6,13 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 12:07:26 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/20 22:32:20 by memam            ###   ########.fr       */
+/*   Updated: 2022/10/21 15:28:37 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 int	g_status;
-
-// void	sighandler(int signal)
-// {
-// 	if (signal == SIGQUIT)
-// 	{
-// 		printf("\nThank you for using MINISHELL\n");
-// 		exit(0);
-// 	}
-// 	else if (signal == SIGINT)
-// 	{
-		
-// 		ioctl(STDIN_FILENO, TIOCSTI, "\n");
-// 		rl_on_new_line();
-// 		//rl_replace_line("", 0);
-// 	}
-// }
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -42,8 +26,6 @@ int	main(int argc, char **argv, char **envp)
 	}
 	g_status = 0;
 	new_envp = ft_calloc(1000, sizeof(char *));
-	// signal(SIGQUIT, SIG_IGN);
-	// signal(SIGINT, &sighandler);
 	create_env(new_envp, envp);
 	logo("assets/logo.txt");
 	shell_prompt(new_envp);

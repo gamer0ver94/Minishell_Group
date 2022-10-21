@@ -6,7 +6,7 @@
 /*   By: memam <memam@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 13:25:13 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/20 23:35:39 by memam            ###   ########.fr       */
+/*   Updated: 2022/10/21 15:30:01 by memam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,11 @@ int			ft_unset(char **envp, char **args);
 void		t_signals(void);
 int			builtin(t_command *prompt, char **envp);
 int			builtin_env(t_command *prompt, char **envp);
-/*********** Bonus **********/
-// int		    ft_wildcards(char *args);
 
 /*********** Utils Functions**********/
+
 extern int	g_status;
+
 void		parse_phase_one(t_helper2 *buf_s, t_command **prompt, \
 char *buffer, char **envp);
 void		init_helper(t_helper *helper, t_command **prompt);
@@ -147,6 +147,5 @@ t_execc *exe);
 void		ft_close_exit_complex(t_command **prompt, t_execc *exe, int *file, \
 char **envp);
 void		export_list(char **envp);
-void        get_signals(int sig);
-
+void		get_signals(int sig);
 #endif
