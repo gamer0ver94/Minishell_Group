@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 12:29:56 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/21 03:14:26 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/21 17:25:39 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,16 @@ void	double_quotes(t_parse *p, char **args, char *buffer)
 	if (p->lock == 2)
 	{
 		p->lock = 0;
-		args[p->i][p->j] = '\0';
-		p->i++;
-		p->j = 0;
-		while (buffer[p->l + 1] && buffer[p->l + 1] == ' ')
+		if (buffer[p->l] == ' ')
+		{
+			args[p->i][p->j] = '\0';
+			p->i++;
+			p->j = 0;
+			while (buffer[p->l + 1] && buffer[p->l + 1] == ' ')
 			p->l++;
-		if (buffer[p->l + 1])
+			if (buffer[p->l + 1])
 			args[p->i] = ft_calloc(100, sizeof(char));
+		}
 	}
 	p->l++;
 }

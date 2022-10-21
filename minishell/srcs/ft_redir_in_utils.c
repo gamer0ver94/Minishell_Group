@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 17:08:03 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/19 17:11:39 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/21 17:01:08 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,9 @@ int	redir_prompt(t_execc *exe, int *file)
 
 	res = ft_calloc(100, sizeof(res));
 	a = ft_strdup(exe->tmp->next->argv[0]);
-	while (g_status != 130)
+	while (1)
 	{
+		g_status = 0;
 		buffer = readline("> ");
 		if (!buffer)
 		{
@@ -100,6 +101,8 @@ int	redir_prompt(t_execc *exe, int *file)
 		write(file[1], buffer, ft_strlen(buffer));
 		write(file[1], "\n", 1);
 		free(buffer);
+		if (g_status == 130)
+			return (0);
 	}
 	free_redir(a, res);
 	return (0);
