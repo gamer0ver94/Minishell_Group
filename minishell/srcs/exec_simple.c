@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 15:18:48 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/19 17:17:15 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/21 03:05:12 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	wait_fork(pid_t *pid)
 		{
 			g_status = 0;
 		}
-		else if (WIFEXITED(status) && WEXITSTATUS(status))
+		else
 		{
 			if (WEXITSTATUS(status) == 127)
 				g_status = 127;
@@ -80,9 +80,42 @@ void	wait_fork(pid_t *pid)
 			else
 				g_status = 1;
 		}
-		else
-			g_status = 2;
 	}
+}
+
+void	sighandler2(int sig)
+{
+	if (sig == SIGQUIT)
+	{
+		printf("^\\QUIT\n");
+		signal(SIGQUIT, SIG_IGN);
+		signal(SIGINT, &sighandler);
+		g_status = 131;
+	}
+	else if (sig == SIGINT)
+	{
+		printf("\n");
+		g_status = 130;
+		signal(SIGINT, &sighandler);
+		signal(SIGQUIT, SIG_IGN);
+	}
+}
+
+int	is_cmd_exception(t_command *prompt)
+{
+	if (ft_strncmp(prompt->cmd, "grep", ft_strlen(prompt->cmd)) && prompt->argv[1])
+		return (0);
+	else if (!ft_strncmp(prompt->cmd, "cat", ft_strlen(prompt->cmd)))
+		return (1);
+	else if (!ft_strncmp(prompt->cmd, "wc", ft_strlen(prompt->cmd)))
+		return (1);
+	else if (!ft_strncmp(prompt->cmd, "grep", ft_strlen(prompt->cmd)) && prompt->argv[1])
+		return (1);
+	else if (!ft_strncmp(prompt->cmd, "as", ft_strlen(prompt->cmd)))
+		return (1);
+	else
+		return (0);
+	return (0);
 }
 
 int	exec_simple(t_command *prompt, char **envp)
@@ -91,6 +124,11 @@ int	exec_simple(t_command *prompt, char **envp)
 	int		i;
 	pid_t	pid;
 
+	if (is_cmd_exception(prompt))
+	{
+		signal(SIGINT, &sighandler2);
+		signal(SIGQUIT, &sighandler2);
+	}
 	i = 0;
 	env_path = ft_split(getenv("PATH"), ':');
 	if (!ft_strncmp(prompt->cmd, "cd", 2))

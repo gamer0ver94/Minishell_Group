@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buffer_parsing_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 12:29:56 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/14 17:25:14 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/21 03:14:26 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	jump_spaces(t_parse *p, char **args, char *buffer)
 	while (buffer[p->l] && buffer[p->l] == ' ')
 		p->l++;
 	if (buffer[p->l])
-		args[p->i] = ft_calloc(100, sizeof(char));
+		args[p->i] = ft_calloc(1000, sizeof(char));
 }
 
 int	parse_without_meta(t_helper2 *b, char *buf, t_command **pt, char **env)

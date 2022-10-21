@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_prompt.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 09:42:11 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/20 14:54:56 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/21 02:17:39 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,7 @@ void	shell_prompt(char **envp)
 	while (1)
 	{
 		ptr = parse_prompt();
-		if (isatty(STDOUT_FILENO))
-			buffer = readline(ptr);
+		buffer = readline(ptr);
 		free(ptr);
 		if (buffer && *buffer)
 		{
@@ -75,8 +74,6 @@ void	shell_prompt(char **envp)
 				exec_simple(prompt, envp);
 			else if (res == 1)
 				exec_complex(&prompt, envp);
-			if (res != 2)
-				print_struct(prompt);
 			add_hist_free_prompt(prompt, buffer);
 		}
 		exit_ctl_d(buffer, envp);

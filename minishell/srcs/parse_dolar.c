@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 21:31:03 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/14 10:10:13 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/21 02:48:36 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,60 @@ char	*ft_realoc(char *str, int size)
 	return (tmp);
 }
 
-char	*get_dolar_var(char *tmp2, t_command **prompt)
+char	*get_slash(char *str)
+{
+	char	*tmp;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	tmp = ft_calloc(150, sizeof(char));
+	while (str[i])
+	{
+		if (str[i] == '/')
+		{
+			while (str[i])
+			{
+				tmp[j] = str[i];
+				j++;
+				i++;
+			}
+		}
+		i++;
+	}
+	return (tmp);
+}
+
+char	*get_remaining2(char *str)
 {
 	int		i;
 	char	*tmp;
 
+	i = 0;
+	tmp = ft_calloc(150, sizeof(char));
+	while (str[i] != '/')
+	{
+		tmp[i] = str[i];
+		i++;
+	}
+	return (tmp);
+}
+
+char	*get_dolar_var(char *tmp2, t_command **prompt)
+{
+	int		i;
+	char	*tmp;
+	char	*aux;
+	int		lock;
+
+	lock = 0;
+	if (find_char(tmp2, "/"))
+	{
+		aux = get_slash(tmp2);
+		tmp2 = get_remaining2(tmp2);
+		lock++;
+	}
 	i = 0;
 	if (!ft_strncmp(tmp2, "?", 1))
 		return (ft_itoa(g_status));
@@ -49,6 +98,10 @@ char	*get_dolar_var(char *tmp2, t_command **prompt)
 				ft_bzero(tmp2, ft_strlen(tmp2));
 				tmp = ft_strdup((*prompt)->envp_val[i]);
 				tmp[ft_strlen(tmp)] = '\0';
+				if (lock)
+				{
+					tmp = ft_strjoin(tmp, aux);
+				}
 				return (tmp);
 			}
 			i++;

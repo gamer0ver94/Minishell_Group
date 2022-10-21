@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 10:27:32 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/17 16:55:46 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/21 03:10:40 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	struct_init_simple(t_command **prompt, char **envp)
 	help->tmp->argv = NULL;
 	help->tmp->meta_char = NULL;
 	help->tmp->id = 0;
-	help->tmp->envp = malloc(sizeof(char *) * 500);
+	help->tmp->envp = malloc(sizeof(char *) * 1000);
 	help->tmp->envp_val = malloc(sizeof(char *) * 1000);
 	help->tmp->next = NULL;
 	init_envp_simple(help, envp);

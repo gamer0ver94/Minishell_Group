@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 12:07:26 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/20 14:48:28 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/20 22:32:40 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,7 @@ int	g_status;
 
 void	sighandler(int signal)
 {
-	if (signal == SIGQUIT)
-	{
-		printf("\nThank you for using MINISHELL\n");
-		exit(0);
-	}
-	else if (signal == SIGINT)
+	if (signal == SIGINT)
 	{
 		ioctl(STDIN_FILENO, TIOCSTI, "\n");
 		rl_replace_line("", 0);
@@ -33,14 +28,9 @@ void	sighandler(int signal)
 int	main(int argc, char **argv, char **envp)
 {
 	char			**new_envp;
-	//term
-	// char *term_name;
-	struct termios			t_config;
-	struct termios			old_term;
-	// term_name = getenv("TERM");
-	// tgetent(NULL, term_name);
-	termios_config(&t_config, &old_term);
-	//endterm
+	struct termios	term;
+
+	termios_config(&term);
 	(void)argv;
 	if (argc > 2)
 	{

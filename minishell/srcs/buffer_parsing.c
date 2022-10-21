@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 13:34:36 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/20 09:21:18 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/21 03:12:59 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	get_commands(char **split, t_command **prompt, char **envp)
 	}
 	while (tmp->next != NULL)
 		tmp = tmp->next;
-	tmp->argv = ft_calloc(500, sizeof(char *));
+	tmp->argv = ft_calloc(2000, sizeof(char *));
 	while (split && split[i])
 	{
 		if (split[i][0])
@@ -73,7 +73,7 @@ int	parse_quotes(char **args, char *buffer)
 
 	p = malloc(sizeof(t_parse));
 	init_parse_struct(p);
-	args[p->i] = ft_calloc(100, sizeof(char));
+	args[p->i] = ft_calloc(20000, sizeof(char));
 	while (buffer[p->l])
 	{
 		parse_quotes_util(p, args, buffer);
