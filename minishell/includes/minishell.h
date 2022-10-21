@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 13:25:13 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/20 22:10:28 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/21 17:53:00 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,9 @@ t_execc *exe);
 void		ft_close_exit_complex(t_command **prompt, t_execc *exe, int *file, \
 char **envp);
 void		export_list(char **envp);
+void		get_signals(int sig);
+void		signal_handler(int signal);
 void		sighandler(int signal);
-int	termios_config(struct termios *t_config);
+int			termios_config(struct termios *t_config);
 
 #endif

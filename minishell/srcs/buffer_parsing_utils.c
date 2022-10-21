@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 12:29:56 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/21 17:25:39 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/21 18:10:45 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	jump_spaces(t_parse *p, char **args, char *buffer)
 
 int	parse_without_meta(t_helper2 *b, char *buf, t_command **pt, char **env)
 {
-	b->args = ft_calloc(100, sizeof(char *));
+	b->args = ft_calloc(3000, sizeof(char *));
 	if (parse_quotes(b->args, buf) == -2)
 	{
 		free_args(b->args);

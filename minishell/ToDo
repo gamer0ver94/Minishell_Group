@@ -1,20 +1,20 @@
 //😀 good ---- 🥵 badd//
 
-//Makefile must have all srcs files 🥵
-//Spaces before the command must be ignored 😀
-//Echo -n must be handle 🥵
-//Exit must handle diference arguments 🥵
-//Handle $? + $? 🥵
-//Handle cat ctl+c should not display 2 prompts 🥵
-//When using cat with no arguments Ctl + \ should quit the blocking command 🥵
-//echo "cat lol.c | cat > lol.c" problem with parsing  🥵
+//Makefile must have all srcs files  😀 it fixed 
+//Spaces before the command must be ignored  😀 it fixed 
+//Echo -n must be handle 😀 it fixed 
+//Exit must handle diference arguments 😀 it fixed
+//Handle $? + $?  😀 it work wall i thing you all ready fixed
+//Handle cat ctl+c should not display 2 prompts 😀
+//When using cat with no arguments Ctl + \ should quit the blocking command 😀
+//echo "cat lol.c | cat > lol.c" problem with parsing   😀 it fixed 
 //echo $ problem with parsing  
-//cd $HOME/Documents problem with parsing  🥵
+//cd $HOME/Documents problem with parsing  😀
 //when executing first try to search in PATH before executing  🥵 
 //< ToDo cat problem segfault 😀
-//<< parse problem  🥵
+//<< parse problem  😀
 //hereDoc must parse $  🥵
-//termios ctl c should not display ^C 🥵
-//buffer[size] should be bigger; 🥵
+//termios ctl c should not display ^C  😀 it fixed 
+//buffer[size] should be bigger; 😀
 //Echo $variable should not display a space betwern variables
 //valgrind --leak-check=full --suppressions=readline.supp --show-leak-kinds=all --track-origins=yes ./minishell

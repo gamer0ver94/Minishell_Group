@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 12:07:26 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/20 22:32:40 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/21 17:48:15 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ int	main(int argc, char **argv, char **envp)
 	}
 	g_status = 0;
 	new_envp = ft_calloc(1000, sizeof(char *));
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, &sighandler);
+	// signal(SIGQUIT, SIG_IGN);
+	// signal(SIGINT, &sighandler);
 	create_env(new_envp, envp);
 	logo("assets/logo.txt");
 	shell_prompt(new_envp);

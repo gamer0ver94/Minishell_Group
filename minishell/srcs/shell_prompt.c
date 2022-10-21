@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 09:42:11 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/21 16:36:59 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/21 17:49:02 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ char	*parse_prompt(void)
 	char	current_dir[1024];
 	char	*tmp;
 
+	get_signals(1);
 	parser = ft_strdup(RED_CLR);
 	tmp = ft_strjoin(parser, getenv("USER"));
 	free(parser);
@@ -74,7 +75,7 @@ void	shell_prompt(char **envp)
 				exec_simple(prompt, envp);
 			else if (res == 1)
 				exec_complex(&prompt, envp);
-			print_struct(prompt);
+			//print_struct(prompt);
 			add_hist_free_prompt(prompt, buffer);
 		}
 		exit_ctl_d(buffer, envp);
