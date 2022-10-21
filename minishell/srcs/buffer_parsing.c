@@ -6,7 +6,7 @@
 /*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 13:34:36 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/21 16:52:29 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/22 01:28:19 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,10 @@ void	parse_quotes_util(t_parse *p, char **args, char *buffer)
 	{
 		if (buffer[p->l] == '$' && p->lock_2 != 1)
 		{
-			args[p->i][p->j++] = '&';
+			if (!buffer[p->l + 1] || buffer[p->l + 1] == ' ')
+				args[p->i][p->j++] = '$';
+			else
+				args[p->i][p->j++] = '&';
 		}
 		else
 			args[p->i][p->j++] = buffer[p->l];
@@ -118,6 +121,23 @@ int	exception(char *buffer)
 	return (1);
 }
 
+int	check_last_arg(char *buffer)
+{
+	int	i;
+
+	i = ft_strlen(buffer) - 1;
+	while(i > 0)
+	{
+		if (buffer[i] == ' ')
+			i--;
+		else if (buffer[i] == '|' || buffer[i] == '>' || buffer[i] == '<')
+			return (0);
+		else
+			return (1);
+	}
+	return (0);
+}
+
 int	buffer_parsing(char *buffer, t_command **prompt, char **envp)
 {
 	t_helper2	*buf_s;
@@ -136,6 +156,8 @@ int	buffer_parsing(char *buffer, t_command **prompt, char **envp)
 	}
 	if (find_meta_char(buffer))
 	{
+		if (!check_last_arg(buffer))
+			return (2);
 		parse_phase_one(buf_s, prompt, buffer, envp);
 		free_matrix(buf_s->meta_chars);
 		free_matrix(buf_s->exe);
