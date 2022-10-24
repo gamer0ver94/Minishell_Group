@@ -3,32 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 11:03:50 by memam             #+#    #+#             */
-/*   Updated: 2022/10/21 17:48:02 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/24 16:11:04 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-extern int	g_status;
-
 int	ft_echo_flag(char *args)
 {
 	int	i;
-	int flag;
+	int	flag;
 
 	i = 0;
 	flag = 0;
 	if (args[i] != '-')
-		return(flag);
+		return (flag);
 	i++;
 	while (args[i] && args[i] == 'n')
 		i++;
 	if (args[i] == '\0')
 		flag = 1;
-	return (flag);	
+	return (flag);
 }
 
 void	ft_echo_print(t_command *command, int flag, int i)
@@ -48,8 +46,6 @@ void	ft_echo_print(t_command *command, int flag, int i)
 			ft_putchar_fd('\n', STDOUT_FILENO);
 		i++;
 	}
-	
-
 }
 
 int	ft_echo(t_command *command)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_signal.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 22:32:59 by memam             #+#    #+#             */
-/*   Updated: 2022/10/21 17:51:39 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/24 15:50:22 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,23 @@ void	get_signals(int sig)
 	{
 		signal(SIGINT, ctrl_c);
 		signal(SIGQUIT, back_slash);
+	}
+}
+
+void	sighandler2(int sig)
+{
+	if (sig == SIGQUIT)
+	{
+		printf("^\\QUIT\n");
+		signal(SIGQUIT, SIG_IGN);
+		signal(SIGINT, &sighandler);
+		g_status = 131;
+	}
+	else if (sig == SIGINT)
+	{
+		printf("\n");
+		g_status = 130;
+		signal(SIGINT, &sighandler);
+		signal(SIGQUIT, SIG_IGN);
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 13:25:13 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/21 17:53:00 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/24 16:33:14 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,5 +152,21 @@ void		get_signals(int sig);
 void		signal_handler(int signal);
 void		sighandler(int signal);
 int			termios_config(struct termios *t_config);
-
+void		meta_char_util2(char *buffer, int *lock, t_helper2 *buf_s, \
+t_tmp *tp);
+void		meta_char_utils(t_tmp *tp, char *buffer, t_helper2 *buf_s);
+void		get_dolar_char(t_command **prompt, char **arg, int i);
+void		get_dolar_helper(t_helper3 *help, t_command **prompt, char **arg);
+char		*dolar_utils2(char *tmp2, char *aux, int *lock, t_command **prompt);
+void		init_helper3(t_helper3 *help);
+char		*ft_realoc(char *str, int size);
+int			is_cmd_exception(t_command *prompt);
+int			verify_cd_exit(t_command *prompt, char **envp, char **env_path);
+void		sighandler2(int sig);
+int			write_redir(int *file, char *buffer);
+int			exception_checker(char *buffer, t_helper2 **buf_s);
+int			check_last_arg(char *buffer);
+int			exception(char *buffer);
+int			is_empty_buffer(char *buffer);
+void		parsing_dolar_helper(char *buffer, t_parse *p, char **args);
 #endif

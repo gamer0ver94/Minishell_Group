@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_simple_verify.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 16:36:48 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/20 22:04:29 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/24 16:12:43 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	verify_access(t_command *prompt)
 	if (!ft_strncmp(prompt->cmd, ".", ft_strlen(prompt->cmd)))
 	{
 		write(2, "bash: .: filename argument required\n", 36);
-		write(2,".: usage: . filename [arguments]\n", 33);
+		write(2, ".: usage: . filename [arguments]\n", 33);
 		g_status = 2;
 		exit(g_status);
 	}

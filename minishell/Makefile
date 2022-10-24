@@ -47,6 +47,8 @@ SRC =  srcs/main.c \
 				srcs/struct_init_utils.c \
 				srcs/ft_signal.c \
 				srcs/termios_config.c \
+				srcs/dolar_utils2.c \
+				srcs/buffer_parsing_helper.c \
 
 OBJ = $(SRC:$(SRCDIR)/%$(EXT)=$(OBJDIR)/%.o)
 RM = rm -rf

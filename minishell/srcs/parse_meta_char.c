@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_meta_char.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 21:32:24 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/20 10:02:26 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/24 15:00:38 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,20 +104,7 @@ void	parse_meta_chars(char *buffer, t_helper2 *buf_s)
 		i++;
 	while (buffer[tp.i])
 	{
-		if (buffer[tp.i] == '\"' || buffer[tp.i] == '\'')
-		{
-			lock++;
-			if (lock == 2)
-				lock = 0;
-			buf_s->exe[tp.j][tp.h++] = buffer[tp.i++];
-		}
-		if (lock == 0 && (buffer [tp.i] == '<' || buffer [tp.i] == '>' || \
-		buffer [tp.i] == '|'))
-		{
-			meta_char_utils(&tp, buffer, buf_s);
-		}
-		else
-			buf_s->exe[tp.j][tp.h++] = buffer[tp.i++];
+		meta_char_util2(buffer, &lock, buf_s, &tp);
 	}
 	buf_s->exe[tp.j + 1] = NULL;
 	buf_s->meta_chars[tp.a] = NULL;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_redir_in_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaulino <dpaulino@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: dpaulino <dpaulino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 17:08:03 by dpaulino          #+#    #+#             */
-/*   Updated: 2022/10/21 17:01:08 by dpaulino         ###   ########.fr       */
+/*   Updated: 2022/10/24 16:10:06 by dpaulino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,16 @@ void	free_redir(char *a, char *res)
 	free(res);
 }
 
+int	write_redir(int *file, char *buffer)
+{
+	write(file[1], buffer, ft_strlen(buffer));
+	write(file[1], "\n", 1);
+	free(buffer);
+	if (g_status == 130)
+		return (0);
+	return (1);
+}
+
 int	redir_prompt(t_execc *exe, int *file)
 {
 	char	*res;
@@ -98,10 +108,7 @@ int	redir_prompt(t_execc *exe, int *file)
 			free(buffer);
 			break ;
 		}
-		write(file[1], buffer, ft_strlen(buffer));
-		write(file[1], "\n", 1);
-		free(buffer);
-		if (g_status == 130)
+		if (!write_redir(file, buffer))
 			return (0);
 	}
 	free_redir(a, res);
